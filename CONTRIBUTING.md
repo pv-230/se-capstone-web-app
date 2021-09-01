@@ -22,9 +22,11 @@ commit messages:
 
 ## Branch Types
 
+When you are ready to work on a specific task, it is time to create a new branch that links to an issue in the tracker.
+
 ### Features
 
-For each feature, make a new branch, following the nomenclature `f/[short-desc]`. For example, `f/ui-improvements`.
+For each feature, make a new branch following the nomenclature `f/[short-desc]`. For example, `f/ui-improvements`.
 
 ### Documentation
 
@@ -32,8 +34,8 @@ For documentation changes, follow the nomenclature `d/[short-desc]`. For example
 
 ### Bug Fixes
 
-For branches dealing with bugs, follow the nomenclature `b-[short-desc]`. For example, `b/missing-ui-element`.
+For branches dealing with bugs, follow the nomenclature `b/[short-desc]`. For example, `b/missing-ui-element`.
 
 ## Common Rules for all Branches
 
-After you have committed changes to your local branch, you are ready to push those changes to the remote branch. Then, when you are ready, you should open a pull request against main. Somebody else needs to review your changes before merging. After merging, you can feel free to delete the branch that was merged.
+After you have committed changes to your local branch, you are ready to push those changes to the remote branch. Then, when you are ready, you should open a pull request against main. Remember to link the pull request to an existing issue in the tracker. Somebody else needs to review your changes before merging. After merging, you can feel free to delete the branch that was merged.
