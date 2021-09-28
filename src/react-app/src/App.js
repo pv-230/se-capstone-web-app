@@ -1,5 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 
 function App() {
   return (
@@ -17,9 +18,30 @@ function App() {
         >
           Learn React
         </a>
+        <button onClick={login}>LogIn</button>
       </header>
     </div>
   );
+}
+
+function login() {
+
+  const auth = getAuth();
+  let email = "test@gmail.com"
+  let password = "password123"
+  console.log('test');
+  createUserWithEmailAndPassword(auth, email, password)
+    .then((userCredential) => {
+      // Signed in 
+      const user = userCredential.user;
+      console.log(userCredential.user.uid);
+      // ...
+    })
+    .catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      // ..
+    });
 }
 
 export default App;
