@@ -1,6 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { user, signIn, SetCompletedClasses } from "./db";
 
 function App() {
   return (
@@ -18,7 +19,8 @@ function App() {
         >
           Learn React
         </a>
-        <button onClick={login}>LogIn</button>
+        <button onClick={ () => signIn("test@gmail.com", "password123")}>LogIn</button>
+        <button onClick={() => SetCompletedClasses("test class")}>Test</button>
       </header>
     </div>
   );
@@ -40,6 +42,7 @@ function login() {
     .catch((error) => {
       const errorCode = error.code;
       const errorMessage = error.message;
+      console.log(user);
       // ..
     });
 }
