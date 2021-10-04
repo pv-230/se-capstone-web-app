@@ -1,8 +1,7 @@
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { getDatabase } from "firebase/database";
-import { doc, Firestore, getFirestore, setDoc, addDoc, collection, onSnapshot } from "firebase/firestore";
+import { doc, Firestore, getFirestore, setDoc, addDoc, collection, onSnapshot, getDoc } from "firebase/firestore";
 import { useEffect } from "react";
-/* eslint-disable */
 
 export let user = null;
 export let uid = null;
@@ -22,32 +21,63 @@ export const signIn = (email, password) => {
     });
 }
 
-// Takes in a map and saves those classes as completed classes in the db for that user
-export async function SetCompletedClasses() {
+// Takes in a userData class and stores it into Firestore
+export async function setUserData(UserData) {
+    if(uid == null) {
+        console.log("Error, user is not logged in!");
+        return;
+    }
     const db = getFirestore();
+    const ref = collection(db, 'users');
 
-    let path = ("users/" + uid.toString() + "/CompletedClasses");
-    const ref = collection(db, 'users', uid.toString(), 'Classes');
-
-    const data = {
-        1: "one",
-        2: "two",
-        3: "three"
-    };
-    await setDoc(doc(ref, "CompletedClasses"), data);
+    // This will be removed, just here for testing
+    const compClass = ["COT4420", "COP3363"];
+    const outClass = ["CEN4020"];
+    const userD = new userData(compClass, outClass);
+    await setDoc(doc(ref, uid.toString()), userD.getJSONObject());
+    
+    // This will also be commented back in after testing
+    //await setDoc(doc(ref, uid.toString()), UserData.getJSONObject());
 }
 
-// Takes in a map and saves those classes as outstanding classes in the db for that user
-export const setOutstandingClasses = (newClasses) => {
+// Returns the userData class from Firebase
+export async function getUserData() {
+    if(uid == null) {
+        console.log("Error, user is not logged in!");
+        return;
+    }
+    const db = getFirestore();
+    const ref = doc(db, "users", uid.toString());
+    const snapshot = await getDoc(ref);
 
+    if(snapshot.exists()) {
+        let userD = new userData(JSON.parse(snapshot.data().CompletedClasses), JSON.parse(snapshot.data().OutstandingClasses));
+        console.log(userD.toString());
+        return userD;
+    } else {
+        console.log("Error reading user data from Firestore!");
+    }
 }
 
-// Returns a map containing all the user's completed classes
-export const getCompletedClasses = () => {
-
-}
-
-// Returns a map containing all the user's outstanding classes
-export const getOutstandingClasses = () => {
-
+export class userData {
+    constructor(completedClasses, outstandingClasses) {
+        this.completedClasses = completedClasses;
+        this.outstandingClasses = outstandingClasses;
+    }
+    toString() {
+        return "Completed Classes:\n" + this.completedClasses.toString() + "\nOutstanding Classes:\n" + this.outstandingClasses.toString();
+    }
+    getOutstanding() {
+        return this.outstandingClasses;
+    }
+    getCompleted() {
+        return this.completedClasses;
+    }
+    getJSONObject() {
+        const JSONData = {
+            "CompletedClasses":  JSON.stringify(this.completedClasses),
+            "OutstandingClasses": JSON.stringify(this.outstandingClasses)
+        };
+        return JSONData;
+    }
 }

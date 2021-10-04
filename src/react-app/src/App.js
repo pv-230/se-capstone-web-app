@@ -1,7 +1,8 @@
 import logo from './logo.svg';
 import './App.css';
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
-import { user, signIn, SetCompletedClasses } from "./db";
+import { user, signIn, setUserData, getUserData, uid } from "./db";
+import { Button } from '@material-ui/core';
 
 function App() {
   return (
@@ -19,8 +20,9 @@ function App() {
         >
           Learn React
         </a>
-        <button onClick={ () => signIn("test@gmail.com", "password123")}>LogIn</button>
-        <button onClick={() => SetCompletedClasses("test class")}>Test</button>
+        <Button variant="contained" onClick={ () => signIn("test@gmail.com", "password123")}>LogIn</Button>
+        <Button variant="contained" onClick={() => setUserData()}>Set User Data</Button>
+        <Button variant="contained" onClick={() => getUserData()}>Get User Data</Button>
       </header>
     </div>
   );
@@ -28,6 +30,10 @@ function App() {
 
 function login() {
 
+  if(uid.equals(null)) {
+    console.log("Error, user is not logged in!");
+    return;
+  }
   const auth = getAuth();
   let email = "test@gmail.com"
   let password = "password123"
