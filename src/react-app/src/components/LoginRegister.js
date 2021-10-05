@@ -57,6 +57,7 @@ const LoginRegister = props => {
                 name="password"
                 required
             />
+            
             <Button onClick={handleLoginButton} variant="contained">Login</Button>
         </Stack>
 
