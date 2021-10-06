@@ -4,12 +4,18 @@ import { TextField, Button, Stack } from "@mui/material"
 
 export let uid = null;
 
+/*
+ * This is the component that provides the login function.
+ * TODO: Password reset, register button, styling, redirect to homepage on login
+ */
 const LoginRegister = props => {
+    // Component state
     const [inputText, setInputText] = useState({
         username: "",
         password: "",
     })
 
+    // Event handler for user input
     const handleInputChange = event => {
         setInputText({
             ...inputText,
@@ -17,11 +23,13 @@ const LoginRegister = props => {
         })
     }
 
+    // Event handler for clicking on the login button
     const handleLoginButton = event => {
         event.preventDefault()
         signIn(inputText.username, inputText.password)
     }
 
+    // Firebase related function that sends user credentials to the database
     const signIn = (email, password) => {
         const auth = getAuth();
         signInWithEmailAndPassword(auth, email, password)
@@ -39,7 +47,9 @@ const LoginRegister = props => {
     }
 
     return (
-        <Stack className="center" spacing={2}>
+        <Stack className="login" spacing={2}>
+            <h3>Sign in</h3>
+
             <TextField
                 type="text"
                 onChange={handleInputChange}
@@ -60,7 +70,6 @@ const LoginRegister = props => {
             
             <Button onClick={handleLoginButton} variant="contained">Login</Button>
         </Stack>
-
     )
 }
 
