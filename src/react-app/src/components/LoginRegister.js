@@ -1,17 +1,18 @@
 import React, { useState } from 'react'
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth"
 import { TextField, Button, Stack } from "@mui/material"
-
-export let uid = null;
+import { setUserData } from '../db'
 
 /*
  * This is the component that provides the login function.
  * TODO: Password reset, register button, styling, redirect to homepage on login
  */
-const LoginRegister = props => {
+const LoginRegister = (props) => {
+    var uid = null;
+
     // Component state
     const [inputText, setInputText] = useState({
-        username: "",
+        email: "",
         password: "",
     })
 
@@ -24,25 +25,34 @@ const LoginRegister = props => {
     }
 
     // Event handler for clicking on the login button
-    const handleLoginButton = event => {
-        event.preventDefault()
-        signIn(inputText.username, inputText.password)
+    const handleLoginButton = async event => {
+        event.preventDefault();
+        await signIn(inputText.email, inputText.password);
+        props.setUserProp(uid);
+        await setUserData(uid);
+        window.location.href = '/';
+    }
+
+    // Event handler for clicking on the register button
+    const handleRegisterButton = event => {
+        event.preventDefault();
+        window.location.href = '/register';
     }
 
     // Firebase related function that sends user credentials to the database
-    const signIn = (email, password) => {
+    async function signIn(email, password) {
         const auth = getAuth();
-        signInWithEmailAndPassword(auth, email, password)
+        await signInWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
                 // Signed in
-                uid = userCredential.uid;
-                console.log(uid.toString())
+                uid = userCredential.user.uid;
             })
             .catch((error) => {
                 // Error signing in
                 const errorCode = error.code;
                 const errorMessage = error.message;
                 console.log(errorCode + ": " + errorMessage)
+                return null;
             });
     }
 
@@ -53,9 +63,9 @@ const LoginRegister = props => {
             <TextField
                 type="text"
                 onChange={handleInputChange}
-                label="Username"
+                label="Email"
                 variant="outlined"
-                name="username"
+                name="email"
                 required
             />
 
@@ -67,8 +77,9 @@ const LoginRegister = props => {
                 name="password"
                 required
             />
-            
+
             <Button onClick={handleLoginButton} variant="contained">Login</Button>
+            <Button onClick={handleRegisterButton} variant="contained">Register</Button>
         </Stack>
     )
 }

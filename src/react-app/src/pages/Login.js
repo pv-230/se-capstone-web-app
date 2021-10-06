@@ -4,10 +4,10 @@ import LoginRegister from '../components/LoginRegister'
 /*
  * This is the page that houses all components needed to allow a user to log in.
  */
-const Login = () => {
+const Login = (props) => {
   return (
     <div>
-      <LoginRegister />
+      <LoginRegister setUserProp={props.setUserProp} />
     </div>
   )
 }

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Route, Switch } from 'react-router-dom'
 
 // Pages
@@ -12,12 +12,30 @@ import Register from '../pages/Register'
  * manages app wide state.
  */
 const AppContainer = () => {
+    const getUserInfo = () => {
+        const temp = localStorage.getItem("userId");
+        const savedUserId = JSON.parse(temp);
+        return savedUserId || null;
+    }
+
+    const [userInfo, setUserInfo] = useState({
+        uid: getUserInfo(),
+    });
+
+    const setUser = (userId) => {
+        setUserInfo({
+            uid: userId,
+        })
+        const temp = JSON.stringify(userId)
+        localStorage.setItem("userId", temp)
+        console.log(userId);
+    }
+
     return (
         <div className="container">
             <Switch>
-
                 <Route path="/login">
-                    <Login />
+                    <Login setUserProp={setUser} />
                 </Route>
 
 
@@ -27,14 +45,13 @@ const AppContainer = () => {
 
 
                 <Route exact path="/">
-                    <Home />
+                    <Home uidProp={userInfo.uid} />
                 </Route>
 
 
                 <Route path="*">
                     <PageNotFound />
                 </Route>
-
             </Switch>
         </div>
     )
