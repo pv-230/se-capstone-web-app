@@ -1,11 +1,14 @@
 import React from 'react'
+import Register from '../components/Register'
 
 /*
  * This is the page that houses all components needed to allow a user to register.
  */
-const RegisterPage = () => {
+const RegisterPage = (props) => {
   return (
-    <h1>Register page</h1>
+    <div>
+      <Register setUserProp={props.setUserProp} />
+    </div>
   )
 }
 
