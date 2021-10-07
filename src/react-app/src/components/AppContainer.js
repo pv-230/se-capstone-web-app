@@ -6,6 +6,7 @@ import HomePage from '../pages/HomePage'
 import MissingPage from '../pages/MissingPage'
 import LoginPage from '../pages/LoginPage'
 import RegisterPage from '../pages/RegisterPage'
+import AccountSetup from '../pages/AccountSetup'
 
 /*
  * This component houses all the components that will be used in the application and it also
@@ -43,6 +44,9 @@ const AppContainer = () => {
                     <RegisterPage />
                 </Route>
 
+                <Route path="/account_setup">
+                    <AccountSetup />
+                </Route>
 
                 <Route exact path="/">
                     <HomePage uidProp={userInfo.uid} />
