@@ -1,4 +1,4 @@
-export class userData {
+export class UserData {
     constructor(firstName, lastName, email, completedClasses, outstandingClasses) {
         this.firstName = firstName;
         this.lastName = lastName;

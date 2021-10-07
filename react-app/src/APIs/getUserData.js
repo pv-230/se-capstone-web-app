@@ -1,5 +1,5 @@
 import { doc, getFirestore, getDoc } from "firebase/firestore";
-import { userData } from "../models/userData";
+import { UserData } from "../models/UserData";
 
 // Returns the userData class from Firebase
 export async function getUserData() {
@@ -22,7 +22,8 @@ export async function getUserData() {
         let outstanding = JSON.parse(snapshot.data().OutstandingClasses);
 
         // Creates the new object
-        let userD = new userData(firstN, lastN, email, comp, outstanding);
+        let userD = new UserData(firstN, lastN, email, comp, outstanding);
+        console.log(userD.toString());
         return userD;
     } else {
         console.log("Error reading user data from Firestore!");

@@ -6,7 +6,7 @@ import { TextField, Button, Stack } from "@mui/material"
  * This is the component that provides the login function.
  * TODO: Password reset, register button, styling, redirect to homepage on login
  */
-const LoginRegister = (props) => {
+const Login = (props) => {
     var uid = null;
 
     // Component state
@@ -82,4 +82,4 @@ const LoginRegister = (props) => {
     )
 }
 
-export default LoginRegister
+export default Login
