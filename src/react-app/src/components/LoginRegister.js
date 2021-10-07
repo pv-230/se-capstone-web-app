@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth"
 import { TextField, Button, Stack } from "@mui/material"
-import { setUserData } from '../db'
 
 /*
  * This is the component that provides the login function.
@@ -29,7 +28,6 @@ const LoginRegister = (props) => {
         event.preventDefault();
         await signIn(inputText.email, inputText.password);
         props.setUserProp(uid);
-        await setUserData(uid);
         window.location.href = '/';
     }
 
