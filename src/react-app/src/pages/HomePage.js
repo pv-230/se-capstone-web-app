@@ -3,7 +3,7 @@ import React from 'react'
 /*
  * This is the page that houses all components needed in the home page.
  */
-const Home = (props) => {
+const HomePage = (props) => {
   if (props.uidProp === null) {
     // Attempts to visit the homepage if not logged in will redirect to the login page
     window.location.href = '/login';
@@ -15,4 +15,4 @@ const Home = (props) => {
   )
 }
 
-export default Home
+export default HomePage

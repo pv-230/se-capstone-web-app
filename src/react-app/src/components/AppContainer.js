@@ -2,10 +2,10 @@ import React, { useState } from 'react'
 import { Route, Switch } from 'react-router-dom'
 
 // Pages
-import Home from '../pages/Home'
-import PageNotFound from '../pages/PageNotFound'
-import Login from '../pages/Login'
-import Register from '../pages/Register'
+import HomePage from '../pages/HomePage'
+import MissingPage from '../pages/MissingPage'
+import LoginPage from '../pages/LoginPage'
+import RegisterPage from '../pages/RegisterPage'
 
 /*
  * This component houses all the components that will be used in the application and it also
@@ -35,22 +35,22 @@ const AppContainer = () => {
         <div className="container">
             <Switch>
                 <Route path="/login">
-                    <Login setUserProp={setUser} />
+                    <LoginPage setUserProp={setUser} />
                 </Route>
 
 
                 <Route path="/register">
-                    <Register />
+                    <RegisterPage />
                 </Route>
 
 
                 <Route exact path="/">
-                    <Home uidProp={userInfo.uid} />
+                    <HomePage uidProp={userInfo.uid} />
                 </Route>
 
 
                 <Route path="*">
-                    <PageNotFound />
+                    <MissingPage />
                 </Route>
             </Switch>
         </div>
