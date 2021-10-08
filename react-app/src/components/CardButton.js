@@ -1,12 +1,10 @@
 import React from "react"
-import { Card, CardActionArea, Stack } from "@mui/material"
-import { CardContent } from "@mui/material"
+import { Card, CardActionArea, Stack, CardContent, Typography } from "@mui/material"
 
 const CardButton = (props) => {
     const [clicked, setClicked] = React.useState(true);
     const handleClick = () => {
         setClicked(!clicked);
-        console.log(clicked);
         props.update(props.classCode);
     };
 
@@ -26,17 +24,19 @@ const CardButton = (props) => {
         color: 'white'
     }
 
-    function getClicked() {
-        return clicked;
+    var typographyStyle = {
+        "fontFamily": `"Segoe UI", "sans-serif"`,
+        "fontSize": 25,
+        "fontWeight": 700,
     }
 
     return (
         <Card style={clicked? style : clickedStyle}>
             <CardActionArea onClick={handleClick} style={style}>
                 <CardContent>
-                    <Stack>
-                        <h1>{props.classCode}</h1>
-                        <h2>{props.className}</h2>
+                    <Stack spacing={2}>
+                        <Typography style={typographyStyle}>{props.classCode}</Typography>
+                        <Typography style={typographyStyle}>{props.className}</Typography>
                     </Stack>
                 </CardContent>
             </CardActionArea>
