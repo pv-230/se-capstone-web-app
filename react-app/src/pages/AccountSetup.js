@@ -1,8 +1,10 @@
 import React from 'react'
 import CardButton from '../components/CardButton'
 import { Stack, Grid, Card, Box, Typography, Button } from '@mui/material'
+import { ClassInfo } from '../models/ClassInfo'
 
 let selectedClasses = [];
+let classInfo = new ClassInfo();
 
 const stackStyle = {
   alignItems: 'center',
@@ -15,25 +17,39 @@ var typographyStyle = {
   "fontWeight": 700,
 }
 
+var style = {
+  display: 'block',
+  width: '1500px',
+  height: '1500px',
+  textAlign: 'center',
+}
+
 const AccountSetup = () => {
   return (
-    <Card>
+    <Card style={style}>
       <Box m={5}>
         <Stack spacing={3} style={stackStyle}>
           <Typography style={typographyStyle}>Pick your completed class here and stuff</Typography>
-          <Grid container justifyContent="space-evenly" rowSpacing={2}>
-            <Grid item>
-              <CardButton classCode="COP3363" className="Intro to Programming" update={updateClicked}/>
-            </Grid>
-            <Grid item>
-              <CardButton classCode="CDA3100" className="Comp Org" update={updateClicked}/>
-            </Grid>
+          <Grid container justifyContent="space-evenly" rowSpacing={2} spacing={2}>
+            {test()}
           </Grid>
           <Button variant="contained">Submit</Button>
         </Stack>
       </Box>
     </Card>
   )
+}
+
+function test() {
+  let classCards = []
+  for(let i = 0; i < classInfo.classCodes.length; i++) {
+      classCards.push(
+      <Grid item>
+        <CardButton classCode={classInfo.classCodes[i]} className={classInfo.classNames[i]} update={updateClicked}/>
+      </Grid>
+      );
+  }
+  return classCards;
 }
 
 function updateClicked(classCode) {
