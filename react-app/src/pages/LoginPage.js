@@ -6,9 +6,7 @@ import Login from '../components/Login'
  */
 const LoginPage = (props) => {
   return (
-    <div>
-      <Login setUserProp={props.setUserProp} />
-    </div>
+    <Login setUserId={props.setUserId} />
   )
 }
 

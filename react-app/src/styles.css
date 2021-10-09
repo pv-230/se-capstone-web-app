@@ -1,11 +1,15 @@
-.container {
-  /* position: relative;
+.resetCard {
+  position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%); */
+  transform: translate(-50%, -50%);
+  text-align: center;
 }
 
-.login h3 {
-  font-family: 'Segoe UI', sans-serif;
+.loginCard {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   text-align: center;
 }
