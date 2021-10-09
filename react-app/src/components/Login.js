@@ -3,18 +3,20 @@ import { getAuth, signInWithEmailAndPassword } from "firebase/auth"
 import { TextField, Button, Stack, Typography, Link } from "@mui/material"
 
 /*
- * This is the component that provides the login function.
+ * This is the component that provides the login functionality
+ * TODO: Add object to hold custom error messages
+ * TODO: Modify firebase error codes to only should part after auth/
  */
 const Login = (props) => {
   var uid = null;  // Stores a UID returned from Firebase
 
-  // Form states
+  // Form state
   const [inputText, setInputText] = useState({
     email: "",
     password: ""
   })
 
-  // Error states
+  // Error state
   const [errors, setErrors] = useState({
     emailError: false,
     passwordError: false,
@@ -22,12 +24,12 @@ const Login = (props) => {
     message: ""
   });
 
-  // Event handler for user input inside the forms
+  // Event handler for user input inside the fields
   const handleInputChange = event => {
     setInputText({
       ...inputText,
       [event.target.name]: event.target.value,
-    })
+    });
   }
 
   // Event handler for clicking on the login button
@@ -53,7 +55,8 @@ const Login = (props) => {
     window.location.href = "/register";
   }
 
-  const handleForgotPassword = event => {
+  // Event handler for clicking on the password reset link
+  const handleForgotPassword = () => {
     window.location.href = "/password_reset"
   }
 
