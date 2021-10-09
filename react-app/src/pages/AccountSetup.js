@@ -40,6 +40,7 @@ var buttonStyle = {
 
 const AccountSetup = () => {
 
+  // States
   const [inputText, setInputText] = useState({
     firstName: "",
     lastName: ""
@@ -61,10 +62,7 @@ const AccountSetup = () => {
     auth = getAuth();
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        // User is signed in, see docs for a list of available properties
-        // https://firebase.google.com/docs/reference/js/firebase.User
-        const uid = user.uid;
-        // ...
+        // User is signed in
       } else {
           // If they are logged out, redirects to login
           window.location.href = '/login';
@@ -74,7 +72,9 @@ const AccountSetup = () => {
     }
   }, [])
 
+  // Functions
   async function setupAccount() {
+    // Checks for valid names
     if(inputText.firstName.length < 1 && inputText.lastName.length < 1)
       setErrors({...errors, firstNameError: true, lastNameError: true});
     else if(inputText.firstName.length < 1)
@@ -87,6 +87,7 @@ const AccountSetup = () => {
     if(inputText.firstName.length < 1 || inputText.lastName.length < 1)
       window.scrollTo(0,0);
     else {
+      // Creates and send their data to the database
       const email = auth.currentUser.email;
       let userD = new UserData(
         inputText.firstName, 
@@ -96,6 +97,7 @@ const AccountSetup = () => {
         notSelectedClasses
       );
       setUserData(userD, auth.currentUser.uid);
+      window.location.href = '/';
     }
   }
 
@@ -126,6 +128,7 @@ const AccountSetup = () => {
     console.log(notSelectedClasses);
   }
 
+  // Temporarily in here to test logout
   function fbSignOut() {
     signOut(auth).then(() => {
       // Sign-out successful.

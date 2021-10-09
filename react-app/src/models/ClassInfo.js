@@ -14,13 +14,13 @@ export class ClassInfo {
                     "Secure, Parallel & Dist. Python", "Op Sys & Conc Progr", "3000 or 4000 level CS Elective", 
                     "4000 level Upper Division Elective", "Directed Individual Study or 3000 level CS Elective", 
                     "4000 level CS or Advanced Math Elective"]
-
-        this.usualProfs = []
     }
-    getClassName(classCode) {
-
-    }
-    getUsualProfs(classCode) {
-
+    
+    getClassName(code) {
+        let pos = this.classCodes.indexOf(code);
+        if(pos)
+            return this.classNames[pos];
+        else
+            return null;
     }
 }
