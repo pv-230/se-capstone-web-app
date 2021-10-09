@@ -19,9 +19,10 @@ var typographyStyle = {
 
 var style = {
   display: 'block',
-  width: '1500px',
-  height: '1500px',
+  width: 'auto',
+  height: 'auto',
   textAlign: 'center',
+  margin: '3%'
 }
 
 const AccountSetup = () => {
@@ -31,7 +32,7 @@ const AccountSetup = () => {
         <Stack spacing={3} style={stackStyle}>
           <Typography style={typographyStyle}>Pick your completed class here and stuff</Typography>
           <Grid container justifyContent="space-evenly" rowSpacing={2} spacing={2}>
-            {test()}
+            {createCards()}
           </Grid>
           <Button variant="contained">Submit</Button>
         </Stack>
@@ -40,7 +41,7 @@ const AccountSetup = () => {
   )
 }
 
-function test() {
+function createCards() {
   let classCards = []
   for(let i = 0; i < classInfo.classCodes.length; i++) {
       classCards.push(
