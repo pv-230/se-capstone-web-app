@@ -29,6 +29,7 @@ const AppContainer = () => {
         })
         const temp = JSON.stringify(userId)
         localStorage.setItem("userId", temp)
+        //Testing variable, remove
         console.log(userId);
     }
 
@@ -41,7 +42,7 @@ const AppContainer = () => {
 
 
                 <Route path="/register">
-                    <RegisterPage />
+                    <RegisterPage setUserProp={setUser}/>
                 </Route>
 
                 <Route path="/account_setup">
