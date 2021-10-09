@@ -1,10 +1,9 @@
 import React, { useState } from "react"
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth"
-import { TextField, Button, Stack, Typography, Link, Card, CardContent } from "@mui/material"
+import { TextField, Button, Stack, Typography, Link, Card } from "@mui/material"
 
 /*
  * This is the component that provides the login functionality
- * TODO: Modify firebase error codes to only show the part after auth/
  */
 const Login = (props) => {
   var uid = null;  // Stores a UID returned from Firebase
@@ -100,15 +99,19 @@ const Login = (props) => {
         passwordErrorReceived = true;
         break;
       case "auth/invalid-email":
+        errorCode = processErrorString(errorCode);
         emailErrorReceived = true;
         break;
       case "auth/user-disabled":
+        errorCode = processErrorString(errorCode);
         emailErrorReceived = true;
         break;
       case "auth/user-not-found":
+        errorCode = processErrorString(errorCode);
         emailErrorReceived = true;
         break;
       case "auth/wrong-password":
+        errorCode = processErrorString(errorCode);
         passwordErrorReceived = true;
         break;
       default:
@@ -123,6 +126,12 @@ const Login = (props) => {
       otherError: otherErrorReceived,
       message: errorCode
     });
+  }
+
+  const processErrorString = (errorString) => {
+    let withoutAuth = errorString.slice(5);
+    let withoutDash = withoutAuth.replace("-", " ");
+    return withoutDash;
   }
 
   return (
