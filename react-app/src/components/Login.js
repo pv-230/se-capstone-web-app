@@ -1,6 +1,7 @@
 import React, { useState } from "react"
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth"
-import { TextField, Button, Stack, Typography, Link, Card } from "@mui/material"
+import { TextField, Button, Stack, Typography, Card } from "@mui/material"
+import { buttonStyle } from "../styles"
 
 /*
  * This is the component that provides the login functionality
@@ -135,8 +136,8 @@ const Login = (props) => {
   }
 
   return (
-    <Card sx={{ width: 300 }}>
-      <Stack className="login" spacing={2}>
+    <Card className="loginCard" sx={{ width: 300 }} elevation={8}>
+      <Stack spacing={2} margin={3}>
         <Typography variant="h4">Welcome!</Typography>
 
         <TextField
@@ -161,9 +162,9 @@ const Login = (props) => {
           helperText={errors.passwordError ? errors.message : ""}
         />
 
-        <Link onClick={handleForgotPassword}>
+        <Button onClick={handleForgotPassword}>
           Forgot your password?
-        </Link>
+        </Button>
 
         {errors.otherError ?
           <Typography className="loginError" color="red">
@@ -173,8 +174,12 @@ const Login = (props) => {
           null
         }
 
-        <Button onClick={handleLoginButton} variant="contained">Login</Button>
-        <Button onClick={handleRegisterButton} variant="contained">Register</Button>
+        <Button onClick={handleLoginButton} variant="contained" style={buttonStyle}>
+          Login
+        </Button>
+        <Button onClick={handleRegisterButton} variant="contained" style={buttonStyle}>
+          Register
+        </Button>
       </Stack>
     </Card>
   )
