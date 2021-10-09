@@ -7,38 +7,41 @@ import MissingPage from '../pages/MissingPage'
 import LoginPage from '../pages/LoginPage'
 import RegisterPage from '../pages/RegisterPage'
 import AccountSetup from '../pages/AccountSetup'
+import PasswordResetPage from '../pages/PasswordResetPage'
 
 /*
  * This component houses all the components that will be used in the application and it also
  * manages app wide state.
  */
 const AppContainer = () => {
+    // Returns the userId found in local storage or null if not found
     const getUserInfo = () => {
         const temp = localStorage.getItem("userId");
         const savedUserId = JSON.parse(temp);
         return savedUserId || null;
     }
 
+    // User information states
     const [userInfo, setUserInfo] = useState({
         uid: getUserInfo(),
     });
 
-    const setUser = (userId) => {
+
+    // Updates the uid state to the userId parameter and stores userId in local storage
+    const setUserId = (userId) => {
         setUserInfo({
             uid: userId,
         })
         const temp = JSON.stringify(userId)
         localStorage.setItem("userId", temp)
-        console.log(userId);
     }
 
     return (
         <div className="container">
             <Switch>
                 <Route path="/login">
-                    <LoginPage setUserProp={setUser} />
+                    <LoginPage setUserId={setUserId} />
                 </Route>
-
 
                 <Route path="/register">
                     <RegisterPage />
@@ -48,8 +51,12 @@ const AppContainer = () => {
                     <AccountSetup />
                 </Route>
 
+                <Route path="/password_reset">
+                    <PasswordResetPage />
+                </Route>
+
                 <Route exact path="/">
-                    <HomePage uidProp={userInfo.uid} />
+                    <HomePage uid={userInfo.uid} />
                 </Route>
 
 
