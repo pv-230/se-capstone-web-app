@@ -1,14 +1,19 @@
 import React, { useState } from "react"
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth"
-import { TextField, Button, Stack, Typography, Link } from "@mui/material"
+import { TextField, Button, Stack, Typography, Link, Card, CardContent } from "@mui/material"
 
 /*
  * This is the component that provides the login functionality
- * TODO: Add object to hold custom error messages
- * TODO: Modify firebase error codes to only should part after auth/
+ * TODO: Modify firebase error codes to only show the part after auth/
  */
 const Login = (props) => {
   var uid = null;  // Stores a UID returned from Firebase
+
+  // This object just holds some strings that are reused for display error messages
+  const customErrorCodes = {
+    noEmail: "Please enter an email",
+    noPassword: "Please enter a password"
+  }
 
   // Form state
   const [inputText, setInputText] = useState({
@@ -36,9 +41,9 @@ const Login = (props) => {
   const handleLoginButton = async () => {
     // Attempts to sign in using user credentials
     if (!inputText.email) {
-      checkErrorCodes("Please enter an email");
+      checkErrorCodes(customErrorCodes.noEmail);
     } else if (!inputText.password) {
-      checkErrorCodes("Please enter a password");
+      checkErrorCodes(customErrorCodes.noPassword);
     } else {
       await signIn(inputText.email, inputText.password);
     }
@@ -88,10 +93,10 @@ const Login = (props) => {
 
     // Determines which errors was received and sets the appropriate bools
     switch (errorCode) {
-      case "Please enter an email":
+      case customErrorCodes.noEmail:
         emailErrorReceived = true;
         break;
-      case "Please enter a password":
+      case customErrorCodes.noPassword:
         passwordErrorReceived = true;
         break;
       case "auth/invalid-email":
@@ -121,46 +126,48 @@ const Login = (props) => {
   }
 
   return (
-    <Stack className="login" spacing={2}>
-      <Typography variant="h4">Welcome!</Typography>
+    <Card sx={{ width: 300 }}>
+      <Stack className="login" spacing={2}>
+        <Typography variant="h4">Welcome!</Typography>
 
-      <TextField
-        type="text"
-        onChange={handleInputChange}
-        label="Email"
-        variant="outlined"
-        name="email"
-        required
-        error={errors.emailError}
-        helperText={errors.emailError ? errors.message : ""}
-      />
+        <TextField
+          type="text"
+          onChange={handleInputChange}
+          label="Email"
+          variant="outlined"
+          name="email"
+          required
+          error={errors.emailError}
+          helperText={errors.emailError ? errors.message : ""}
+        />
 
-      <TextField
-        type="password"
-        onChange={handleInputChange}
-        label="Password"
-        variant="outlined"
-        name="password"
-        required
-        error={errors.passwordError}
-        helperText={errors.passwordError ? errors.message : ""}
-      />
+        <TextField
+          type="password"
+          onChange={handleInputChange}
+          label="Password"
+          variant="outlined"
+          name="password"
+          required
+          error={errors.passwordError}
+          helperText={errors.passwordError ? errors.message : ""}
+        />
 
-      <Link onClick={handleForgotPassword}>
-        Forgot your password?
-      </Link>
+        <Link onClick={handleForgotPassword}>
+          Forgot your password?
+        </Link>
 
-      {errors.otherError ?
-        <Typography className="loginError" color="red">
-          Error: {errors.message}
-        </Typography>
-        :
-        null
-      }
+        {errors.otherError ?
+          <Typography className="loginError" color="red">
+            Error: {errors.message}
+          </Typography>
+          :
+          null
+        }
 
-      <Button onClick={handleLoginButton} variant="contained">Login</Button>
-      <Button onClick={handleRegisterButton} variant="contained">Register</Button>
-    </Stack>
+        <Button onClick={handleLoginButton} variant="contained">Login</Button>
+        <Button onClick={handleRegisterButton} variant="contained">Register</Button>
+      </Stack>
+    </Card>
   )
 }
 

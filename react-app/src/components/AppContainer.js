@@ -30,7 +30,8 @@ const AppContainer = () => {
     // Updates the uid state to the userId parameter and stores userId in local storage
     const setUserId = (userId) => {
         setUserInfo({
-            uid: userId,
+            ...userId,
+            uid: userId
         })
         const temp = JSON.stringify(userId)
         localStorage.setItem("userId", temp)
@@ -58,7 +59,6 @@ const AppContainer = () => {
                 <Route exact path="/">
                     <HomePage uid={userInfo.uid} />
                 </Route>
-
 
                 <Route path="*">
                     <MissingPage />
