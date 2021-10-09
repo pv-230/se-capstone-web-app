@@ -13,7 +13,7 @@ export class ClassInfo {
                     "Data Strucs, Alg's & Gen Program", "Software Engineering", "Software Engineering Capstone", 
                     "Secure, Parallel & Dist. Python", "Op Sys & Conc Progr", "3000 or 4000 level CS Elective", 
                     "4000 level Upper Division Elective", "Directed Individual Study or 3000 level CS Elective", 
-                    "4000 level CS Elective or Advanced Math Elective"]
+                    "4000 level CS or Advanced Math Elective"]
 
         this.usualProfs = []
     }
