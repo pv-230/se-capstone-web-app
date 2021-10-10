@@ -38,14 +38,14 @@ const AppContainer = () => {
     }
 
     return (
-        <div className="container">
+        <div>
             <Switch>
                 <Route path="/login">
                     <LoginPage setUserId={setUserId} />
                 </Route>
 
                 <Route path="/register">
-                    <RegisterPage />
+                    <RegisterPage setUserId={setUserId} />
                 </Route>
 
                 <Route path="/account_setup">

@@ -41,7 +41,11 @@ var textStyle = {
     onAuthStateChanged(auth, async (user) => {
       if (user) {
         userD = await getUserData(auth.currentUser.uid);
-        updateName(userD);
+        if (userD) {
+          updateName(userD);
+        } else {
+          window.location.href = '/account_setup';
+        }
       } else {
           // If they are logged out, redirects to login
           window.location.href = '/login';

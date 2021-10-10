@@ -68,8 +68,6 @@ const AccountSetup = () => {
           window.location.href = '/login';
       }
     });
-    return () => {
-    }
   }, [])
 
   // Functions
@@ -96,7 +94,7 @@ const AccountSetup = () => {
         selectedClasses, 
         notSelectedClasses
       );
-      setUserData(userD, auth.currentUser.uid);
+      await setUserData(userD, auth.currentUser.uid);
       window.location.href = '/';
     }
   }
