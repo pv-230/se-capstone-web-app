@@ -41,7 +41,7 @@ const Register = (props) => {
     const handleRegisterButton = async () => {
         await register(inputText.email, inputText.password);
         if (uid) {
-            props.setUser(uid);
+            props.setUserId(uid);
             window.location.href = '/account_setup';
         }
     }
