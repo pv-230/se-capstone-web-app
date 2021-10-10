@@ -1,26 +1,71 @@
 import React from 'react'
+import { useEffect, useState } from 'react'
 import { setUserData } from '../APIs/setUserData';
 import { getUserData } from '../APIs/getUserData';
-import { Button, Stack } from '@mui/material';
+import { UserData } from '../models/UserData'
+import { Stack, Typography, Card, CardContent } from '@mui/material';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
 
 /*
  * This is the page that houses all components needed in the home page.
  */
 const HomePage = (props) => {
-  if (props.uidProp === null) {
-    // Attempts to visit the homepage if not logged in will redirect to the login page
-    window.location.href = '/login';
-    return null;
+  let auth = null;
+  let userD = null;
+
+  const stackStyle = {
+    alignItems: 'center',
+    justifyContent: 'center',
+    margin: '3%'
+  }
+
+  var cardStyle = {
+    display: 'block',
+    width: '400px',
+    height: '400px',
+    textAlign: 'center',
+    background: 'linear-gradient(45deg, #0057d1 30%, #0095ff 90%)'
+}
+
+var textStyle = {
+  "fontFamily": `"Segoe UI", "sans-serif"`,
+  "fontSize": 50,
+  "fontWeight": 700,
+}
+
+  // States
+  const [name, setName] = useState("")
+
+  useEffect(() => {
+    auth = getAuth();
+    onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        userD = await getUserData(auth.currentUser.uid);
+        updateName(userD);
+      } else {
+          // If they are logged out, redirects to login
+          window.location.href = '/login';
+      }
+    });
+    return () => {
+    }
+  }, [])
+
+  const updateName = (userData) => {
+    setName(userData.firstName);
   }
 
   return (
-    <div>
-      <h1>Home Page</h1>
-      <Stack spacing={2}>
-          <Button variant="contained" onClick={() => setUserData()}>Set User Data</Button>
-          <Button variant="contained" onClick={() => getUserData()}>Get User Data</Button>
-        </Stack>
-    </div>
+    <Stack spacing={2} style={stackStyle}>
+      <Typography style={textStyle}>Welcome to the Home Page</Typography>
+      <Stack>
+        <Card style={cardStyle} elevation={8}>
+          <Typography style={textStyle} marginTop='40%' color="white">
+            Hello, {name}!
+          </Typography>
+        </Card>
+      </Stack>
+    </Stack>
   )
 }
 
