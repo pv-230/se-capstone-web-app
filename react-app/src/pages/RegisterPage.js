@@ -6,7 +6,7 @@ import Register from '../components/Register'
  */
 const RegisterPage = (props) => {
   return (
-    <Register setUser={props.setUser} />
+    <Register setUserId={props.setUserId} />
   )
 }
 
