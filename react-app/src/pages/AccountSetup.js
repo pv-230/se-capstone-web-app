@@ -96,7 +96,7 @@ const AccountSetup = () => {
         selectedClasses, 
         notSelectedClasses
       );
-      setUserData(userD, auth.currentUser.uid);
+      await setUserData(userD, auth.currentUser.uid);
       window.location.href = '/';
     }
   }
