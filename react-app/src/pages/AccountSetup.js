@@ -68,8 +68,6 @@ const AccountSetup = () => {
           window.location.href = '/login';
       }
     });
-    return () => {
-    }
   }, [])
 
   // Functions

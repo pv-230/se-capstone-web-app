@@ -24,5 +24,6 @@ export async function getUserData(uid) {
         return userD;
     } else {
         console.log("Error reading user data from Firestore!");
+        return null;
     }
 }
