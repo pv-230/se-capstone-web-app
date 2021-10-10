@@ -29,20 +29,18 @@ const AppContainer = () => {
         })
         const temp = JSON.stringify(userId)
         localStorage.setItem("userId", temp)
-        //Testing variable, remove
-        console.log(userId);
     }
 
     return (
-        <div className="container">
+        <div>
             <Switch>
                 <Route path="/login">
-                    <LoginPage setUserProp={setUser} />
+                    <LoginPage setUser={setUser} />
                 </Route>
 
 
                 <Route path="/register">
-                    <RegisterPage setUserProp={setUser}/>
+                    <RegisterPage setUser={setUser} />
                 </Route>
 
                 <Route path="/account_setup">
@@ -50,9 +48,8 @@ const AppContainer = () => {
                 </Route>
 
                 <Route exact path="/">
-                    <HomePage uidProp={userInfo.uid} />
+                    <HomePage uid={userInfo.uid} />
                 </Route>
-
 
                 <Route path="*">
                     <MissingPage />
