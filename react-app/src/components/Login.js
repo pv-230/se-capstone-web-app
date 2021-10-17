@@ -1,7 +1,11 @@
 import React, { useState } from "react"
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth"
-import { TextField, Button, Stack, Typography, Card } from "@mui/material"
+import { getAuth, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, GithubAuthProvider, OAuthProvider } from "firebase/auth"
+import { TextField, Button, Stack, Typography, Card, Tooltip } from "@mui/material"
 import { buttonStyle } from "../styles"
+import { IconButton } from "@mui/material"
+import GoogleIcon from '@mui/icons-material/Google';
+import GitHubIcon from '@mui/icons-material/GitHub';
+import EmailIcon from '@mui/icons-material/Email';
 
 /*
  * This is the component that provides the login functionality
@@ -63,6 +67,88 @@ const Login = (props) => {
   // Event handler for clicking on the password reset link
   const handleForgotPassword = () => {
     window.location.href = "/password_reset"
+  }
+
+  // Event handler for using Google authentication
+  const handleGoogleAuth = async () => {
+    const auth = getAuth();
+    await signInWithPopup(auth, new GoogleAuthProvider())
+      .then((result) => {
+        // This gives you a Google Access Token. You can use it to access the Google API.
+        const credential = GoogleAuthProvider.credentialFromResult(result);
+        // The signed-in user info.
+        const user = result.user;
+        uid = user.uid;
+        // ...
+      }).catch((error) => {
+        // Handle Errors here.
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log(errorMessage);
+        // The AuthCredential type that was used.
+        const credential = GoogleAuthProvider.credentialFromError(error);
+        // ...
+      });
+    
+    // Redirects to homepage if user has been validated since uid will be null otherwise
+    if (uid) {
+      props.setUserId(uid);
+      window.location.href = "/";
+    }
+  }
+
+  // CURRENTLY NOT WORKING FOR SOME REASON
+  const handleGitHubAuth = async () => {
+    const auth = getAuth();
+    await signInWithPopup(auth, new GithubAuthProvider())
+      .then((result) => {
+        // This gives you a GitHub Access Token. You can use it to access the GitHub API.
+        const credential = GithubAuthProvider.credentialFromResult(result);
+        const token = credential.accessToken;
+
+        // The signed-in user info.
+        const user = result.user;
+        uid = user.uid;
+        // ...
+      }).catch((error) => {
+        // Handle Errors here.
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log(errorMessage);
+        // The AuthCredential type that was used.
+        const credential = GithubAuthProvider.credentialFromError(error);
+        // ...
+      });
+
+    // Redirects to homepage if user has been validated since uid will be null otherwise
+    if (uid) {
+      props.setUserId(uid);
+      window.location.href = "/";
+    }
+  }
+
+  const handleYahooAuth = async () => {
+    const auth = getAuth();
+    await signInWithPopup(auth, new OAuthProvider())
+    .then((result) => {
+      // IdP data available in result.additionalUserInfo.profile
+      // ...
+  
+      // Yahoo OAuth access token and ID token can be retrieved by calling:
+      const credential = OAuthProvider.credentialFromResult(result);
+      const accessToken = credential.accessToken;
+      const idToken = credential.idToken;
+      uid = result.user.uid;
+    })
+    .catch((error) => {
+      console.log(error);
+      // Handle error.
+    });
+    // Redirects to homepage if user has been validated since uid will be null otherwise
+    if (uid) {
+      props.setUserId(uid);
+      window.location.href = "/";
+    }
   }
 
   // Firebase related function that sends user credentials to the database. If the credentials
@@ -180,6 +266,23 @@ const Login = (props) => {
         <Button onClick={handleRegisterButton} variant="contained" style={buttonStyle}>
           Register
         </Button>
+        <Stack direction="row" spacing={2} justifyContent="center">
+          <Tooltip title="Sign in with Google">
+            <IconButton onClick={handleGoogleAuth}>
+              <GoogleIcon></GoogleIcon>
+            </IconButton>
+          </Tooltip>
+          <Tooltip title="Sign in with GitHub">
+            <IconButton onClick={handleGitHubAuth}>
+              <GitHubIcon></GitHubIcon>
+            </IconButton>
+          </Tooltip>
+          <Tooltip title="Sign in with Yahoo">
+            <IconButton onClick={handleYahooAuth}>
+              <EmailIcon></EmailIcon>
+            </IconButton>
+          </Tooltip>
+        </Stack>
       </Stack>
     </Card>
   )
