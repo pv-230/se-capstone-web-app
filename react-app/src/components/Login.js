@@ -74,20 +74,15 @@ const Login = (props) => {
     const auth = getAuth();
     await signInWithPopup(auth, new GoogleAuthProvider())
       .then((result) => {
-        // This gives you a Google Access Token. You can use it to access the Google API.
-        const credential = GoogleAuthProvider.credentialFromResult(result);
         // The signed-in user info.
         const user = result.user;
         uid = user.uid;
         // ...
       }).catch((error) => {
         // Handle Errors here.
-        const errorCode = error.code;
         const errorMessage = error.message;
         checkErrorCodes(error.code);
         console.log(errorMessage);
-        // The AuthCredential type that was used.
-        const credential = GoogleAuthProvider.credentialFromError(error);
         // ...
       });
     
@@ -103,22 +98,15 @@ const Login = (props) => {
     const auth = getAuth();
     await signInWithPopup(auth, new GithubAuthProvider())
       .then((result) => {
-        // This gives you a GitHub Access Token. You can use it to access the GitHub API.
-        const credential = GithubAuthProvider.credentialFromResult(result);
-        const token = credential.accessToken;
-
         // The signed-in user info.
         const user = result.user;
         uid = user.uid;
         // ...
       }).catch((error) => {
         // Handle Errors here.
-        const errorCode = error.code;
         const errorMessage = error.message;
         checkErrorCodes(error.code);
         console.log(errorMessage);
-        // The AuthCredential type that was used.
-        const credential = GithubAuthProvider.credentialFromError(error);
         // ...
       });
 
@@ -135,11 +123,6 @@ const Login = (props) => {
     .then((result) => {
       // IdP data available in result.additionalUserInfo.profile
       // ...
-  
-      // Yahoo OAuth access token and ID token can be retrieved by calling:
-      const credential = OAuthProvider.credentialFromResult(result);
-      const accessToken = credential.accessToken;
-      const idToken = credential.idToken;
       uid = result.user.uid;
     })
     .catch((error) => {
