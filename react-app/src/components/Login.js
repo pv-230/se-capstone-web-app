@@ -84,6 +84,7 @@ const Login = (props) => {
         // Handle Errors here.
         const errorCode = error.code;
         const errorMessage = error.message;
+        checkErrorCodes(error.code);
         console.log(errorMessage);
         // The AuthCredential type that was used.
         const credential = GoogleAuthProvider.credentialFromError(error);
@@ -114,6 +115,7 @@ const Login = (props) => {
         // Handle Errors here.
         const errorCode = error.code;
         const errorMessage = error.message;
+        checkErrorCodes(error.code);
         console.log(errorMessage);
         // The AuthCredential type that was used.
         const credential = GithubAuthProvider.credentialFromError(error);
@@ -129,7 +131,7 @@ const Login = (props) => {
 
   const handleYahooAuth = async () => {
     const auth = getAuth();
-    await signInWithPopup(auth, new OAuthProvider())
+    await signInWithPopup(auth, new OAuthProvider("yahoo.com"))
     .then((result) => {
       // IdP data available in result.additionalUserInfo.profile
       // ...
@@ -142,6 +144,7 @@ const Login = (props) => {
     })
     .catch((error) => {
       console.log(error);
+      checkErrorCodes(error.code);
       // Handle error.
     });
     // Redirects to homepage if user has been validated since uid will be null otherwise
@@ -200,6 +203,10 @@ const Login = (props) => {
       case "auth/wrong-password":
         errorCode = processErrorString(errorCode);
         passwordErrorReceived = true;
+        break;
+      case "auth/account-exists-with-different-credential":
+        errorCode = processErrorString(errorCode);
+        otherErrorReceived = true;
         break;
       default:
         otherErrorReceived = true;
