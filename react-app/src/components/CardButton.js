@@ -15,7 +15,7 @@ const CardButton = (props) => {
     return (
         <Card className={clicked ? "card-button-clicked" : "card-button-default"} elevation={6}>
             <CardActionArea className="card-button-default" onClick={handleClick}>
-                <CardContent>
+                <CardContent className={clicked ? "card-content-clicked" : "card-content-default"}>
                     <Stack spacing={2}>
                         <Typography variant="h4">{props.classCode}</Typography>
                         <Typography variant="h6">{props.className}</Typography>

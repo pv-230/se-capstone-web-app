@@ -11,5 +11,12 @@
   height: 220px;
   text-align: center;
   background: linear-gradient(45deg, #0057d1 30%, #0095ff 90%);
+}
+
+.card-content-default {
+  color: black;
+}
+
+.card-content-clicked {
   color: white;
 }
