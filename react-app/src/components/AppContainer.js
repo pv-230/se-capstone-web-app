@@ -1,13 +1,13 @@
 import React, { useState } from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 
-// Pages
-import HomePage from '../pages/HomePage'
-import MissingPage from '../pages/MissingPage'
-import LoginPage from '../pages/LoginPage'
-import RegisterPage from '../pages/RegisterPage'
-import AccountSetup from '../pages/AccountSetup'
-import PasswordResetPage from '../pages/PasswordResetPage'
+// Components
+import Login from './Login'
+import Register from './Register'
+import AccountSetup from './AccountSetup'
+import PasswordReset from './PasswordReset'
+import PageNotFound from './PageNotFound'
+import Home from './Home'
 
 /*
  * This component houses all the components that will be used in the application and it also
@@ -42,11 +42,11 @@ const AppContainer = () => {
             <Router>
                 <Switch>
                     <Route path="/login">
-                        <LoginPage setUserId={setUserId} />
+                        <Login setUserId={setUserId} />
                     </Route>
 
                     <Route path="/register">
-                        <RegisterPage setUserId={setUserId} />
+                        <Register setUserId={setUserId} />
                     </Route>
 
                     <Route path="/account_setup">
@@ -54,15 +54,15 @@ const AppContainer = () => {
                     </Route>
 
                     <Route path="/password_reset">
-                        <PasswordResetPage />
+                        <PasswordReset />
                     </Route>
 
                     <Route exact path="/">
-                        <HomePage uid={userInfo.uid} />
+                        <Home uid={userInfo.uid} />
                     </Route>
 
                     <Route path="*">
-                        <MissingPage />
+                        <PageNotFound />
                     </Route>
                 </Switch>
             </Router>

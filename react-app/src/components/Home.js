@@ -7,7 +7,7 @@ import { getAuth, onAuthStateChanged } from 'firebase/auth';
 /*
  * This is the page that houses all components needed in the home page.
  */
-const HomePage = (props) => {
+const Home = (props) => {
   let auth = null;
   let userD = null;
 
@@ -71,4 +71,4 @@ var textStyle = {
   )
 }
 
-export default HomePage
+export default Home
