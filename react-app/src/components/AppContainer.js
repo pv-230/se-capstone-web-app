@@ -10,7 +10,6 @@ import PasswordReset from './PasswordReset'
 import PageNotFound from './PageNotFound'
 import Home from './Home'
 
-
 /*
  * This component houses all the components that will be used in the application and it also
  * manages app wide state.

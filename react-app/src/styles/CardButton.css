@@ -1,0 +1,15 @@
+.card-button-default {
+  display: block;
+  width: 220px;
+  height: 220px;
+  text-align: center;
+}
+
+.card-button-clicked {
+  display: block;
+  width: 220px;
+  height: 220px;
+  text-align: center;
+  background: linear-gradient(45deg, #0057d1 30%, #0095ff 90%);
+  color: white;
+}
