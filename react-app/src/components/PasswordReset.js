@@ -103,11 +103,11 @@ const PasswordReset = () => {
           helperText={errors.emailError ? errors.message : ""}
         />
 
-        <Button className="standard-button-style" onClick={handleResetButton} variant="contained">
+        <Button className="gradient-button" onClick={handleResetButton} variant="contained">
           Send reset link
         </Button>
 
-        <Button className="standard-button-style" variant="contained" onClick={handleRedirectButton}>
+        <Button className="gradient-button" variant="contained" onClick={handleRedirectButton}>
           Return to login
         </Button>
 

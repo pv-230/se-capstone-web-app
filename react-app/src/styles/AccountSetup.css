@@ -1,0 +1,13 @@
+.acc-setup-card {
+  display: block;
+  width: auto;
+  height: auto;
+  text-align: center;
+  margin: 3%;
+}
+
+.acc-setup-stack {
+  align-items: center;
+  justify-content: center;
+  margin: 3%;
+}

@@ -7,6 +7,6 @@ html {
   background-color: #782F40;
 }
 
-.standard-button-style {
+.gradient-button {
   background: linear-gradient(45deg, #0057d1 30%, #0095ff 90%);
 }

@@ -160,10 +160,10 @@ const Register = (props) => {
                     null
                 }
 
-                <Button className="standard-button-style" onClick={handleRegisterButton} variant="contained">
+                <Button className="gradient-button" onClick={handleRegisterButton} variant="contained">
                     Register
                 </Button>
-                <Button className="standard-button-style" onClick={handleLoginButton} variant="contained">
+                <Button className="gradient-button" onClick={handleLoginButton} variant="contained">
                     Back to Login
                 </Button>
             </Stack>

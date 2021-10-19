@@ -7,50 +7,25 @@ import { useState } from 'react'
 import { UserData } from '../models/UserData'
 import { setUserData } from '../APIs/setUserData'
 import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth'
+import '../styles/AccountSetup.css'
 
 let selectedClasses = [];
 let classInfo = new ClassInfo();
 let notSelectedClasses = classInfo.classCodes;
 let auth = null;
 
-// Styles
-const stackStyle = {
-  alignItems: 'center',
-  justifyContent: 'center',
-  margin: '3%'
-}
-
-var typographyStyle = {
-  "fontFamily": `"Segoe UI", "sans-serif"`,
-  "fontSize": 35,
-  "fontWeight": 700,
-}
-
-var style = {
-  display: 'block',
-  width: 'auto',
-  height: 'auto',
-  textAlign: 'center',
-  margin: '3%'
-}
-
-var buttonStyle = {
-  background: 'linear-gradient(45deg, #0057d1 30%, #0095ff 90%)',
-}
-
 const AccountSetup = () => {
-
   // States
   const [inputText, setInputText] = useState({
     firstName: "",
     lastName: ""
   })
-  
+
   const [errors, setErrors] = useState({
     firstNameError: false,
     lastNameError: false,
   });
-  
+
   const handleInputChange = event => {
     setInputText({
       ...inputText,
@@ -64,8 +39,8 @@ const AccountSetup = () => {
       if (user) {
         // User is signed in
       } else {
-          // If they are logged out, redirects to login
-          window.location.href = '/login';
+        // If they are logged out, redirects to login
+        window.location.href = '/login';
       }
     });
   }, [])
@@ -73,25 +48,25 @@ const AccountSetup = () => {
   // Functions
   async function setupAccount() {
     // Checks for valid names
-    if(inputText.firstName.length < 1 && inputText.lastName.length < 1)
-      setErrors({...errors, firstNameError: true, lastNameError: true});
-    else if(inputText.firstName.length < 1)
-      setErrors({...errors, firstNameError: true, lastNameError: false});
-    else if(inputText.lastName.length < 1)
-      setErrors({...errors, lastNameError: true, firstNameError: false});
+    if (inputText.firstName.length < 1 && inputText.lastName.length < 1)
+      setErrors({ ...errors, firstNameError: true, lastNameError: true });
+    else if (inputText.firstName.length < 1)
+      setErrors({ ...errors, firstNameError: true, lastNameError: false });
+    else if (inputText.lastName.length < 1)
+      setErrors({ ...errors, lastNameError: true, firstNameError: false });
     else
-      setErrors({...errors, firstNameError: false, lastNameError: false});
+      setErrors({ ...errors, firstNameError: false, lastNameError: false });
 
-    if(inputText.firstName.length < 1 || inputText.lastName.length < 1)
-      window.scrollTo(0,0);
+    if (inputText.firstName.length < 1 || inputText.lastName.length < 1)
+      window.scrollTo(0, 0);
     else {
       // Creates and send their data to the database
       const email = auth.currentUser.email;
       let userD = new UserData(
-        inputText.firstName, 
-        inputText.lastName, 
-        email, 
-        selectedClasses, 
+        inputText.firstName,
+        inputText.lastName,
+        email,
+        selectedClasses,
         notSelectedClasses
       );
       await setUserData(userD, auth.currentUser.uid);
@@ -101,20 +76,20 @@ const AccountSetup = () => {
 
   function createCards() {
     let classCards = []
-    for(let i = 0; i < classInfo.classCodes.length; i++) {
-        classCards.push(
+    for (let i = 0; i < classInfo.classCodes.length; i++) {
+      classCards.push(
         <Grid item>
-          <CardButton classCode={classInfo.classCodes[i]} className={classInfo.classNames[i]} update={updateClicked}/>
+          <CardButton classCode={classInfo.classCodes[i]} className={classInfo.classNames[i]} update={updateClicked} />
         </Grid>
-        );
+      );
     }
     return classCards;
   }
-  
+
   function updateClicked(classCode) {
     let pos = selectedClasses.indexOf(classCode);
     let nsPos = notSelectedClasses.indexOf(classCode);
-    if(pos === -1) {
+    if (pos === -1) {
       selectedClasses.push(classCode);
       notSelectedClasses.splice(nsPos, 1);
     }
@@ -134,12 +109,12 @@ const AccountSetup = () => {
       // An error happened.
     });
   }
-  
+
   return (
-    <Card style={style} elevation={8}>
-      <Card style={style}  elevation={4}>
-        <Stack spacing={3} style={stackStyle}>
-        <Typography style={typographyStyle}>Enter your first and last name</Typography>
+    <Card className="acc-setup-card" elevation={8}>
+      <Card className="acc-setup-card" elevation={4}>
+        <Stack className="acc-setup-stack" spacing={3}>
+          <Typography variant="h2">Enter your first and last name</Typography>
           <TextField
             type="text"
             onChange={handleInputChange}
@@ -163,15 +138,16 @@ const AccountSetup = () => {
           />
         </Stack>
       </Card>
-      <Card style={style}  elevation={4}>
+
+      <Card className="acc-setup-card" elevation={4}>
         <Box m={5}>
-          <Stack spacing={3} style={stackStyle}>
-            <Typography style={typographyStyle}>Select the classes that you have taken or are taking</Typography>
+          <Stack className="acc-setup-stack" spacing={3}>
+            <Typography variant="h2">Select the classes that you have taken or are taking</Typography>
             <Grid container justifyContent="space-evenly" rowSpacing={2} spacing={2}>
               {createCards()}
             </Grid>
-            <Button variant="contained" style={buttonStyle} onClick={setupAccount}>Submit</Button>
-            <Button variant="contained" style={buttonStyle} onClick={fbSignOut}>Sign Out</Button>
+            <Button className="gradient-button" variant="contained" onClick={setupAccount}>Submit</Button>
+            <Button className="gradient-button" variant="contained" onClick={fbSignOut}>Sign Out</Button>
           </Stack>
         </Box>
       </Card>
