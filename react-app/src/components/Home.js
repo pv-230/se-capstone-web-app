@@ -22,13 +22,14 @@ const Home = (props) => {
     width: '400px',
     height: '400px',
     textAlign: 'center',
-    background: 'linear-gradient(45deg, #0057d1 30%, #0095ff 90%)'
+    background: 'linear-gradient(45deg, #c4b83f 30%, #c9c167 90%)'
 }
 
 var textStyle = {
   "fontFamily": `"Segoe UI", "sans-serif"`,
   "fontSize": 50,
   "fontWeight": 700,
+  "color": "white"
 }
 
   // States

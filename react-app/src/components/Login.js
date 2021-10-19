@@ -8,7 +8,7 @@ import EmailIcon from '@mui/icons-material/Email';
 import '../styles/Login.css';
 
 /*
- * This is the component that provides the login functionality
+ * This is the component that provides the in functionality
  */
 const Login = (props) => {
   var uid = null;  // Stores a UID returned from Firebase
