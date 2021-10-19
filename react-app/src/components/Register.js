@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth"
 import { TextField, Button, Stack, Typography, Card } from "@mui/material"
-import { buttonStyle } from "../styles"
+import '../styles/Register.css'
 
 /*
  * This is the component that provides the register function.
@@ -115,7 +115,7 @@ const Register = (props) => {
     }
 
     return (
-        <Card className="registerCard" sx={{ width: 300 }} elevation={8}>
+        <Card className="register-card" elevation={8}>
             <Stack spacing={2} margin={3}>
                 <Typography variant="h4">Registration</Typography>
 
@@ -153,17 +153,17 @@ const Register = (props) => {
                 />
 
                 {errors.otherError ?
-                    <Typography color="red">
+                    <Typography className="register-error">
                         Error: {errors.message}
                     </Typography>
                     :
                     null
                 }
 
-                <Button onClick={handleRegisterButton} variant="contained" style={buttonStyle}>
+                <Button className="gradient-button" onClick={handleRegisterButton} variant="contained">
                     Register
                 </Button>
-                <Button onClick={handleLoginButton} variant="contained" style={buttonStyle}>
+                <Button className="gradient-button" onClick={handleLoginButton} variant="contained">
                     Back to Login
                 </Button>
             </Stack>

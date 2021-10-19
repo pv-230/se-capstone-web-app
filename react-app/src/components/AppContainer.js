@@ -1,13 +1,14 @@
 import React, { useState } from 'react'
-import { Route, Switch } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import '../styles/AppContainer.css'
 
-// Pages
-import HomePage from '../pages/HomePage'
-import MissingPage from '../pages/MissingPage'
-import LoginPage from '../pages/LoginPage'
-import RegisterPage from '../pages/RegisterPage'
-import AccountSetup from '../pages/AccountSetup'
-import PasswordResetPage from '../pages/PasswordResetPage'
+// Components
+import Login from './Login'
+import Register from './Register'
+import AccountSetup from './AccountSetup'
+import PasswordReset from './PasswordReset'
+import PageNotFound from './PageNotFound'
+import Home from './Home'
 
 /*
  * This component houses all the components that will be used in the application and it also
@@ -38,32 +39,34 @@ const AppContainer = () => {
     }
 
     return (
-        <div>
-            <Switch>
-                <Route path="/login">
-                    <LoginPage setUserId={setUserId} />
-                </Route>
+        <div className="app-container">
+            <Router>
+                <Switch>
+                    <Route path="/login">
+                        <Login setUserId={setUserId} />
+                    </Route>
 
-                <Route path="/register">
-                    <RegisterPage setUserId={setUserId} />
-                </Route>
+                    <Route path="/register">
+                        <Register setUserId={setUserId} />
+                    </Route>
 
-                <Route path="/account_setup">
-                    <AccountSetup />
-                </Route>
+                    <Route path="/account_setup">
+                        <AccountSetup />
+                    </Route>
 
-                <Route path="/password_reset">
-                    <PasswordResetPage />
-                </Route>
+                    <Route path="/password_reset">
+                        <PasswordReset />
+                    </Route>
 
-                <Route exact path="/">
-                    <HomePage uid={userInfo.uid} />
-                </Route>
+                    <Route exact path="/">
+                        <Home uid={userInfo.uid} />
+                    </Route>
 
-                <Route path="*">
-                    <MissingPage />
-                </Route>
-            </Switch>
+                    <Route path="*">
+                        <PageNotFound />
+                    </Route>
+                </Switch>
+            </Router>
         </div>
     )
 }

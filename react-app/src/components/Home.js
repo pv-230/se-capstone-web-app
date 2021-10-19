@@ -7,7 +7,7 @@ import { getAuth, onAuthStateChanged } from 'firebase/auth';
 /*
  * This is the page that houses all components needed in the home page.
  */
-const HomePage = (props) => {
+const Home = (props) => {
   let auth = null;
   let userD = null;
 
@@ -22,13 +22,14 @@ const HomePage = (props) => {
     width: '400px',
     height: '400px',
     textAlign: 'center',
-    background: 'linear-gradient(45deg, #0057d1 30%, #0095ff 90%)'
+    background: 'linear-gradient(45deg, #c4b83f 30%, #c9c167 90%)'
 }
 
 var textStyle = {
   "fontFamily": `"Segoe UI", "sans-serif"`,
   "fontSize": 50,
   "fontWeight": 700,
+  "color": "white"
 }
 
   // States
@@ -71,4 +72,4 @@ var textStyle = {
   )
 }
 
-export default HomePage
+export default Home

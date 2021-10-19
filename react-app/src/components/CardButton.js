@@ -1,48 +1,24 @@
-import React from "react"
+import React, { useState } from "react"
 import { Card, CardActionArea, Stack, CardContent, Typography } from "@mui/material"
+import '../styles/CardButton.css'
 
 const CardButton = (props) => {
-    const [clicked, setClicked] = React.useState(true);
+    // Toggle state for updating card style when clicked
+    const [clicked, setClicked] = useState(false);
+
+    // Event handler for card action area clicks
     const handleClick = () => {
         setClicked(!clicked);
         props.update(props.classCode);
     };
 
-    var style = {
-        display: 'block',
-        width: '220px',
-        height: '220px',
-        textAlign: 'center',
-    }
-
-    var clickedStyle = {
-        background: 'linear-gradient(45deg, #0057d1 30%, #0095ff 90%)',
-        display: 'block',
-        width: '220px',
-        height: '220px',
-        textAlign: 'center',
-        color: 'white'
-    }
-
-    var codeStyle = {
-        "fontFamily": `"Segoe UI", "sans-serif"`,
-        "fontSize": 25,
-        "fontWeight": 700,
-    }
-
-    var nameStyle = {
-        "fontFamily": `"Segoe UI", "sans-serif"`,
-        "fontSize": 20,
-        "fontWeight": 600,
-    }
-
     return (
-        <Card style={clicked? style : clickedStyle} elevation={6}>
-            <CardActionArea onClick={handleClick} style={style}>
-                <CardContent>
+        <Card className={clicked ? "card-button-clicked" : "card-button-default"} elevation={6}>
+            <CardActionArea className="card-button-default" onClick={handleClick}>
+                <CardContent className={clicked ? "card-content-clicked" : "card-content-default"}>
                     <Stack spacing={2}>
-                        <Typography style={codeStyle}>{props.classCode}</Typography>
-                        <Typography style={nameStyle}>{props.className}</Typography>
+                        <Typography variant="h4">{props.classCode}</Typography>
+                        <Typography variant="h6">{props.className}</Typography>
                     </Stack>
                 </CardContent>
             </CardActionArea>

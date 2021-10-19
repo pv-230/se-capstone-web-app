@@ -1,0 +1,12 @@
+.login-card {
+  width: 300px;
+  text-align: center;
+}
+
+.login-error {
+  color: red;
+}
+
+.login-provider-stack {
+  justify-content: center;
+}

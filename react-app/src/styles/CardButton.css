@@ -1,0 +1,22 @@
+.card-button-default {
+  display: block;
+  width: 220px;
+  height: 220px;
+  text-align: center;
+}
+
+.card-button-clicked {
+  display: block;
+  width: 220px;
+  height: 220px;
+  text-align: center;
+  background: linear-gradient(45deg, #5c2431 30%, #91394d 90%);
+}
+
+.card-content-default {
+  color: black;
+}
+
+.card-content-clicked {
+  color: white;
+}

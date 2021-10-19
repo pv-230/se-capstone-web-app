@@ -1,11 +1,11 @@
 import React, { useState } from "react"
 import { getAuth, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, GithubAuthProvider, OAuthProvider } from "firebase/auth"
 import { TextField, Button, Stack, Typography, Card, Tooltip } from "@mui/material"
-import { buttonStyle } from "../styles"
 import { IconButton } from "@mui/material"
 import GoogleIcon from '@mui/icons-material/Google';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import EmailIcon from '@mui/icons-material/Email';
+import '../styles/Login.css';
 
 /*
  * This is the component that provides the login functionality
@@ -77,15 +77,13 @@ const Login = (props) => {
         // The signed-in user info.
         const user = result.user;
         uid = user.uid;
-        // ...
       }).catch((error) => {
         // Handle Errors here.
         const errorMessage = error.message;
         checkErrorCodes(error.code);
         console.log(errorMessage);
-        // ...
       });
-    
+
     // Redirects to homepage if user has been validated since uid will be null otherwise
     if (uid) {
       props.setUserId(uid);
@@ -93,7 +91,7 @@ const Login = (props) => {
     }
   }
 
-  // CURRENTLY NOT WORKING FOR SOME REASON
+  // Event handler for using GitHub authentication
   const handleGitHubAuth = async () => {
     const auth = getAuth();
     await signInWithPopup(auth, new GithubAuthProvider())
@@ -101,13 +99,11 @@ const Login = (props) => {
         // The signed-in user info.
         const user = result.user;
         uid = user.uid;
-        // ...
       }).catch((error) => {
         // Handle Errors here.
         const errorMessage = error.message;
         checkErrorCodes(error.code);
         console.log(errorMessage);
-        // ...
       });
 
     // Redirects to homepage if user has been validated since uid will be null otherwise
@@ -117,19 +113,19 @@ const Login = (props) => {
     }
   }
 
+  // Event handler for using Yahoo authentication
   const handleYahooAuth = async () => {
     const auth = getAuth();
     await signInWithPopup(auth, new OAuthProvider("yahoo.com"))
-    .then((result) => {
-      // IdP data available in result.additionalUserInfo.profile
-      // ...
-      uid = result.user.uid;
-    })
-    .catch((error) => {
-      console.log(error);
-      checkErrorCodes(error.code);
-      // Handle error.
-    });
+      .then((result) => {
+        uid = result.user.uid;
+      })
+      .catch((error) => {
+        // Handle error.
+        console.log(error);
+        checkErrorCodes(error.code);
+      });
+
     // Redirects to homepage if user has been validated since uid will be null otherwise
     if (uid) {
       props.setUserId(uid);
@@ -205,6 +201,7 @@ const Login = (props) => {
     });
   }
 
+  // Accepts a string and removes the error prefix of "auth/" and replaces dashes with spaces
   const processErrorString = (errorString) => {
     let withoutAuth = errorString.slice(5);
     let withoutDash = withoutAuth.replace("-", " ");
@@ -212,7 +209,7 @@ const Login = (props) => {
   }
 
   return (
-    <Card className="loginCard" sx={{ width: 300 }} elevation={8}>
+    <Card className="login-card" elevation={8}>
       <Stack spacing={2} margin={3}>
         <Typography variant="h4">Welcome!</Typography>
 
@@ -243,20 +240,21 @@ const Login = (props) => {
         </Button>
 
         {errors.otherError ?
-          <Typography className="loginError" color="red">
+          <Typography className="login-error">
             Error: {errors.message}
           </Typography>
           :
           null
         }
 
-        <Button onClick={handleLoginButton} variant="contained" style={buttonStyle}>
+        <Button className="gradient-button" onClick={handleLoginButton} variant="contained">
           Login
         </Button>
-        <Button onClick={handleRegisterButton} variant="contained" style={buttonStyle}>
+        <Button className="gradient-button" onClick={handleRegisterButton} variant="contained">
           Register
         </Button>
-        <Stack direction="row" spacing={2} justifyContent="center">
+
+        <Stack className="login-provider-stack" direction="row" spacing={2}>
           <Tooltip title="Sign in with Google">
             <IconButton onClick={handleGoogleAuth}>
               <GoogleIcon></GoogleIcon>
