@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { getAuth, sendPasswordResetEmail } from "firebase/auth"
 import { TextField, Button, Stack, Typography, Card } from "@mui/material"
+import '../styles/PasswordReset.css'
 
 /*
  * This is the component that handles the password reset functionality
@@ -87,7 +88,7 @@ const PasswordReset = () => {
   }
 
   return (
-    <Card className="resetCard" sx={{ width: 300 }} elevation={8}>
+    <Card className="pw-reset-card" elevation={8}>
       <Stack spacing={2} margin={3}>
         <Typography variant="h4">Enter email</Typography>
 
@@ -102,16 +103,16 @@ const PasswordReset = () => {
           helperText={errors.emailError ? errors.message : ""}
         />
 
-        <Button onClick={handleResetButton} variant="contained">
+        <Button className="standard-button-style" onClick={handleResetButton} variant="contained">
           Send reset link
         </Button>
 
-        <Button variant="contained" onClick={handleRedirectButton}>
+        <Button className="standard-button-style" variant="contained" onClick={handleRedirectButton}>
           Return to login
         </Button>
 
         {errors.resetError ?
-          <Typography color="red">
+          <Typography className="pw-reset-error">
             Error: {errors.message}
           </Typography>
           :
@@ -120,7 +121,7 @@ const PasswordReset = () => {
 
         {linkSent ?
           <Typography>
-            Please check your email
+            Reset link sent to your email
           </Typography>
           :
           null
