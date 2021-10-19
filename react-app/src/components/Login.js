@@ -1,7 +1,11 @@
 import React, { useState } from "react"
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth"
-import { TextField, Button, Stack, Typography, Card } from "@mui/material"
+import { getAuth, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, GithubAuthProvider, OAuthProvider } from "firebase/auth"
+import { TextField, Button, Stack, Typography, Card, Tooltip } from "@mui/material"
 import { buttonStyle } from "../styles"
+import { IconButton } from "@mui/material"
+import GoogleIcon from '@mui/icons-material/Google';
+import GitHubIcon from '@mui/icons-material/GitHub';
+import EmailIcon from '@mui/icons-material/Email';
 
 /*
  * This is the component that provides the login functionality
@@ -65,6 +69,74 @@ const Login = (props) => {
     window.location.href = "/password_reset"
   }
 
+  // Event handler for using Google authentication
+  const handleGoogleAuth = async () => {
+    const auth = getAuth();
+    await signInWithPopup(auth, new GoogleAuthProvider())
+      .then((result) => {
+        // The signed-in user info.
+        const user = result.user;
+        uid = user.uid;
+        // ...
+      }).catch((error) => {
+        // Handle Errors here.
+        const errorMessage = error.message;
+        checkErrorCodes(error.code);
+        console.log(errorMessage);
+        // ...
+      });
+    
+    // Redirects to homepage if user has been validated since uid will be null otherwise
+    if (uid) {
+      props.setUserId(uid);
+      window.location.href = "/";
+    }
+  }
+
+  // CURRENTLY NOT WORKING FOR SOME REASON
+  const handleGitHubAuth = async () => {
+    const auth = getAuth();
+    await signInWithPopup(auth, new GithubAuthProvider())
+      .then((result) => {
+        // The signed-in user info.
+        const user = result.user;
+        uid = user.uid;
+        // ...
+      }).catch((error) => {
+        // Handle Errors here.
+        const errorMessage = error.message;
+        checkErrorCodes(error.code);
+        console.log(errorMessage);
+        // ...
+      });
+
+    // Redirects to homepage if user has been validated since uid will be null otherwise
+    if (uid) {
+      props.setUserId(uid);
+      window.location.href = "/";
+    }
+  }
+
+  const handleYahooAuth = async () => {
+    const auth = getAuth();
+    await signInWithPopup(auth, new OAuthProvider("yahoo.com"))
+    .then((result) => {
+      // IdP data available in result.additionalUserInfo.profile
+      // ...
+      uid = result.user.uid;
+    })
+    .catch((error) => {
+      console.log(error);
+      checkErrorCodes(error.code);
+      // Handle error.
+    });
+    // Redirects to homepage if user has been validated since uid will be null otherwise
+    if (uid) {
+      props.setUserId(uid);
+      window.location.href = "/";
+    }
+  }
+
   // Firebase related function that sends user credentials to the database. If the credentials
   // are valid, then the uid gets set. Otherwise, an error message is shown.
   const signIn = async (email, password) => {
@@ -114,6 +186,10 @@ const Login = (props) => {
       case "auth/wrong-password":
         errorCode = processErrorString(errorCode);
         passwordErrorReceived = true;
+        break;
+      case "auth/account-exists-with-different-credential":
+        errorCode = processErrorString(errorCode);
+        otherErrorReceived = true;
         break;
       default:
         otherErrorReceived = true;
@@ -180,6 +256,23 @@ const Login = (props) => {
         <Button onClick={handleRegisterButton} variant="contained" style={buttonStyle}>
           Register
         </Button>
+        <Stack direction="row" spacing={2} justifyContent="center">
+          <Tooltip title="Sign in with Google">
+            <IconButton onClick={handleGoogleAuth}>
+              <GoogleIcon></GoogleIcon>
+            </IconButton>
+          </Tooltip>
+          <Tooltip title="Sign in with GitHub">
+            <IconButton onClick={handleGitHubAuth}>
+              <GitHubIcon></GitHubIcon>
+            </IconButton>
+          </Tooltip>
+          <Tooltip title="Sign in with Yahoo">
+            <IconButton onClick={handleYahooAuth}>
+              <EmailIcon></EmailIcon>
+            </IconButton>
+          </Tooltip>
+        </Stack>
       </Stack>
     </Card>
   )

@@ -1,9 +1,7 @@
 import React from 'react'
-import { useEffect, useState } from 'react'
-import { setUserData } from '../APIs/setUserData';
+import { useState } from 'react'
 import { getUserData } from '../APIs/getUserData';
-import { UserData } from '../models/UserData'
-import { Stack, Typography, Card, CardContent } from '@mui/material';
+import { Stack, Typography, Card } from '@mui/material';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 
 /*
@@ -36,9 +34,9 @@ var textStyle = {
   // States
   const [name, setName] = useState("")
 
-  useEffect(() => {
+  const checkAuth = async () => {
     auth = getAuth();
-    onAuthStateChanged(auth, async (user) => {
+    await onAuthStateChanged(auth, async (user) => {
       if (user) {
         userD = await getUserData(auth.currentUser.uid);
         if (userD) {
@@ -51,9 +49,9 @@ var textStyle = {
           window.location.href = '/login';
       }
     });
-    return () => {
-    }
-  }, [])
+  }
+
+  checkAuth();
 
   const updateName = (userData) => {
     setName(userData.firstName);
