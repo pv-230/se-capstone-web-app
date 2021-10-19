@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Route, Switch } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 
 // Pages
 import HomePage from '../pages/HomePage'
@@ -38,32 +38,34 @@ const AppContainer = () => {
     }
 
     return (
-        <div>
-            <Switch>
-                <Route path="/login">
-                    <LoginPage setUserId={setUserId} />
-                </Route>
+        <div className="app-container">
+            <Router>
+                <Switch>
+                    <Route path="/login">
+                        <LoginPage setUserId={setUserId} />
+                    </Route>
 
-                <Route path="/register">
-                    <RegisterPage setUserId={setUserId} />
-                </Route>
+                    <Route path="/register">
+                        <RegisterPage setUserId={setUserId} />
+                    </Route>
 
-                <Route path="/account_setup">
-                    <AccountSetup />
-                </Route>
+                    <Route path="/account_setup">
+                        <AccountSetup />
+                    </Route>
 
-                <Route path="/password_reset">
-                    <PasswordResetPage />
-                </Route>
+                    <Route path="/password_reset">
+                        <PasswordResetPage />
+                    </Route>
 
-                <Route exact path="/">
-                    <HomePage uid={userInfo.uid} />
-                </Route>
+                    <Route exact path="/">
+                        <HomePage uid={userInfo.uid} />
+                    </Route>
 
-                <Route path="*">
-                    <MissingPage />
-                </Route>
-            </Switch>
+                    <Route path="*">
+                        <MissingPage />
+                    </Route>
+                </Switch>
+            </Router>
         </div>
     )
 }

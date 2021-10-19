@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth"
 import { TextField, Button, Stack, Typography, Card } from "@mui/material"
-import { buttonStyle } from "../styles"
 
 /*
  * This is the component that provides the register function.
@@ -160,10 +159,10 @@ const Register = (props) => {
                     null
                 }
 
-                <Button onClick={handleRegisterButton} variant="contained" style={buttonStyle}>
+                <Button onClick={handleRegisterButton} variant="contained">
                     Register
                 </Button>
-                <Button onClick={handleLoginButton} variant="contained" style={buttonStyle}>
+                <Button onClick={handleLoginButton} variant="contained">
                     Back to Login
                 </Button>
             </Stack>

@@ -1,7 +1,6 @@
 import React, { useState } from "react"
 import { getAuth, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, GithubAuthProvider, OAuthProvider } from "firebase/auth"
 import { TextField, Button, Stack, Typography, Card, Tooltip } from "@mui/material"
-import { buttonStyle } from "../styles"
 import { IconButton } from "@mui/material"
 import GoogleIcon from '@mui/icons-material/Google';
 import GitHubIcon from '@mui/icons-material/GitHub';
@@ -250,10 +249,10 @@ const Login = (props) => {
           null
         }
 
-        <Button onClick={handleLoginButton} variant="contained" style={buttonStyle}>
+        <Button onClick={handleLoginButton} variant="contained">
           Login
         </Button>
-        <Button onClick={handleRegisterButton} variant="contained" style={buttonStyle}>
+        <Button onClick={handleRegisterButton} variant="contained">
           Register
         </Button>
         <Stack direction="row" spacing={2} justifyContent="center">
