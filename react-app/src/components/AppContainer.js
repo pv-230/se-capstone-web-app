@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import '../styles/AppContainer.css'
 
 // Components
 import Login from './Login'
@@ -8,6 +9,7 @@ import AccountSetup from './AccountSetup'
 import PasswordReset from './PasswordReset'
 import PageNotFound from './PageNotFound'
 import Home from './Home'
+
 
 /*
  * This component houses all the components that will be used in the application and it also

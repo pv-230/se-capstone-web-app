@@ -1,0 +1,12 @@
+/* 
+ * This stylesheet is used for app wide styling. Place any rules here for styles that get reused
+ * by multiple components.
+ */
+
+html {
+  background-color: #782F40;
+}
+
+.standard-button-style {
+  background: linear-gradient(45deg, #0057d1 30%, #0095ff 90%);
+}
