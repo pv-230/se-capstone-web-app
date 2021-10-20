@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
-import '../styles/AppContainer.css'
+// import '../styles/AppContainer.css'
+import CssBaseLine from '@mui/material/CssBaseline'
 
 // Components
 import Login from './Login'
@@ -40,6 +41,7 @@ const AppContainer = () => {
 
     return (
         <div className="app-container">
+            <CssBaseLine />
             <Router>
                 <Switch>
                     <Route path="/login">
