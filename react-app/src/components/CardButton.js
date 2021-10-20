@@ -13,7 +13,7 @@ const CardButton = (props) => {
     };
 
     return (
-        <Card className={clicked ? "card-button-clicked" : "card-button-default"} elevation={6}>
+        <Card className={clicked ? "card-button-clicked" : "card-button-default"} elevation={10}>
             <CardActionArea className="card-button-default" onClick={handleClick}>
                 <CardContent className={clicked ? "card-content-clicked" : "card-content-default"}>
                     <Stack spacing={2}>

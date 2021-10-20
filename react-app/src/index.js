@@ -11,9 +11,18 @@ import '@fontsource/roboto/700.css';
 // Database config file
 import "./firebase-config"
 
+import { ThemeProvider } from "@emotion/react";
+import { CssBaseline } from "@mui/material";
+
+import { globalDarkTheme } from "./styles/GlobalTheme";
+
+
 ReactDOM.render(
     <React.StrictMode>
-        <AppContainer />
+        <ThemeProvider theme={globalDarkTheme}>
+            <CssBaseline/>
+            <AppContainer />
+        </ThemeProvider>
     </React.StrictMode>,
     document.getElementById("root")
 )
