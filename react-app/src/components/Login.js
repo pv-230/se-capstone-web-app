@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import { getAuth, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, GithubAuthProvider, OAuthProvider } from "firebase/auth"
-import { TextField, Button, Stack, Typography, Card, Tooltip, CardContent, Input } from "@mui/material"
+import { TextField, Button, Stack, Typography, Card, Tooltip, CardContent } from "@mui/material"
 import { IconButton } from "@mui/material"
 import GoogleIcon from '@mui/icons-material/Google';
 import GitHubIcon from '@mui/icons-material/GitHub';
@@ -209,72 +209,74 @@ const Login = (props) => {
   }
 
   return (
-    <Card className="login-card" elevation={8}>
-      <CardContent>
-        <Stack spacing={2} margin={3}>
-          <Typography variant="h4">Welcome!</Typography>
+    <Stack height="100vh">
+      <Card className="login-card" elevation={8}>
+        <CardContent>
+          <Stack spacing={2} margin={3}>
+            <Typography variant="h4">Welcome!</Typography>
 
-          <TextField
-            type="text"
-            onChange={handleInputChange}
-            label="Email"
-            variant="outlined"
-            name="email"
-            required
-            error={errors.emailError}
-            helperText={errors.emailError ? errors.message : ""}
-          />
+            <TextField
+              type="text"
+              onChange={handleInputChange}
+              label="Email"
+              variant="outlined"
+              name="email"
+              required
+              error={errors.emailError}
+              helperText={errors.emailError ? errors.message : ""}
+            />
 
-          <TextField
-            type="password"
-            onChange={handleInputChange}
-            label="Password"
-            variant="outlined"
-            name="password"
-            required
-            error={errors.passwordError}
-            helperText={errors.passwordError ? errors.message : ""}
-          />
+            <TextField
+              type="password"
+              onChange={handleInputChange}
+              label="Password"
+              variant="outlined"
+              name="password"
+              required
+              error={errors.passwordError}
+              helperText={errors.passwordError ? errors.message : ""}
+            />
 
-          <Button color="secondary" onClick={handleForgotPassword}>
-            Forgot your password?
-          </Button>
+            <Button color="secondary" onClick={handleForgotPassword}>
+              Forgot your password?
+            </Button>
 
-          {errors.otherError ?
-            <Typography className="login-error">
-              Error: {errors.message}
-            </Typography>
-            :
-            null
-          }
+            {errors.otherError ?
+              <Typography className="login-error">
+                Error: {errors.message}
+              </Typography>
+              :
+              null
+            }
 
-          <Button className="gradient-button" onClick={handleLoginButton} variant="contained">
-            Login
-          </Button>
-          <Button className="gradient-button" onClick={handleRegisterButton} variant="contained">
-            Register
-          </Button>
+            <Button className="gradient-button" onClick={handleLoginButton} variant="contained">
+              Login
+            </Button>
+            <Button className="gradient-button" onClick={handleRegisterButton} variant="contained">
+              Register
+            </Button>
 
-          <Stack className="login-provider-stack" direction="row" spacing={2}>
-            <Tooltip title="Sign in with Google">
-              <IconButton onClick={handleGoogleAuth}>
-                <GoogleIcon color="secondary"></GoogleIcon>
-              </IconButton>
-            </Tooltip>
-            <Tooltip title="Sign in with GitHub">
-              <IconButton onClick={handleGitHubAuth}>
-                <GitHubIcon color="secondary"></GitHubIcon>
-              </IconButton>
-            </Tooltip>
-            <Tooltip title="Sign in with Yahoo">
-              <IconButton onClick={handleYahooAuth}>
-                <EmailIcon color="secondary"></EmailIcon>
-              </IconButton>
-            </Tooltip>
+            <Stack className="login-provider-stack" direction="row" spacing={2}>
+              <Tooltip title="Sign in with Google">
+                <IconButton onClick={handleGoogleAuth}>
+                  <GoogleIcon color="secondary"></GoogleIcon>
+                </IconButton>
+              </Tooltip>
+              <Tooltip title="Sign in with GitHub">
+                <IconButton onClick={handleGitHubAuth}>
+                  <GitHubIcon color="secondary"></GitHubIcon>
+                </IconButton>
+              </Tooltip>
+              <Tooltip title="Sign in with Yahoo">
+                <IconButton onClick={handleYahooAuth}>
+                  <EmailIcon color="secondary"></EmailIcon>
+                </IconButton>
+              </Tooltip>
+            </Stack>
           </Stack>
-        </Stack>
-      </CardContent>
-    </Card>
+        </CardContent>
+      </Card>
+    </Stack>
   )
 }
 

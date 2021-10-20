@@ -10,6 +10,7 @@
   width: 220px;
   height: 220px;
   text-align: center;
+  align-items: center;
   background: linear-gradient(45deg, #5c2431 30%, #91394d 90%);
 }
 
