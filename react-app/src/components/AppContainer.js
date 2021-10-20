@@ -9,6 +9,7 @@ import AccountSetup from './AccountSetup'
 import PasswordReset from './PasswordReset'
 import PageNotFound from './PageNotFound'
 import Home from './Home'
+import NavBar from './NavBar'
 
 /*
  * This component houses all the components that will be used in the application and it also
@@ -41,6 +42,7 @@ const AppContainer = () => {
     return (
         <div className="app-container">
             <Router>
+                <NavBar />
                 <Switch>
                     <Route path="/login">
                         <Login setUserId={setUserId} />
