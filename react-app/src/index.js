@@ -5,12 +5,6 @@ import { CssBaseline } from "@mui/material";
 import { globalDarkTheme, globalLightTheme } from "./styles/GlobalTheme";
 import { ThemeProvider } from "@mui/material/styles";
 
-// Fonts
-import '@fontsource/roboto/300.css';
-import '@fontsource/roboto/400.css';
-import '@fontsource/roboto/500.css';
-import '@fontsource/roboto/700.css';
-
 // Database config file
 import "./firebase-config"
 
