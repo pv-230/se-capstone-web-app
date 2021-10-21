@@ -221,6 +221,7 @@ const Login = (props) => {
               label="Email"
               variant="outlined"
               name="email"
+              color="secondary"
               required
               error={errors.emailError}
               helperText={errors.emailError ? errors.message : ""}
@@ -232,12 +233,13 @@ const Login = (props) => {
               label="Password"
               variant="outlined"
               name="password"
+              color="secondary"
               required
               error={errors.passwordError}
               helperText={errors.passwordError ? errors.message : ""}
             />
 
-            <Button color="secondary" onClick={handleForgotPassword}>
+            <Button color="secondary" variant="text" onClick={handleForgotPassword}>
               Forgot your password?
             </Button>
 
