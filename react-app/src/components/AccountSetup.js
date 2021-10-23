@@ -1,6 +1,7 @@
 import React from 'react'
 import { useEffect } from 'react'
 import CardButton from '../components/CardButton'
+import CourseSelection from './CourseSelection'
 import { Stack, Grid, Card, Box, Typography, Button, TextField } from '@mui/material'
 import { ClassInfo } from '../models/ClassInfo'
 import { useState } from 'react'
@@ -141,20 +142,24 @@ const AccountSetup = () => {
         </Stack>
       </Card>
 
-      <Card className="acc-setup-card" elevation={4}>
-        <Box m={5}>
-          <Stack className="acc-setup-stack" spacing={3}>
-            <Typography variant="h2">Select the classes that you have taken or are taking</Typography>
-            <Grid container justifyContent="space-evenly" rowSpacing={2} spacing={2}>
-              {createCards()}
-            </Grid>
-            <Button className="gradient-button" variant="contained" onClick={setupAccount}>Submit</Button>
-            <Button className="gradient-button" variant="contained" onClick={fbSignOut}>Sign Out</Button>
-          </Stack>
-        </Box>
-      </Card>
+      <CourseSelection></CourseSelection>
+      
     </Card>
   )
 }
+
+// Old code
+/*<Card className="acc-setup-card" elevation={4}>
+  <Box m={5}>
+    <Stack className="acc-setup-stack" spacing={3}>
+      <Typography variant="h2">Select the classes that you have taken or are taking</Typography>
+      <Grid container justifyContent="space-evenly" rowSpacing={2} spacing={2}>
+        {createCards()}
+      </Grid>
+      <Button className="gradient-button" variant="contained" onClick={setupAccount}>Submit</Button>
+      <Button className="gradient-button" variant="contained" onClick={fbSignOut}>Sign Out</Button>
+    </Stack>
+  </Box>
+</Card>*/
 
 export default AccountSetup
