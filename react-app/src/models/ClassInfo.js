@@ -1,9 +1,9 @@
 export class ClassInfo {
     constructor() {
-        this.classCodes = ["MAC1105", "MAC1114", "MAC1140", "MAC2311", "MAC2312", "MAD2104", "MAD3105", "STA4442", 
-                    "CHM1045C", "BSC2010", "BSC2011", "PHY2048C", "PHY2049C", "XXXxxxx", "FLI", "FLII", "FLIII", "COP3363", 
-                    "CIS3250", "COP3330", "CDA3100", "COT4420", "COP4530", "CEN4020", "CEN4090L", "COP4521", "COP4610", 
-                    "CXX3xxx or 4xxx", "CXX4xxx", "CIS4900 or CXX3xxx", "CS4xxx or Advanced Math"]
+        this.classCodes = ["MAC 1105", "MAC 1114", "MAC 1140", "MAC 2311", "MAC 2312", "MAD 2104", "MAD 3105", "STA 4442", 
+                    "CHM 1045C", "BSC 2010", "BSC 2011", "PHY 2048C", "PHY 2049C", "XXX xxxx", "Foreign Language I", "Foreign Language II",
+                    "Foreign Language III", "COP 3363", "CIS 3250", "COP 3330", "CDA 3100", "COT 4420", "COP 4530", "CEN 4020",
+                    "CEN 4090L", "COP 4521", "COP 4610", "CXX 3xxx or 4xxx", "CXX 4xxx", "CIS 4900 or CXX 3xxx", "CS 4xxx or Advanced Math"]
 
         this.classNames = ["College Algebra", "Trigonometry", "Precalculus", "Calculus I", "Calculus II", 
                     "Discrete Math I", "Discrete Math II", "Intro to Probability", "Gen Chem I w/lab", 

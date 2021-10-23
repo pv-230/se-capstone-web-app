@@ -2,7 +2,7 @@ import React from 'react'
 import { useEffect } from 'react'
 import CardButton from '../components/CardButton'
 import CourseSelection from './CourseSelection'
-import { Stack, Grid, Card, Box, Typography, Button, TextField } from '@mui/material'
+import { Stack, Card, Typography, Button, TextField } from '@mui/material'
 import { ClassInfo } from '../models/ClassInfo'
 import { useState } from 'react'
 import { UserData } from '../models/UserData'
@@ -75,7 +75,7 @@ const AccountSetup = () => {
     }
   }
 
-  function createCards() {
+  /*function createCards() {
     let classCards = []
     for (let i = 0; i < classInfo.classCodes.length; i++) {
       classCards.push(
@@ -85,9 +85,9 @@ const AccountSetup = () => {
       );
     }
     return classCards;
-  }
+  }*/
 
-  function updateClicked(classCode) {
+  /*function updateClicked(classCode) {
     let pos = selectedClasses.indexOf(classCode);
     let nsPos = notSelectedClasses.indexOf(classCode);
     if (pos === -1) {
@@ -100,7 +100,7 @@ const AccountSetup = () => {
     }
     console.log(selectedClasses);
     console.log(notSelectedClasses);
-  }
+  }*/
 
   // Temporarily in here to test logout
   function fbSignOut() {
@@ -112,8 +112,8 @@ const AccountSetup = () => {
   }
 
   return (
-    <Card className="acc-setup-card" elevation={8}>
-      <Card className="acc-setup-card" elevation={4}>
+    <Card className="acc-setup-card" elevation={2}>
+      <Card className="acc-setup-card" elevation={8}>
         <Stack className="acc-setup-stack" spacing={3}>
           <Typography variant="h2">Enter your first and last name</Typography>
           <TextField
@@ -143,7 +143,7 @@ const AccountSetup = () => {
       </Card>
 
       <CourseSelection></CourseSelection>
-      
+      <Button className="gradient-button" variant="contained" onClick={fbSignOut}>Sign Out</Button>
     </Card>
   )
 }
