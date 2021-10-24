@@ -4,6 +4,7 @@ import '../styles/CourseSelection.css'
 import CourseButton from "./CourseButton"
 import { useState } from "react"
 import { ClassInfo } from '../models/ClassInfo'
+import { minWidth, width } from "@mui/system"
 
 const CourseSelection = () => {
     
@@ -96,10 +97,10 @@ const CourseSelection = () => {
     return(
         <Card className="crs-select-card" elevation={8}>
             <Button variant="contained" onClick={test}>Show Selected</Button>
-            <Stack direction="row" justifyContent="center">
+            <Stack className="crs-select-stack" direction="row" justifyContent="center">
                 <Stack className="crs-select-stack" spacing={2}>
                     <Stack direction="row" spacing={2}>
-                        <Card elevation={10}>
+                        <Card style={{minWidth: '1310px'}} elevation={10}>
                             <CardContent>
                                 <Stack spacing={2} direction="row">
                                     <Stack spacing={2} direction="row">
@@ -145,9 +146,9 @@ const CourseSelection = () => {
                                 </Stack>
                             </CardContent>
                         </Card>
-                        <Card style={{height: '15vw'}} backgroundColor="primary" elevation={10}>
+                        <Card style={{height: '290px', minWidth: '230px'}} elevation={10}>
                             <CardContent>
-                                <Stack  spacing={2}>
+                                <Stack spacing={2}>
                                     <CourseButton courseCode='Foreign Language I' courseName='' id={0} selectState={langSelect} disableState={false} onClick={toggleLangSelect} update={updateClicked}></CourseButton>
                                     <CourseButton courseCode='Foreign Language II' courseName='' id={1} selectState={langSelect} disableState={false} onClick={toggleLangSelect} update={updateClicked}></CourseButton>
                                     <CourseButton courseCode='Foreign Language III' courseName='' id={2} selectState={langSelect} disableState={false} onClick={toggleLangSelect} update={updateClicked}></CourseButton>
@@ -168,7 +169,7 @@ const CourseSelection = () => {
                                         </Stack>
                                     </CardContent>
                                 </Card>
-                                <Card style={{height: '10.5vw'}} elevation={10}>
+                                <Card style={{height: '200px'}} elevation={10}>
                                     <CardContent>
                                         <Stack spacing={2}>
                                             <CourseButton courseCode='PHY 2048C' courseName='Gen Physics I w/lab' id={0} selectState={phySelect} disableState={phyDisable} onClick={togglePhySelect} update={updateClicked}></CourseButton>
@@ -177,7 +178,7 @@ const CourseSelection = () => {
                                     </CardContent>
                                 </Card>
                             </Stack>
-                            <Card elevation={10}>
+                            <Card style={{height: '105px'}} elevation={10}>
                                 <CardContent>
                                     <CourseButton courseCode='XXX xxxx' courseName='Science for Majors' id={0} selectState={electiveSelect} disableState={false} onClick={toggleElectiveSelect} update={updateClicked}></CourseButton>
                                 </CardContent>
