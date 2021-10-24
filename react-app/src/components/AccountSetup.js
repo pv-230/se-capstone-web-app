@@ -121,6 +121,7 @@ const AccountSetup = () => {
             label="First Name"
             variant="outlined"
             name="firstName"
+            color="secondary"
             required
             error={errors.firstNameError}
             helperText={errors.firstNameError ? "Please enter your first name" : ""}
@@ -132,6 +133,7 @@ const AccountSetup = () => {
             label="Last Name"
             variant="outlined"
             name="lastName"
+            color="secondary"
             required
             error={errors.lastNameError}
             helperText={errors.lastNameError ? "Please enter your last name" : ""}

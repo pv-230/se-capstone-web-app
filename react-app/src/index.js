@@ -1,19 +1,19 @@
 import React from "react"
 import ReactDOM from "react-dom"
 import AppContainer from "./components/AppContainer"
-
-// Fonts
-import '@fontsource/roboto/300.css';
-import '@fontsource/roboto/400.css';
-import '@fontsource/roboto/500.css';
-import '@fontsource/roboto/700.css';
+import { CssBaseline } from "@mui/material";
+import { globalDarkTheme, globalLightTheme } from "./styles/GlobalTheme";
+import { ThemeProvider } from "@mui/material/styles";
 
 // Database config file
 import "./firebase-config"
 
 ReactDOM.render(
     <React.StrictMode>
-        <AppContainer />
+        <ThemeProvider theme={globalDarkTheme}>
+            <CssBaseline/>
+            <AppContainer />
+        </ThemeProvider>
     </React.StrictMode>,
     document.getElementById("root")
 )
