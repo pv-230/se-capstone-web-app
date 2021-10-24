@@ -6,7 +6,7 @@ const CourseButton = (props) => {
     const [selected, setSelected] = useState(false);
 
     const cbClick = () => {
-        setSelected(!selected);
+        //setSelected(!selected);
         props.onClick(props.id);
         props.update(props.courseCode);
     }

@@ -1,10 +1,9 @@
 import React from "react"
-import { Container, Card, Stack, Button, CardContent } from "@mui/material"
+import { Container, Card, Stack, Button, CardContent, Snackbar, Alert } from "@mui/material"
 import '../styles/CourseSelection.css'
 import CourseButton from "./CourseButton"
 import { useState } from "react"
 import { ClassInfo } from '../models/ClassInfo'
-import { minWidth, width } from "@mui/system"
 
 const CourseSelection = () => {
     
@@ -30,6 +29,19 @@ const CourseSelection = () => {
     const [selectedClasses, setSelectedClasses] = useState(Array(0));
     const [notSelectedClasses, setNotSelectedClasses] = useState(classInfo.classCodes)
 
+    const [open, setOpen] = React.useState(false);
+
+    const showCoreq = () => {
+        setOpen(true);
+    };
+
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+        return;
+        }
+        setOpen(false);
+    };
+
     const testClick = () => {
         console.log(csDisable);
         const newArr = [...mathSelect];
@@ -40,13 +52,69 @@ const CourseSelection = () => {
     function updateClicked(classCode) {
         let pos = selectedClasses.indexOf(classCode);
         let nsPos = notSelectedClasses.indexOf(classCode);
+
         if (pos === -1) {
-          selectedClasses.push(classCode);
-          notSelectedClasses.splice(nsPos, 1);
+            selectedClasses.push(classCode);
+            notSelectedClasses.splice(nsPos, 1);
+
+            // Enabling button logic
+            if(classCode === "MAC 1105") {
+                mathEnable([1,4]);
+                chmEnable([0]);
+            }
+            else if(classCode === "MAC 1114") {
+                if(mathSelect[4])
+                    mathEnable([5]);
+            }
+            else if(classCode === "MAC 1140") {
+                if(mathSelect[1])
+                    mathEnable([5]);
+                csEnable([0]);
+            }
+            else if(classCode === "MAC 2311") {
+                mathEnable([2,6]);
+                phyEnable([0]);
+            }
+            else if(classCode === "MAC 2312")
+                mathEnable([3]);
+            else if(classCode === "MAD 2104")
+                mathEnable([7]);
+            else if(classCode === "MAD 3105")
+                csEnable([4]);
+            
+            else if(classCode === "BSC 2010")
+                chmEnable([2]);
+            else if(classCode === "PHY 2048C")
+                phyEnable([1]);
+            
+            else if(classCode === "COP 3363")
+                csEnable([1, 2, 3]);
+            else if(classCode === "COP 3330") {
+                csEnable([5]);
+                showCoreq();
+            }
+            else if(classCode === "CDA 3100") {
+                if(csSelect[5])
+                    csEnable([9]);
+                showCoreq();
+            }
+            else if(classCode === "COP 4530") {
+                if(csSelect[3])
+                    csEnable([6, 7, 8, 9]);
+                else
+                    csEnable([6, 7, 8])
+            }
+
+            else if(classCode === "Foreign Language I")
+                langEnable([1]);
+            else if(classCode === "Foreign Language II")
+                langEnable([2]);
+
         }
         else {
           notSelectedClasses.push(classCode);
           selectedClasses.splice(pos, 1);
+
         }
         //console.log(selectedClasses);
         //console.log(notSelectedClasses);
@@ -55,7 +123,7 @@ const CourseSelection = () => {
     const test = () => {
         console.log(selectedClasses);
         console.log(notSelectedClasses);
-        console.log(mathSelect);
+        console.log(langSelect);
     }
 
     const toggleMathSelect = (id) => {
@@ -64,10 +132,26 @@ const CourseSelection = () => {
         setMathSelect(newArr);
     }
 
+    const mathEnable = (id) => {
+        const newArr = [...mathDisable];
+        for(let i = 0; i < id.length; i++) {
+            newArr[id[i]] = false;
+        }
+        setMathDisable(newArr);
+    }
+
     const toggleChmSelect = (id) => {
         const newArr = [...chmSelect];
         newArr[id] = !newArr[id];
         setChmSelect(newArr);
+    }
+
+    const chmEnable = (id) => {
+        const newArr = [...chmDisable];
+        for(let i = 0; i < id.length; i++) {
+            newArr[id[i]] = false;
+        }
+        setChmDisable(newArr);
     }
 
     const togglePhySelect = (id) => {
@@ -76,16 +160,40 @@ const CourseSelection = () => {
         setPhySelect(newArr);
     }
 
+    const phyEnable = (id) => {
+        const newArr = [...phyDisable];
+        for(let i = 0; i < id.length; i++) {
+            newArr[id[i]] = false;
+        }
+        setPhyDisable(newArr);
+    }
+
     const toggleLangSelect = (id) => {
         const newArr = [...langSelect];
         newArr[id] = !newArr[id];
         setLangSelect(newArr);
     }
 
+    const langEnable = (id) => {
+        const newArr = [...langDisable];
+        for(let i = 0; i < id.length; i++) {
+            newArr[id[i]] = false;
+        }
+        setLangDisable(newArr);
+    }
+
     const toggleCsSelect = (id) => {
         const newArr = [...csSelect];
         newArr[id] = !newArr[id];
         setCsSelect(newArr);
+    }
+
+    const csEnable = (id) => {
+        const newArr = [...csDisable];
+        for(let i = 0; i < id.length; i++) {
+            newArr[id[i]] = false;
+        }
+        setCsDisable(newArr);
     }
 
     const toggleElectiveSelect = (id) => {
@@ -149,9 +257,9 @@ const CourseSelection = () => {
                         <Card style={{height: '290px', minWidth: '230px'}} elevation={10}>
                             <CardContent>
                                 <Stack spacing={2}>
-                                    <CourseButton courseCode='Foreign Language I' courseName='' id={0} selectState={langSelect} disableState={false} onClick={toggleLangSelect} update={updateClicked}></CourseButton>
-                                    <CourseButton courseCode='Foreign Language II' courseName='' id={1} selectState={langSelect} disableState={false} onClick={toggleLangSelect} update={updateClicked}></CourseButton>
-                                    <CourseButton courseCode='Foreign Language III' courseName='' id={2} selectState={langSelect} disableState={false} onClick={toggleLangSelect} update={updateClicked}></CourseButton>
+                                    <CourseButton courseCode='Foreign Language I' courseName='' id={0} selectState={langSelect} disableState={langDisable} onClick={toggleLangSelect} update={updateClicked}></CourseButton>
+                                    <CourseButton courseCode='Foreign Language II' courseName='' id={1} selectState={langSelect} disableState={langDisable} onClick={toggleLangSelect} update={updateClicked}></CourseButton>
+                                    <CourseButton courseCode='Foreign Language III' courseName='' id={2} selectState={langSelect} disableState={langDisable} onClick={toggleLangSelect} update={updateClicked}></CourseButton>
                                 </Stack>
                             </CardContent>
                         </Card>
@@ -208,6 +316,11 @@ const CourseSelection = () => {
                     </Stack>
                 </Stack>
             </Stack>
+            <Snackbar open={open} autoHideDuration={4000} onClose={handleClose}>
+                <Alert onClose={handleClose} severity="warning" sx={{ width: '100%' }} >
+                    Please note that COP 3330 and CDA 3100 are corequisites!
+                </Alert>
+            </Snackbar>
         </Card>
     )
 }
