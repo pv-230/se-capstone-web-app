@@ -23,14 +23,13 @@ const Home = (props) => {
     height: '400px',
     textAlign: 'center',
     background: 'linear-gradient(45deg, #c4b83f 30%, #c9c167 90%)'
-}
+  }
 
-var textStyle = {
-  "fontFamily": `"Segoe UI", "sans-serif"`,
-  "fontSize": 50,
-  "fontWeight": 700,
-  "color": "white"
-}
+  var textStyle = {
+    "fontFamily": `"Segoe UI", "sans-serif"`,
+    "fontSize": 50,
+    "fontWeight": 700,
+  }
 
   // States
   const [name, setName] = useState("")
@@ -46,8 +45,8 @@ var textStyle = {
           window.location.href = '/account_setup';
         }
       } else {
-          // If they are logged out, redirects to login
-          window.location.href = '/login';
+        // If they are logged out, redirects to login
+        window.location.href = '/login';
       }
     });
   }
@@ -60,7 +59,7 @@ var textStyle = {
 
   return (
     <Stack spacing={2} style={stackStyle}>
-      <Typography style={textStyle}>Welcome to the Home Page</Typography>
+      <Typography color="text.primary" style={textStyle}>Welcome to the Home Page</Typography>
       <Stack>
         <Card style={cardStyle} elevation={8}>
           <Typography style={textStyle} marginTop='40%' color="white">
