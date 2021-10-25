@@ -42,7 +42,6 @@ const AppContainer = () => {
     return (
         <div className="app-container">
             <Router>
-                <NavBar />
                 <Switch>
                     <Route path="/login">
                         <Login setUserId={setUserId} />
@@ -61,6 +60,7 @@ const AppContainer = () => {
                     </Route>
 
                     <Route exact path="/">
+                        <NavBar />
                         <Home uid={userInfo.uid} />
                     </Route>
 
