@@ -2,7 +2,7 @@ import React from 'react'
 import { useEffect } from 'react'
 import CardButton from '../components/CardButton'
 import CourseSelection from './CourseSelection'
-import { Stack, Card, Typography, Button, TextField } from '@mui/material'
+import { Stack, Card, Typography, Button, TextField, Container } from '@mui/material'
 import { ClassInfo } from '../models/ClassInfo'
 import { useState } from 'react'
 import { UserData } from '../models/UserData'
@@ -112,10 +112,10 @@ const AccountSetup = () => {
   }
 
   return (
-    <Card className="acc-setup-card" elevation={2}>
+    <div>
       <Card className="acc-setup-card" elevation={8}>
         <Stack className="acc-setup-stack" spacing={3}>
-          <Typography variant="h2">Enter your first and last name</Typography>
+          <Typography variant="h4">Enter your first and last name</Typography>
           <TextField
             type="text"
             onChange={handleInputChange}
@@ -139,12 +139,14 @@ const AccountSetup = () => {
             error={errors.lastNameError}
             helperText={errors.lastNameError ? "Please enter your last name" : ""}
           />
+
+        <Button className="gradient-button" variant="contained" onClick={fbSignOut}>Sign Out</Button>
+
         </Stack>
       </Card>
 
       <CourseSelection></CourseSelection>
-      <Button className="gradient-button" variant="contained" onClick={fbSignOut}>Sign Out</Button>
-    </Card>
+    </div>
   )
 }
 

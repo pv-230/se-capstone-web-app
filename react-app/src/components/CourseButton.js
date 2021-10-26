@@ -8,7 +8,7 @@ const CourseButton = (props) => {
     const cbClick = () => {
         //setSelected(!selected);
         props.onClick(props.id);
-        props.update(props.courseCode);
+        props.update(props.courseCode, props.onClick, props.id);
     }
 
     return(
