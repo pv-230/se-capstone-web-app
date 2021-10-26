@@ -60,7 +60,7 @@ const AppContainer = () => {
                     </Route>
 
                     <Route exact path="/">
-                        <NavBar />
+                        <NavBar title="Home"/>
                         <Home uid={userInfo.uid} />
                     </Route>
 
