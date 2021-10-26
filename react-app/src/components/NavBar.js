@@ -9,19 +9,22 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle'
 import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
 import { getAuth, signOut } from 'firebase/auth'
+import FormGroup from '@mui/material/FormGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Switch from '@mui/material/Switch';
+import { globalDarkTheme } from '../styles/GlobalTheme';
 
+/*
+ * This is the navbar component that allows the user to navigate around the
+ * the website and use features such as a light/dark mode switch.
+ */
 const NavBar = (props) => {
-  const history = useHistory();
+  const history = useHistory();  // Used for routing
   const auth = getAuth();
 
   // Account menu related
   const [accMenuAnchor, setAccMenuAnchor] = useState(null);
   const accMenuOpen = Boolean(accMenuAnchor);
-
-  // Event handler for the account settings menu item
-  const handleAccSettings = () => {
-    // Not used until account settings component is built
-  }
 
   // Event handler for the logout menu item
   const handleAccLogout = () => {
@@ -32,20 +35,15 @@ const NavBar = (props) => {
   // Nav menu related
   const [navMenuAnchor, setNavMenuAnchor] = useState(null);
   const navMenuOpen = Boolean(navMenuAnchor);
-  
+
   // Event handler for the home nav menu item
   const handleNavHome = () => {
     setNavMenuAnchor(null);
     history.push("/");
   }
 
-  // Event handler for the course selection nav menu item
-  const handleNavCourseSelection = () => {
-    // Not used until course selection component is built
-  }
-
   return (
-    <AppBar enableColorOnDark="true" position="static">
+    <AppBar enableColorOnDark={true} position="static">
       <Toolbar>
 
         {/* Nav menu */}
@@ -72,6 +70,19 @@ const NavBar = (props) => {
         >
           {props.title}
         </Typography>
+
+        {/* Light/dark mode switch */}
+        <FormGroup>
+          <FormControlLabel
+            control={
+              <Switch
+                defaultChecked
+                onClick={() => props.toggleThemeMode()}
+                color="default"
+              />
+            }
+            label={props.currentThemeMode === globalDarkTheme ? "Dark" : "Light"} />
+        </FormGroup>
 
         {/* Account menu */}
         <IconButton
