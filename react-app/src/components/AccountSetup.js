@@ -140,7 +140,7 @@ const AccountSetup = () => {
             helperText={errors.lastNameError ? "Please enter your last name" : ""}
           />
 
-        <Button className="gradient-button" variant="contained" onClick={fbSignOut}>Sign Out</Button>
+          <Button className="gradient-button" variant="contained" onClick={fbSignOut}>Sign Out</Button>
 
         </Stack>
       </Card>

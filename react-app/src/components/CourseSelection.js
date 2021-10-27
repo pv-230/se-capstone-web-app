@@ -15,27 +15,92 @@ const CourseSelection = () => {
   const [select, setSelect] = useState(Array(35).fill(false));
   const [disable, setDisable] = useState([false].concat(Array(17).fill(true))
     .concat([false, true, true]).concat([true, false, true]).concat(Array(2).fill(true)
-    .concat([false, false, true]).concat(Array(3).fill(false).concat(Array(3).fill(true)))));
+      .concat([false, false, true]).concat(Array(3).fill(false).concat(Array(3).fill(true)))));
 
   let classInfo = new ClassInfo();
-  const [selectedClasses, setSelectedClasses] = useState(Array(0));
-  const [notSelectedClasses, setNotSelectedClasses] = useState(classInfo.classCodes)
+  // Stores the selected/not selected classes
+  let [selectedClasses, setSelectedClasses] = useState(Array(0));
+  let [notSelectedClasses, setNotSelectedClasses] = useState(classInfo.classCodes)
 
+  // State for the snackbar and loading pop-ups
   const [open, setOpen] = React.useState(false);
   const [loadingOpen, setLoadingOpen] = React.useState(true);
 
   let auth = null;
+  let selectData, disableData = null;
 
+  // Makes the snackbar pop up
   const showCoreq = () => {
     setOpen(true);
   };
 
+  // Closes the snackbar
   const handleClose = (event, reason) => {
     if (reason === 'clickaway') {
       return;
     }
     setOpen(false);
   };
+
+  // Logic for enabling the classes
+  const disableLogic = (classCode, enable) => {
+    if (classCode === "MAC 1105")
+      enable([1, 4, 21]);
+    else if (classCode === "MAC 1114") {
+      if (select[4])
+        enable([5]);
+    }
+    else if (classCode === "MAC 1140") {
+      if (select[1])
+        enable([5]);
+      enable([8]);
+    }
+    else if (classCode === "MAC 2311")
+      enable([2, 6, 24]);
+    else if (classCode === "MAC 2312")
+      enable([3]);
+    else if (classCode === "MAD 2104")
+      enable([7]);
+    else if (classCode === "MAD 3105")
+      enable([12]);
+
+    else if (classCode === "BSC 2010")
+      enable([23]);
+    else if (classCode === "PHY 2048C")
+      enable([25]);
+
+    else if (classCode === "COP 3363")
+      enable([9, 10, 11]);
+    else if (classCode === "COP 3330") {
+      enable([13]);
+      showCoreq();
+    }
+    else if (classCode === "CDA 3100") {
+      if (select[13])
+        enable([17]);
+      showCoreq();
+    }
+    else if (classCode === "COP 4530") {
+      if (select[11])
+        enable([14, 15, 16, 17]);
+      else
+        enable([14, 15, 16])
+    }
+
+    else if (classCode === "Foreign Language I")
+      enable([19]);
+    else if (classCode === "Foreign Language II")
+      enable([20]);
+
+    else if (classCode === 'CXX 3xxx or 4xxx I')
+      enable([28]);
+    else if (classCode === "CXX 4xxx I")
+      enable([32]);
+    else if (classCode === "CXX 4xxx II")
+      enable([33]);
+    else if (classCode === "CXX 4xxx III")
+      enable([34]);
+  }
 
   function updateClicked(classCode, id) {
     toggleSelect(id);
@@ -46,144 +111,7 @@ const CourseSelection = () => {
       selectedClasses.push(classCode);
       notSelectedClasses.splice(nsPos, 1);
 
-      // Enabling button logic
-      if (classCode === "MAC 1105")
-        enable([1, 4, 21]);
-      else if (classCode === "MAC 1114") {
-        if (select[4])
-          enable([5]);
-      }
-      else if (classCode === "MAC 1140") {
-        if (select[1])
-          enable([5]);
-        enable([8]);
-      }
-      else if (classCode === "MAC 2311")
-        enable([2, 6, 24]);
-      else if (classCode === "MAC 2312")
-        enable([3]);
-      else if (classCode === "MAD 2104")
-        enable([7]);
-      else if (classCode === "MAD 3105")
-        enable([12]);
-
-      else if (classCode === "BSC 2010")
-        enable([23]);
-      else if (classCode === "PHY 2048C")
-        enable([25]);
-
-      else if (classCode === "COP 3363")
-        enable([9, 10, 11]);
-      else if (classCode === "COP 3330") {
-        enable([13]);
-        showCoreq();
-      }
-      else if (classCode === "CDA 3100") {
-        if (select[13])
-          enable([17]);
-        showCoreq();
-      }
-      else if (classCode === "COP 4530") {
-        if (select[11])
-          enable([14, 15, 16, 17]);
-        else
-          enable([14, 15, 16])
-      }
-
-      else if (classCode === "Foreign Language I")
-        enable([19]);
-      else if (classCode === "Foreign Language II")
-        enable([20]);
-
-      else if(classCode === 'CXX 3xxx or 4xxx I')
-        enable([28]);
-      else if(classCode === "CXX 4xxx I")
-        enable([32]);
-      else if(classCode === "CXX 4xxx II")
-        enable([33]);
-      else if(classCode === "CXX 4xxx III")
-        enable([34]);
-
-    }
-    else {
-      notSelectedClasses.push(classCode);
-      selectedClasses.splice(pos, 1);
-
-    }
-    return new Promise(resolve => {
-      setTimeout(() => {
-        resolve(true);
-      }, 50);
-    });
-  }
-
-    function updateClicked(classCode, id, ) {
-    toggleSelect(id);
-    let pos = selectedClasses.indexOf(classCode);
-    let nsPos = notSelectedClasses.indexOf(classCode);
-
-    if (pos === -1) {
-      selectedClasses.push(classCode);
-      notSelectedClasses.splice(nsPos, 1);
-
-      // Enabling button logic
-      if (classCode === "MAC 1105")
-        enable([1, 4, 21]);
-      else if (classCode === "MAC 1114") {
-        if (select[4])
-          enable([5]);
-      }
-      else if (classCode === "MAC 1140") {
-        if (select[1])
-          enable([5]);
-        enable([8]);
-      }
-      else if (classCode === "MAC 2311")
-        enable([2, 6, 24]);
-      else if (classCode === "MAC 2312")
-        enable([3]);
-      else if (classCode === "MAD 2104")
-        enable([7]);
-      else if (classCode === "MAD 3105")
-        enable([12]);
-
-      else if (classCode === "BSC 2010")
-        enable([23]);
-      else if (classCode === "PHY 2048C")
-        enable([25]);
-
-      else if (classCode === "COP 3363")
-        enable([9, 10, 11]);
-      else if (classCode === "COP 3330") {
-        enable([13]);
-        showCoreq();
-      }
-      else if (classCode === "CDA 3100") {
-        if (select[13])
-          enable([17]);
-        showCoreq();
-      }
-      else if (classCode === "COP 4530") {
-        if (select[11])
-          enable([14, 15, 16, 17]);
-        else
-          enable([14, 15, 16])
-      }
-
-      else if (classCode === "Foreign Language I")
-        enable([19]);
-      else if (classCode === "Foreign Language II")
-        enable([20]);
-
-      else if(classCode === 'CXX 3xxx or 4xxx I')
-        enable([28]);
-      else if(classCode === "CXX 4xxx I")
-        enable([32]);
-      else if(classCode === "CXX 4xxx II")
-        enable([33]);
-      else if(classCode === "CXX 4xxx III")
-        enable([34]);
-
+      disableLogic(classCode, enable);
     }
     else {
       notSelectedClasses.push(classCode);
@@ -205,6 +133,7 @@ const CourseSelection = () => {
     //console.log(disable.length);
   }
 
+  // Enables a button
   const enable = (id) => {
     const newArr = [...disable];
     for (let i = 0; i < id.length; i++) {
@@ -213,36 +142,59 @@ const CourseSelection = () => {
     setDisable(newArr);
   }
 
+  // Toggles if the button is selected
   const toggleSelect = (id) => {
     const newArr = [...select];
     newArr[id] = !newArr[id];
     setSelect(newArr);
   }
 
+  // Gets the user's data and makes the selector reflect it, if it exists
   const getData = async () => {
     const data = await getUserData(auth.currentUser.uid);
     if (data === null)
       setLoadingOpen(false);
     else {
-      //console.log(data.completedClasses);
-      for(let x = 0; x < classInfo.classCodes.length; x++) {
+      disableData = disable;
+      selectData = select;
+      for (let x = 0; x < classInfo.classCodes.length; x++) {
         let pos = data.completedClasses.indexOf(classInfo.classCodes[x]);
-        if(pos !== -1) {
-          console.log(data.completedClasses[pos] + " " + x);
-          await updateClicked(data.completedClasses[pos], x);
-          //console.log(selectedClasses);
+        if (pos !== -1) {
+          updateData(data.completedClasses[pos], x);
         }
       }
-      //for (let i = 0; i < data.completedClasses.length; i++) {
-        //updateClicked(data.completedClasses[i]);
-        //console.log(data.completedClasses[i]);
-      //}
+      setSelect(selectData);
+      setDisable(disableData);
+      selectData = null;
+      disableData = null;
+      setSelectedClasses(data.completedClasses);
+      setNotSelectedClasses(data.outstandingClasses);
       setLoadingOpen(false);
     }
   }
 
+  // Helper functions for getData
+  const updateData = (code, id) => {
+    toggleSelectData(id);
+    toggleDisableData(code);
+  }
+
+  const toggleSelectData = (id) => {
+    selectData[id] = true;
+  }
+
+  const toggleDisableData = (classCode) => {
+    disableLogic(classCode, enableData);
+  }
+
+  const enableData = (id) => {
+    for (let i = 0; i < id.length; i++) {
+      disableData[id[i]] = false;
+    }
+  }
+
+  // Saves the data to firebase
   const saveData = async () => {
-    // Creates and send their data to the database
     console.log(auth.currentUser);
     const email = auth.currentUser.email;
     let userD = new UserData(
