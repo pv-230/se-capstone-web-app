@@ -30,16 +30,6 @@ const AppContainer = () => {
     uid: getUserInfo(),
   });
 
-  // State for the theme mode (light or dark)
-  const [themeMode, setThemeMode] = useState(globalDarkTheme);
-
-  // Toggles between light mode and dark mode
-  const toggleThemeMode = () => {
-    setThemeMode((prevThemeMode) => (
-      prevThemeMode === globalDarkTheme ? globalLightTheme : globalDarkTheme
-    ));
-  }
-
   // Updates the uid state to the userId parameter and stores userId in local storage
   const setUserId = (userId) => {
     setUserInfo({
@@ -48,6 +38,39 @@ const AppContainer = () => {
     })
     const temp = JSON.stringify(userId)
     localStorage.setItem("userId", temp)
+  }
+  
+  // Returns the saved theme mode from local storage
+  const getUserTheme = () => {
+    const savedTheme = localStorage.getItem("themeMode");
+
+    if (savedTheme === "light") {
+      return globalLightTheme;
+    } else {
+      // If themeMode not found in local storage, dark mode is set by default
+      return globalDarkTheme;
+    }
+  }
+
+  // State for the theme mode (light or dark)
+  const [themeMode, setThemeMode] = useState(getUserTheme());
+
+  // Toggles between light mode and dark mode
+  const toggleThemeMode = () => {
+    setThemeMode((prevThemeMode) => (
+      prevThemeMode === globalDarkTheme ? globalLightTheme : globalDarkTheme
+    ));
+
+    // Updates local storage themeMode with opposite of current theme. The
+    // setThemeMode function does not seem to update the theme right away so
+    // that is why this logic is reversed.
+    let savedTheme;
+    if (themeMode === globalDarkTheme) {
+      savedTheme = "light";
+    } else {
+      savedTheme = "dark";
+    }
+    localStorage.setItem("themeMode", savedTheme);
   }
 
   return (
