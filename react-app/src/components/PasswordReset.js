@@ -1,26 +1,30 @@
 import React, { useState } from 'react'
-import { getAuth, sendPasswordResetEmail } from "firebase/auth"
-import { TextField, Button, Stack, Typography, Card } from "@mui/material"
-import '../styles/PasswordReset.css'
+import { getAuth, sendPasswordResetEmail } from 'firebase/auth'
+import TextField from '@mui/material/TextField'
+import Button from '@mui/material/Button'
+import Stack from '@mui/material/Stack'
+import Typography from '@mui/material/Typography'
+import Paper from '@mui/material/Paper'
+import Box from '@mui/material/Box'
 
-/*
+/**
  * This is the component that handles the password reset functionality
  */
 const PasswordReset = () => {
   const customErrorCodes = {
-    noEmail: "Please enter your email"
+    noEmail: 'Please enter your email'
   }
 
   // Form state
   const [inputText, setInputText] = useState({
-    email: "",
+    email: '',
   });
 
   // Error state
   const [errors, setErrors] = useState({
     emailError: false,
     resetError: false,
-    message: ""
+    message: ''
   });
 
   // Link sent state
@@ -45,7 +49,7 @@ const PasswordReset = () => {
   }
 
   const handleRedirectButton = () => {
-    window.location.href = "/login";
+    window.location.href = '/login';
   }
 
   const sendResetLink = async () => {
@@ -88,47 +92,61 @@ const PasswordReset = () => {
   }
 
   return (
-    <Card className="pw-reset-card" elevation={8}>
-      <Stack spacing={2} margin={3}>
-        <Typography variant="h4">Enter email</Typography>
+    <Box sx={{
+      display: 'flex',
+      minHeight: '100vh',
+      justifyContent: 'center',
+      alignItems: 'center',
+      textAlign: 'center',
+    }}>
+      <Paper elevation={8} sx={{ width: 300}}>
+        <Stack spacing={2} margin={3}>
+          <Typography variant="h4">Password Reset</Typography>
 
-        <TextField
-          type="text"
-          onChange={handleInputChange}
-          label="Email"
-          variant="outlined"
-          name="email"
-          required
-          error={errors.emailError}
-          helperText={errors.emailError ? errors.message : ""}
-        />
+          {/* Email field */}
+          <TextField
+            type="text"
+            onChange={handleInputChange}
+            label="Email"
+            variant="outlined"
+            name="email"
+            color="secondary"
+            required
+            error={errors.emailError}
+            helperText={errors.emailError ? errors.message : ""}
+          />
 
-        <Button className="gradient-button" onClick={handleResetButton} variant="contained">
-          Send reset link
-        </Button>
+          {/* Send reset link button */}
+          <Button onClick={handleResetButton} variant="contained">
+            Send reset link
+          </Button>
 
-        <Button className="gradient-button" variant="contained" onClick={handleRedirectButton}>
-          Return to login
-        </Button>
+          {/* Return to login button */}
+          <Button  variant="contained" onClick={handleRedirectButton}>
+            Return to login
+          </Button>
 
-        {errors.resetError ?
-          <Typography className="pw-reset-error">
-            Error: {errors.message}
-          </Typography>
-          :
-          null
-        }
+          {/* Message that shows when errors are received */}
+          {errors.resetError ?
+            <Typography color="red">
+              Error: {errors.message}
+            </Typography>
+            :
+            null
+          }
 
-        {linkSent ?
-          <Typography>
-            Reset link sent to your email
-          </Typography>
-          :
-          null
-        }
+          {/* Message that shows when the reset link has been sent */}
+          {linkSent ?
+            <Typography>
+              Reset link sent!
+            </Typography>
+            :
+            null
+          }
 
-      </Stack>
-    </Card>
+        </Stack>
+      </Paper>
+    </Box>
   )
 }
 
