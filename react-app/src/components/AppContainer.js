@@ -108,45 +108,10 @@ const AppContainer = () => {
             <PageNotFound />
           </Route>
 
-<<<<<<< HEAD
-    return (
-        <div className="app-container">
-            <CssBaseLine />
-            <Router>
-                <Switch>
-                    <Route path="/login">
-                        <Login setUserId={setUserId} />
-                    </Route>
-
-                    <Route path="/register">
-                        <Register setUserId={setUserId} />
-                    </Route>
-
-                    <Route path="/account_setup">
-                        <AccountSetup />
-                    </Route>
-
-                    <Route path="/password_reset">
-                        <PasswordReset />
-                    </Route>
-
-                    <Route exact path="/">
-                        <Home uid={userInfo.uid} />
-                    </Route>
-
-                    <Route path="*">
-                        <PageNotFound />
-                    </Route>
-                </Switch>
-            </Router>
-        </div>
-    )
-=======
         </Switch>
       </Router>
     </ThemeProvider>
   )
->>>>>>> 6b25b95ebab34e2a2d82a906cb20bc4b2fe930b8
 }
 
 export default AppContainer
