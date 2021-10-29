@@ -1,13 +1,18 @@
-import React, { useState } from "react"
-import { getAuth, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, GithubAuthProvider, OAuthProvider } from "firebase/auth"
-import { TextField, Button, Stack, Typography, Card, Tooltip, CardContent } from "@mui/material"
-import { IconButton } from "@mui/material"
+import React, { useState } from 'react'
+import { getAuth, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, GithubAuthProvider, OAuthProvider } from 'firebase/auth'
+import TextField from '@mui/material/TextField'
+import Button from '@mui/material/Button'
+import Stack from '@mui/material/Stack'
+import Typography from '@mui/material/Typography'
+import Tooltip from '@mui/material/Tooltip'
+import IconButton from '@mui/material/IconButton'
 import GoogleIcon from '@mui/icons-material/Google';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import EmailIcon from '@mui/icons-material/Email';
-import '../styles/Login.css';
+import Box from '@mui/material/Box'
+import Paper from '@mui/material/Paper'
 
-/*
+/**
  * This is the component that provides the login functionality
  */
 const Login = (props) => {
@@ -15,14 +20,14 @@ const Login = (props) => {
 
   // This object just holds some strings that are reused for display error messages
   const customErrorCodes = {
-    noEmail: "Please enter an email",
-    noPassword: "Please enter a password"
+    noEmail: 'Please enter an email',
+    noPassword: 'Please enter a password'
   }
 
   // Form state
   const [inputText, setInputText] = useState({
-    email: "",
-    password: ""
+    email: '',
+    password: ''
   })
 
   // Error state
@@ -30,7 +35,7 @@ const Login = (props) => {
     emailError: false,
     passwordError: false,
     otherError: false,
-    message: ""
+    message: ''
   });
 
   // Event handler for user input inside the fields
@@ -55,18 +60,18 @@ const Login = (props) => {
     // Redirects to homepage if user has been validated since uid will be null otherwise
     if (uid) {
       props.setUserId(uid);
-      window.location.href = "/";
+      window.location.href = '/';
     }
   }
 
   // Event handler for clicking on the register button
   const handleRegisterButton = () => {
-    window.location.href = "/register";
+    window.location.href = '/register';
   }
 
   // Event handler for clicking on the password reset link
   const handleForgotPassword = () => {
-    window.location.href = "/password_reset"
+    window.location.href = '/password_reset'
   }
 
   // Event handler for using Google authentication
@@ -87,7 +92,7 @@ const Login = (props) => {
     // Redirects to homepage if user has been validated since uid will be null otherwise
     if (uid) {
       props.setUserId(uid);
-      window.location.href = "/";
+      window.location.href = '/';
     }
   }
 
@@ -109,14 +114,14 @@ const Login = (props) => {
     // Redirects to homepage if user has been validated since uid will be null otherwise
     if (uid) {
       props.setUserId(uid);
-      window.location.href = "/";
+      window.location.href = '/';
     }
   }
 
   // Event handler for using Yahoo authentication
   const handleYahooAuth = async () => {
     const auth = getAuth();
-    await signInWithPopup(auth, new OAuthProvider("yahoo.com"))
+    await signInWithPopup(auth, new OAuthProvider('yahoo.com'))
       .then((result) => {
         uid = result.user.uid;
       })
@@ -129,7 +134,7 @@ const Login = (props) => {
     // Redirects to homepage if user has been validated since uid will be null otherwise
     if (uid) {
       props.setUserId(uid);
-      window.location.href = "/";
+      window.location.href = '/';
     }
   }
 
@@ -167,23 +172,23 @@ const Login = (props) => {
       case customErrorCodes.noPassword:
         passwordErrorReceived = true;
         break;
-      case "auth/invalid-email":
+      case 'auth/invalid-email':
         errorCode = processErrorString(errorCode);
         emailErrorReceived = true;
         break;
-      case "auth/user-disabled":
+      case 'auth/user-disabled':
         errorCode = processErrorString(errorCode);
         emailErrorReceived = true;
         break;
-      case "auth/user-not-found":
+      case 'auth/user-not-found':
         errorCode = processErrorString(errorCode);
         emailErrorReceived = true;
         break;
-      case "auth/wrong-password":
+      case 'auth/wrong-password':
         errorCode = processErrorString(errorCode);
         passwordErrorReceived = true;
         break;
-      case "auth/account-exists-with-different-credential":
+      case 'auth/account-exists-with-different-credential':
         errorCode = processErrorString(errorCode);
         otherErrorReceived = true;
         break;
@@ -201,20 +206,28 @@ const Login = (props) => {
     });
   }
 
-  // Accepts a string and removes the error prefix of "auth/" and replaces dashes with spaces
+  // Accepts a string and removes the error prefix of 'auth/' and replaces dashes with spaces
   const processErrorString = (errorString) => {
     let withoutAuth = errorString.slice(5);
-    let withoutDash = withoutAuth.replace("-", " ");
+    let withoutDash = withoutAuth.replace('-', ' ');
     return withoutDash;
   }
 
   return (
-    <Stack height="100vh">
-      <Card className="login-card" elevation={8}>
-        <CardContent>
+    <Box
+      sx={{
+        display: 'flex',
+        minHeight: '100vh',
+        justifyContent: 'center',
+        alignItems: 'center',
+        textAlign: 'center',
+      }}
+    >
+      <Paper elevation={8} sx={{ width: 300}}>
           <Stack spacing={2} margin={3}>
             <Typography variant="h4">Welcome!</Typography>
 
+            {/* Email field */}
             <TextField
               type="text"
               onChange={handleInputChange}
@@ -227,6 +240,7 @@ const Login = (props) => {
               helperText={errors.emailError ? errors.message : ""}
             />
 
+            {/* Password field */}
             <TextField
               type="password"
               onChange={handleInputChange}
@@ -239,26 +253,30 @@ const Login = (props) => {
               helperText={errors.passwordError ? errors.message : ""}
             />
 
+            {/* Forgot password button */}
             <Button color="secondary" variant="text" onClick={handleForgotPassword}>
               Forgot your password?
             </Button>
 
+            {/* Message that shows when other errors are received */}
             {errors.otherError ?
-              <Typography className="login-error">
+              <Typography color="red">
                 Error: {errors.message}
               </Typography>
               :
               null
             }
 
-            <Button className="gradient-button" onClick={handleLoginButton} variant="contained">
+            {/* Login and register buttons */}
+            <Button onClick={handleLoginButton} variant="contained">
               Login
             </Button>
-            <Button className="gradient-button" onClick={handleRegisterButton} variant="contained">
+            <Button onClick={handleRegisterButton} variant="contained">
               Register
             </Button>
 
-            <Stack className="login-provider-stack" direction="row" spacing={2}>
+            {/* Login providers */}
+            <Stack sx={{ justifyContent: 'center' }} direction="row" spacing={2}>
               <Tooltip title="Sign in with Google">
                 <IconButton onClick={handleGoogleAuth}>
                   <GoogleIcon color="secondary"></GoogleIcon>
@@ -275,10 +293,10 @@ const Login = (props) => {
                 </IconButton>
               </Tooltip>
             </Stack>
+            
           </Stack>
-        </CardContent>
-      </Card>
-    </Stack>
+      </Paper>
+    </Box>
   )
 }
 
