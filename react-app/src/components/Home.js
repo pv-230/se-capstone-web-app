@@ -9,7 +9,7 @@ import { useHistory } from 'react-router'
 /*
  * This is the page that houses all components needed in the home page.
  */
-const Home = (props) => {
+const Home = () => {
   const history = useHistory();
 
   const [name, setName] = useState('')

@@ -20,7 +20,7 @@ import NavBar from './NavBar'
 const AppContainer = () => {
   // Returns the userId found in local storage or null if not found
   const getUserInfo = () => {
-    return JSON.parse(localStorage.getItem("uid")) || null;
+    return JSON.parse(localStorage.getItem('uid')) || null;
   }
 
   // User information states
@@ -34,14 +34,14 @@ const AppContainer = () => {
       ...userInfo,
       uid: userId
     })
-    localStorage.setItem("uid", JSON.stringify(userId))
+    localStorage.setItem('uid', JSON.stringify(userId))
   }
 
   // Returns the saved theme mode from local storage
   const getUserTheme = () => {
-    const savedTheme = localStorage.getItem("themeMode");
+    const savedTheme = localStorage.getItem('themeMode');
 
-    if (savedTheme === "light") {
+    if (savedTheme === 'light') {
       return globalLightTheme;
     } else {
       // If themeMode not found in local storage, dark mode is set by default
@@ -63,11 +63,11 @@ const AppContainer = () => {
     // that is why this logic is reversed.
     let savedTheme;
     if (themeMode === globalDarkTheme) {
-      savedTheme = "light";
+      savedTheme = 'light';
     } else {
-      savedTheme = "dark";
+      savedTheme = 'dark';
     }
-    localStorage.setItem("themeMode", savedTheme);
+    localStorage.setItem('themeMode', savedTheme);
   }
 
   return (
@@ -100,7 +100,7 @@ const AppContainer = () => {
                   currentThemeMode={themeMode}
                   toggleThemeMode={toggleThemeMode}
                 />
-                <Home uid={userInfo.uid} />
+                <Home />
               </>
             ) : (
               <Redirect to="/login" />
