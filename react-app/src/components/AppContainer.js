@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom'
 import { ThemeProvider } from '@mui/material/styles';
 import { globalDarkTheme, globalLightTheme } from '../styles/GlobalTheme';
 import { CssBaseline } from '@mui/material';
@@ -20,9 +20,7 @@ import NavBar from './NavBar'
 const AppContainer = () => {
   // Returns the userId found in local storage or null if not found
   const getUserInfo = () => {
-    const temp = localStorage.getItem("userId");
-    const savedUserId = JSON.parse(temp);
-    return savedUserId || null;
+    return JSON.parse(localStorage.getItem("uid")) || null;
   }
 
   // User information states
@@ -33,13 +31,12 @@ const AppContainer = () => {
   // Updates the uid state to the userId parameter and stores userId in local storage
   const setUserId = (userId) => {
     setUserInfo({
-      ...userId,
+      ...userInfo,
       uid: userId
     })
-    const temp = JSON.stringify(userId)
-    localStorage.setItem("userId", temp)
+    localStorage.setItem("uid", JSON.stringify(userId))
   }
-  
+
   // Returns the saved theme mode from local storage
   const getUserTheme = () => {
     const savedTheme = localStorage.getItem("themeMode");
@@ -96,12 +93,18 @@ const AppContainer = () => {
           </Route>
 
           <Route exact path="/">
-            <NavBar
-              title="Home"
-              currentThemeMode={themeMode}
-              toggleThemeMode={toggleThemeMode}
-            />
-            <Home uid={userInfo.uid} />
+            {userInfo.uid ? (
+              <>
+                <NavBar
+                  title="Home"
+                  currentThemeMode={themeMode}
+                  toggleThemeMode={toggleThemeMode}
+                />
+                <Home uid={userInfo.uid} />
+              </>
+            ) : (
+              <Redirect to="/login" />
+            )}
           </Route>
 
           <Route path="*">

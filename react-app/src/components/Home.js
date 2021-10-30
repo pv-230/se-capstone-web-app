@@ -1,73 +1,52 @@
-import React from 'react'
-import { useState } from 'react'
-import { getUserData } from '../APIs/getUserData';
-import { Stack, Typography, Card } from '@mui/material';
+import React, { useState } from 'react'
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import { getUserData } from '../APIs/getUserData';
+import Box from '@mui/material/Box'
+import Typography from '@mui/material/Typography';
+import Paper from '@mui/material/Paper'
+import { useHistory } from 'react-router'
 
 /*
  * This is the page that houses all components needed in the home page.
  */
 const Home = (props) => {
-  let auth = null;
-  let userD = null;
+  const history = useHistory();
 
-  const stackStyle = {
-    alignItems: 'center',
-    justifyContent: 'center',
-    margin: '3%'
-  }
+  const [name, setName] = useState('')
 
-  var cardStyle = {
-    display: 'block',
-    width: '400px',
-    height: '400px',
-    textAlign: 'center',
-    background: 'linear-gradient(45deg, #c4b83f 30%, #c9c167 90%)'
-  }
-
-  var textStyle = {
-    "fontFamily": `"Segoe UI", "sans-serif"`,
-    "fontSize": 50,
-    "fontWeight": 700,
-  }
-
-  // States
-  const [name, setName] = useState("")
-
-  const checkAuth = async () => {
-    auth = getAuth();
-    await onAuthStateChanged(auth, async (user) => {
-      if (user) {
-        userD = await getUserData(auth.currentUser.uid);
-        if (userD) {
-          updateName(userD);
-        } else {
-          window.location.href = '/account_setup';
-        }
-      } else {
-        // If they are logged out, redirects to login
-        window.location.href = '/login';
-      }
-    });
-  }
-
-  checkAuth();
-
-  const updateName = (userData) => {
-    setName(userData.firstName);
-  }
+  const auth = getAuth();
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      setName('John');
+    } else {
+      history.push('/login');
+    }
+  });
 
   return (
-    <Stack spacing={2} style={stackStyle}>
-      <Typography color="text.primary" style={textStyle}>Welcome to the Home Page</Typography>
-      <Stack>
-        <Card style={cardStyle} elevation={8}>
-          <Typography style={textStyle} marginTop='40%' color="white">
+    <Box
+      sx={{
+        display: 'flex',
+        minHeight: `calc(100vh - 65px)`,
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}
+    >
+      {name === '' ? (
+        null
+      ) : (
+        <Paper sx={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          padding: 2
+        }}>
+          <Typography>
             Hello, {name}!
           </Typography>
-        </Card>
-      </Stack>
-    </Stack>
+        </Paper>
+      )}
+    </Box>
   )
 }
 

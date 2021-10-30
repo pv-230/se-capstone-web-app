@@ -30,6 +30,7 @@ const NavBar = (props) => {
   const handleAccLogout = () => {
     setAccMenuAnchor(null);
     signOut(auth);
+    localStorage.removeItem('uid');
   }
 
   // Nav menu related
@@ -39,12 +40,18 @@ const NavBar = (props) => {
   // Event handler for the home nav menu item
   const handleNavHome = () => {
     setNavMenuAnchor(null);
-    history.push("/");
+    history.push('/');
   }
 
   return (
-    <AppBar enableColorOnDark={true} position="static">
-      <Toolbar>
+    <>
+    {/* The extra Toolbar that is not nested inside the AppBar component is used to help center
+        our content vertically within the space that is immediately below the AppBar. This is
+        helpful because the AppBar is set to a "fixed" position and this means that the AppBar
+        itself does not effect the layout of other components. */}
+    <Toolbar sx={{ minHeight: 65}}></Toolbar>
+    <AppBar enableColorOnDark={true} position="fixed">
+      <Toolbar sx={{ minHeight: 65}}>
 
         {/* Nav menu */}
         <IconButton
@@ -102,6 +109,7 @@ const NavBar = (props) => {
 
       </Toolbar>
     </AppBar>
+    </>
   )
 }
 
