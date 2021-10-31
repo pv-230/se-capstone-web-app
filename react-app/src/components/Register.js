@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useHistory } from 'react-router-dom'
 import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth'
 import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
@@ -11,7 +12,8 @@ import Box from '@mui/material/Box'
  * This is the component that provides the register function.
  */
 const Register = (props) => {
-  var uid = null;
+  const history = useHistory();
+  let uid = null;
 
   // Form state
   const [inputText, setInputText] = useState({
@@ -36,17 +38,12 @@ const Register = (props) => {
     });
   }
 
-  // Event handler for clicking on the login button
-  const handleLoginButton = async () => {
-    window.location.href = '/login';
-  }
-
   // Event handler for clicking on the register button
   const handleRegisterButton = async () => {
     await register(inputText.email, inputText.password);
     if (uid) {
       props.setUserId(uid);
-      window.location.href = '/account_setup';
+      history.push('/account_setup');
     }
   }
 
@@ -179,10 +176,10 @@ const Register = (props) => {
           }
 
           {/* Login and register buttons */}
-          <Button onClick={handleRegisterButton} variant="contained">
+          <Button variant="contained" onClick={handleRegisterButton} >
             Register
           </Button>
-          <Button onClick={handleLoginButton} variant="contained">
+          <Button variant="contained" onClick={() => history.push('/login')} >
             Back to Login
           </Button>
 

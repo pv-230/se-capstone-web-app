@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useHistory } from 'react-router-dom'
 import { getAuth, sendPasswordResetEmail } from 'firebase/auth'
 import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
@@ -11,6 +12,8 @@ import Box from '@mui/material/Box'
  * This is the component that handles the password reset functionality
  */
 const PasswordReset = () => {
+  const history = useHistory();
+
   const customErrorCodes = {
     noEmail: 'Please enter your email'
   }
@@ -46,10 +49,6 @@ const PasswordReset = () => {
     } else {
       await sendResetLink();
     }
-  }
-
-  const handleRedirectButton = () => {
-    window.location.href = '/login';
   }
 
   const sendResetLink = async () => {
@@ -117,12 +116,12 @@ const PasswordReset = () => {
           />
 
           {/* Send reset link button */}
-          <Button onClick={handleResetButton} variant="contained">
+          <Button variant="contained" onClick={handleResetButton}>
             Send reset link
           </Button>
 
           {/* Return to login button */}
-          <Button  variant="contained" onClick={handleRedirectButton}>
+          <Button  variant="contained" onClick={() => history.push('/login')}>
             Return to login
           </Button>
 

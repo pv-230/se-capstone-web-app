@@ -76,22 +76,7 @@ const AppContainer = () => {
       <Router>
         <Switch>
 
-          <Route path="/login">
-            <Login setUserId={setUserId} />
-          </Route>
-
-          <Route path="/register">
-            <Register setUserId={setUserId} />
-          </Route>
-
-          <Route path="/account_setup">
-            <AccountSetup />
-          </Route>
-
-          <Route path="/password_reset">
-            <PasswordReset />
-          </Route>
-
+          {/* Home page */}
           <Route exact path="/">
             {userInfo.uid ? (
               <>
@@ -99,14 +84,52 @@ const AppContainer = () => {
                   title="Home"
                   currentThemeMode={themeMode}
                   toggleThemeMode={toggleThemeMode}
+                  setUserId={setUserId}
                 />
-                <Home />
+                <Home uid={userInfo.uid} setUserId={setUserId} />
               </>
             ) : (
               <Redirect to="/login" />
             )}
           </Route>
 
+          {/* Login page */}
+          <Route path="/login">
+            {userInfo.uid ? (
+              <Redirect to="/" />
+            ) : (
+              <Login setUserId={setUserId} />
+            )}
+          </Route>
+
+          {/* Register page */}
+          <Route path="/register">
+            {userInfo.uid ? (
+              <Redirect to="/" />
+            ) : (
+              <Register setUserId={setUserId} />
+            )}
+          </Route>
+
+          {/* Course registration page */}
+          <Route path="/account_setup">
+            {userInfo.uid ? (
+              <AccountSetup />
+            ) : (
+              <Redirect to="/login" />
+            )}
+          </Route>
+
+          {/* Password reset page */}
+          <Route path="/password_reset">
+            {userInfo.uid ? (
+              <Redirect to="/" />
+            ) : (
+              <PasswordReset />
+            )}
+          </Route>
+
+          {/* Page not found */}
           <Route path="*">
             <PageNotFound />
           </Route>

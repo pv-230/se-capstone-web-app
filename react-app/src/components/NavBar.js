@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { useHistory } from 'react-router'
+import { useHistory } from 'react-router-dom'
 import AppBar from '@mui/material/AppBar'
 import Toolbar from '@mui/material/Toolbar'
 import Typography from '@mui/material/Typography'
@@ -20,7 +20,6 @@ import { globalDarkTheme } from '../styles/GlobalTheme';
  */
 const NavBar = (props) => {
   const history = useHistory();  // Used for routing
-  const auth = getAuth();
 
   // Account menu related
   const [accMenuAnchor, setAccMenuAnchor] = useState(null);
@@ -28,9 +27,10 @@ const NavBar = (props) => {
 
   // Event handler for the logout menu item
   const handleAccLogout = () => {
+    const auth = getAuth();
     setAccMenuAnchor(null);
+    props.setUserId(null);
     signOut(auth);
-    localStorage.removeItem('uid');
   }
 
   // Nav menu related
