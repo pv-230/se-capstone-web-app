@@ -98,7 +98,7 @@ const PasswordReset = () => {
       alignItems: 'center',
       textAlign: 'center',
     }}>
-      <Paper elevation={8} sx={{ width: 300}}>
+      <Paper elevation={8} sx={{ width: 300 }}>
         <Stack spacing={2} margin={3}>
           <Typography variant="h4">Password Reset</Typography>
 
@@ -112,7 +112,7 @@ const PasswordReset = () => {
             color="secondary"
             required
             error={errors.emailError}
-            helperText={errors.emailError ? errors.message : ""}
+            helperText={errors.emailError ? errors.message : ''}
           />
 
           {/* Send reset link button */}
@@ -121,7 +121,7 @@ const PasswordReset = () => {
           </Button>
 
           {/* Return to login button */}
-          <Button  variant="contained" onClick={() => history.push('/login')}>
+          <Button variant="contained" onClick={() => history.push('/login')}>
             Return to login
           </Button>
 

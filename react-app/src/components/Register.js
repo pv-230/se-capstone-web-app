@@ -137,7 +137,7 @@ const Register = (props) => {
             color="secondary"
             required
             error={errors.emailError}
-            helperText={errors.emailError ? errors.message : ""}
+            helperText={errors.emailError ? errors.message : ''}
           />
 
           {/* Password field */}
@@ -150,7 +150,7 @@ const Register = (props) => {
             color="secondary"
             required
             error={errors.passwordError}
-            helperText={errors.passwordError ? errors.message : ""}
+            helperText={errors.passwordError ? errors.message : ''}
           />
 
           {/* Confirm password field */}
@@ -163,7 +163,7 @@ const Register = (props) => {
             color="secondary"
             required
             error={errors.passwordError}
-            helperText={errors.passwordError ? errors.message : ""}
+            helperText={errors.passwordError ? errors.message : ''}
           />
 
           {/* Message that shows when other errors are received */}

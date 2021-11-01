@@ -229,7 +229,7 @@ const Login = (props) => {
             color="secondary"
             required
             error={errors.emailError}
-            helperText={errors.emailError ? errors.message : ""}
+            helperText={errors.emailError ? errors.message : ''}
           />
 
           {/* Password field */}
@@ -242,7 +242,7 @@ const Login = (props) => {
             color="secondary"
             required
             error={errors.passwordError}
-            helperText={errors.passwordError ? errors.message : ""}
+            helperText={errors.passwordError ? errors.message : ''}
           />
 
           {/* Forgot password button */}
@@ -264,7 +264,7 @@ const Login = (props) => {
             Login
           </Button>
           <Button variant="contained" onClick={() => history.push('/register')}>
-              Register
+            Register
           </Button>
 
           {/* Login providers */}

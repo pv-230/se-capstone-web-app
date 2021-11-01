@@ -6,9 +6,9 @@ import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper'
 
-/*
- * This is the page that houses all components needed in the home page.
-*/
+/**
+ * This is the component that provides the main features of the application
+ */
 const Home = (props) => {
   const history = useHistory();
 
@@ -20,7 +20,6 @@ const Home = (props) => {
     const auth = getAuth();
     onAuthStateChanged(auth, async (user) => {
       if (user) {
-        // TODO: Check local storage for existing name before calling getUserData
         let userData = await getUserData(props.uid);
         setName(userData.firstName + ' ' + userData.lastName);
       } else {
@@ -44,6 +43,7 @@ const Home = (props) => {
         null
       ) : (
         <>
+          {/* All of these Paper components are just placeholders and are meant to be replaced */}
           <Paper
             sx={{
               display: 'flex',
