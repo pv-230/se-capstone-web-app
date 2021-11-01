@@ -32,6 +32,11 @@ const NavBar = (props) => {
     signOut(auth);
   }
 
+  //Event Handler for the account settings redirect menu item
+  const handleAccSettings = () => {
+    window.location.href = "/account_settings";
+  }
+
   // Nav menu related
   const [navMenuAnchor, setNavMenuAnchor] = useState(null);
   const navMenuOpen = Boolean(navMenuAnchor);
@@ -96,7 +101,7 @@ const NavBar = (props) => {
           open={accMenuOpen}
           onClose={() => setAccMenuAnchor(null)}
         >
-          <MenuItem>Account settings</MenuItem>
+          <MenuItem onClick={handleAccSettings}>Account settings</MenuItem>
           <MenuItem onClick={handleAccLogout}>Logout</MenuItem>
         </Menu>
 

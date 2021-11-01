@@ -8,6 +8,7 @@ import { CssBaseline } from '@mui/material';
 import Login from './Login'
 import Register from './Register'
 import AccountSetup from './AccountSetup'
+import AccountSettings from './AccountSettings'
 import PasswordReset from './PasswordReset'
 import PageNotFound from './PageNotFound'
 import Home from './Home'
@@ -70,6 +71,10 @@ const AppContainer = () => {
 
           <Route path="/password_reset">
             <PasswordReset />
+          </Route>
+
+          <Route path="/account_settings">
+            <AccountSettings />
           </Route>
 
           <Route exact path="/">
