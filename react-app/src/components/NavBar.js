@@ -50,76 +50,82 @@ const NavBar = (props) => {
         setTitle('Home');
         break;
       default:
-        setTitle('Error: unknown path');
+        setTitle('');
     }
   }, [history.location.pathname]);
 
   return (
     <>
-      {/* The extra Toolbar that is not nested inside the AppBar component is used to help center
-        our content vertically within the space that is immediately below the AppBar. This is
-        helpful because the AppBar is set to a "fixed" position and this means that the AppBar
-        itself does not effect the layout of other components. */}
-      <Toolbar sx={{ minHeight: 65 }}></Toolbar>
-      <AppBar enableColorOnDark={true} position="fixed">
-        <Toolbar sx={{ minHeight: 65 }}>
+      {!title ? (
+        null
+      ) : (
+        <>
+          {/* The extra Toolbar that is not nested inside the AppBar component is used to help center
+          our content vertically within the space that is immediately below the AppBar. This is
+          helpful because the AppBar is set to a "fixed" position and this means that the AppBar
+          itself does not effect the layout of other components. */}
+          <Toolbar sx={{ minHeight: 65 }}></Toolbar>
+          <AppBar enableColorOnDark={true} position="fixed">
+            <Toolbar sx={{ minHeight: 65 }}>
 
-          {/* Nav menu */}
-          <IconButton
-            edge="start"
-            sx={{ mr: 1 }}
-            onClick={(e) => setNavMenuAnchor(e.currentTarget)}
-          >
-            <MenuIcon fontSize="large" />
-          </IconButton>
-          <Menu
-            anchorEl={navMenuAnchor}
-            open={navMenuOpen}
-            onClose={() => setNavMenuAnchor(null)}
-          >
-            <MenuItem onClick={handleNavHome}>Home</MenuItem>
-            <MenuItem>Course selection</MenuItem>
-          </Menu>
+              {/* Nav menu */}
+              <IconButton
+                edge="start"
+                sx={{ mr: 1 }}
+                onClick={(e) => setNavMenuAnchor(e.currentTarget)}
+              >
+                <MenuIcon fontSize="large" />
+              </IconButton>
+              <Menu
+                anchorEl={navMenuAnchor}
+                open={navMenuOpen}
+                onClose={() => setNavMenuAnchor(null)}
+              >
+                <MenuItem onClick={handleNavHome}>Home</MenuItem>
+                <MenuItem>Course selection</MenuItem>
+              </Menu>
 
-          {/* Navbar text */}
-          <Typography
-            variant="h4"
-            sx={{ flexGrow: 1 }}
-          >
-            {title}
-          </Typography>
+              {/* Navbar text */}
+              <Typography
+                variant="h4"
+                sx={{ flexGrow: 1 }}
+              >
+                {title}
+              </Typography>
 
-          {/* Light/dark mode switch */}
-          <FormGroup>
-            <FormControlLabel
-              control={
-                <Switch
-                  defaultChecked
-                  onClick={() => props.toggleThemeMode()}
-                  color="default"
-                />
-              }
-              label={props.currentThemeMode === globalDarkTheme ? 'Dark' : 'Light'} />
-          </FormGroup>
+              {/* Light/dark mode switch */}
+              <FormGroup>
+                <FormControlLabel
+                  control={
+                    <Switch
+                      defaultChecked
+                      onClick={() => props.toggleThemeMode()}
+                      color="default"
+                    />
+                  }
+                  label={props.currentThemeMode === globalDarkTheme ? 'Dark' : 'Light'} />
+              </FormGroup>
 
-          {/* Account menu */}
-          <IconButton
-            edge="end"
-            onClick={(e) => setAccMenuAnchor(e.currentTarget)}
-          >
-            <AccountCircleIcon fontSize="large" />
-          </IconButton>
-          <Menu
-            anchorEl={accMenuAnchor}
-            open={accMenuOpen}
-            onClose={() => setAccMenuAnchor(null)}
-          >
-            <MenuItem>Account settings</MenuItem>
-            <MenuItem onClick={handleAccLogout}>Logout</MenuItem>
-          </Menu>
+              {/* Account menu */}
+              <IconButton
+                edge="end"
+                onClick={(e) => setAccMenuAnchor(e.currentTarget)}
+              >
+                <AccountCircleIcon fontSize="large" />
+              </IconButton>
+              <Menu
+                anchorEl={accMenuAnchor}
+                open={accMenuOpen}
+                onClose={() => setAccMenuAnchor(null)}
+              >
+                <MenuItem>Account settings</MenuItem>
+                <MenuItem onClick={handleAccLogout}>Logout</MenuItem>
+              </Menu>
 
-        </Toolbar>
-      </AppBar>
+            </Toolbar>
+          </AppBar>
+        </>
+      )}
     </>
   )
 }

@@ -129,8 +129,8 @@ const PasswordReset = () => {
           </Button>
 
           {/* Return to login button */}
-          <Button variant="contained" onClick={() => history.push('/login')}>
-            Return to login
+          <Button variant="contained" onClick={() => history.goBack()}>
+            Return
           </Button>
 
           {/* Message that shows when errors are received */}

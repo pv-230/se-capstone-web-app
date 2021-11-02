@@ -141,11 +141,7 @@ const AppContainer = () => {
 
           {/* Password reset page */}
           <Route path="/password_reset">
-            {userInfo.uid ? (
-              <Redirect to="/" />
-            ) : (
-              <PasswordReset />
-            )}
+            <PasswordReset />
           </Route>
 
           {/* Page not found */}
