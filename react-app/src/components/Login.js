@@ -48,6 +48,13 @@ const Login = (props) => {
     });
   }
 
+  // Event handler for when the user presses the enter key inside of a text field
+  const handleEnterKey = event => {
+    if (event.key === 'Enter') {
+      handleLoginButton();
+    }
+  }
+
   // Event handler for clicking on the login button
   const handleLoginButton = async () => {
     // Attempts to sign in using user credentials
@@ -223,6 +230,7 @@ const Login = (props) => {
           <TextField
             type="text"
             onChange={handleInputChange}
+            onKeyDown={handleEnterKey}
             label="Email"
             variant="outlined"
             name="email"
@@ -236,6 +244,7 @@ const Login = (props) => {
           <TextField
             type="password"
             onChange={handleInputChange}
+            onKeyDown={handleEnterKey}
             label="Password"
             variant="outlined"
             name="password"

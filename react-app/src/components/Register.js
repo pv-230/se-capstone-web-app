@@ -38,6 +38,13 @@ const Register = (props) => {
     });
   }
 
+  // Event handler for when the user presses the enter key inside of a text field
+  const handleEnterKey = event => {
+    if (event.key === 'Enter') {
+      handleRegisterButton();
+    }
+  }
+
   // Event handler for clicking on the register button
   const handleRegisterButton = async () => {
     await register(inputText.email, inputText.password);
@@ -131,6 +138,7 @@ const Register = (props) => {
           <TextField
             type="text"
             onChange={handleInputChange}
+            onKeyDown={handleEnterKey}
             label="Email"
             variant="outlined"
             name="email"
@@ -144,6 +152,7 @@ const Register = (props) => {
           <TextField
             type="password"
             onChange={handleInputChange}
+            onKeyDown={handleEnterKey}
             label="Password"
             variant="outlined"
             name="password"
@@ -157,6 +166,7 @@ const Register = (props) => {
           <TextField
             type="password"
             onChange={handleInputChange}
+            onKeyDown={handleEnterKey}
             label="Confirm Password"
             variant="outlined"
             name="confirmPassword"

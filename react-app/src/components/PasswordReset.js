@@ -41,6 +41,13 @@ const PasswordReset = () => {
     });
   }
 
+  // Event handler for when the user presses the enter key inside of a text field
+  const handleEnterKey = event => {
+    if (event.key === 'Enter') {
+      handleResetButton();
+    }
+  }
+
   // Event handler for the reset button
   const handleResetButton = async () => {
     // Attempts to sign in using user credentials
@@ -106,6 +113,7 @@ const PasswordReset = () => {
           <TextField
             type="text"
             onChange={handleInputChange}
+            onKeyDown={handleEnterKey}
             label="Email"
             variant="outlined"
             name="email"
