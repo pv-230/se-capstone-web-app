@@ -122,6 +122,8 @@ const CourseSelection = (props) => {
   }
 
   function updateClicked(classCode, id) {
+    if(props.disable)
+      return;
     toggleSelect(id);
     let pos = selectedClasses.indexOf(classCode);
     let nsPos = notSelectedClasses.indexOf(classCode);
@@ -297,12 +299,17 @@ const CourseSelection = (props) => {
     }
   }
 
+  const editHandler = () => {
+    window.location.href = '/edit_courses';
+  }
+
   return (
     <div>
-      {props.showName && (<Card className="acc-setup-card" elevation={8}>
-        <Stack className="acc-setup-stack" spacing={3}>
+      {props.showName && (<Card className="crs-select-card" elevation={8}>
+        <Stack className="crs-select-name-stack" spacing={3}>
           <Typography variant="h4">Enter your first and last name</Typography>
           <TextField
+            className="crs-select-name"
             type="text"
             value={inputText.firstName}
             onChange={handleInputChange}
@@ -316,6 +323,7 @@ const CourseSelection = (props) => {
           />
 
           <TextField
+            className="crs-select-name"
             type="text"
             value={inputText.lastName}
             onChange={handleInputChange}
@@ -449,7 +457,12 @@ const CourseSelection = (props) => {
               </Stack>
             </Stack>
           </Stack>
-          <Button variant="contained" onClick={saveData}>Save</Button>
+          {props.disable && (
+            <Button variant="contained" onClick={saveData}>Edit</Button>
+          )}
+          {!props.disable && (
+            <Button variant="contained" onClick={editHandler}>Save</Button>
+          )}
           <Snackbar open={open} autoHideDuration={4000} onClose={handleClose}>
             <Alert onClose={handleClose} severity="warning" sx={{ width: '100%' }} >
               Please note that COP 3330 and CDA 3100 are corequisites!

@@ -10,6 +10,17 @@
     overflow-x: auto;
 }
 
+.crs-select-name-stack {
+    padding: 2%;
+    overflow-x: auto;
+    justify-content: center;
+    align-items: center;
+}
+
+.crs-select-name {
+    width: 300px;
+}
+
 .main-button {
     width: 200px;
     height: 75px;

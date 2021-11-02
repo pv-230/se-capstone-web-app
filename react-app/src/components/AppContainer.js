@@ -3,11 +3,11 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import { ThemeProvider } from '@mui/material/styles';
 import { globalDarkTheme, globalLightTheme } from '../styles/GlobalTheme';
 import { CssBaseline } from '@mui/material';
+import CourseSelection from './CourseSelection';
 
 // Components
 import Login from './Login'
 import Register from './Register'
-import AccountSetup from './AccountSetup'
 import PasswordReset from './PasswordReset'
 import PageNotFound from './PageNotFound'
 import Home from './Home'
@@ -65,7 +65,15 @@ const AppContainer = () => {
           </Route>
 
           <Route path="/account_setup">
-            <AccountSetup />
+            <div>
+              <CourseSelection showName={true}></CourseSelection>
+            </div>
+          </Route>
+
+          <Route path="/edit_courses">
+            <div>
+              <CourseSelection showName={false}></CourseSelection>
+            </div>
           </Route>
 
           <Route path="/password_reset">
