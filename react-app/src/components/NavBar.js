@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 import { getAuth, signOut } from 'firebase/auth'
 import AppBar from '@mui/material/AppBar'
@@ -20,6 +20,7 @@ import { globalDarkTheme } from '../styles/GlobalTheme';
  */
 const NavBar = (props) => {
   const history = useHistory();  // Used for routing
+  const [title, setTitle] = useState('');
 
   // Account menu related
   const [accMenuAnchor, setAccMenuAnchor] = useState(null);
@@ -42,6 +43,16 @@ const NavBar = (props) => {
     setNavMenuAnchor(null);
     history.push('/');
   }
+
+  useEffect(() => {
+    switch (history.location.pathname) {
+      case '/':
+        setTitle('Home');
+        break;
+      default:
+        setTitle('Error: unknown path');
+    }
+  }, [history.location.pathname]);
 
   return (
     <>
@@ -75,7 +86,7 @@ const NavBar = (props) => {
             variant="h4"
             sx={{ flexGrow: 1 }}
           >
-            {props.title}
+            {title}
           </Typography>
 
           {/* Light/dark mode switch */}

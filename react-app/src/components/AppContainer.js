@@ -18,28 +18,18 @@ import NavBar from './NavBar'
  * manages app wide state.
  */
 const AppContainer = () => {
+  //
+  // ====================[ Local storage functions ]====================
+  //
+
   // Returns the userId found in local storage or null if not found
-  const getUserInfo = () => {
-    return JSON.parse(localStorage.getItem('uid')) || null;
-  }
-
-  // User information states
-  const [userInfo, setUserInfo] = useState({
-    uid: getUserInfo(),
-  });
-
-  // Updates the uid state to the userId parameter and stores userId in local storage
-  const setUserId = (userId) => {
-    setUserInfo({
-      ...userInfo,
-      uid: userId
-    })
-    localStorage.setItem('uid', JSON.stringify(userId))
+  const getUserId = () => {
+    return JSON.parse(localStorage.getItem('uid'));
   }
 
   // Returns the saved theme mode from local storage
   const getUserTheme = () => {
-    const savedTheme = localStorage.getItem('themeMode');
+    const savedTheme = JSON.parse(localStorage.getItem('themeMode'));
 
     if (savedTheme === 'light') {
       return globalLightTheme;
@@ -49,8 +39,36 @@ const AppContainer = () => {
     }
   }
 
+  //
+  // ====================[ States ]====================
+  //
+
+  // User information states
+  const [userInfo, setUserInfo] = useState({
+    uid: getUserId(),
+  });
+
   // State for the theme mode (light or dark)
   const [themeMode, setThemeMode] = useState(getUserTheme());
+
+  //
+  // ====================[ State mutators ]====================
+  //
+
+  // Updates the uid state to the userId parameter and stores userId in local storage. Also sets
+  // firstName and lastName in local storage to null if the userId is null.
+  const setUserId = (userId) => {
+    setUserInfo({
+      ...userInfo,
+      uid: userId
+    })
+    localStorage.setItem('uid', JSON.stringify(userId));
+
+    if (userId === null) {
+      localStorage.setItem('firstName', JSON.stringify(null));
+      localStorage.setItem('lastName', JSON.stringify(null));
+    }
+  }
 
   // Toggles between light mode and dark mode
   const toggleThemeMode = () => {
@@ -67,27 +85,28 @@ const AppContainer = () => {
     } else {
       savedTheme = 'dark';
     }
-    localStorage.setItem('themeMode', savedTheme);
+    localStorage.setItem('themeMode', JSON.stringify(savedTheme));
   }
 
   return (
     <ThemeProvider theme={themeMode}>
       <CssBaseline />
       <Router>
-        <Switch>
 
+        {/* Navbar */}
+        {userInfo.uid &&
+          <NavBar
+            currentThemeMode={themeMode}
+            toggleThemeMode={toggleThemeMode}
+            setUserId={setUserId}
+          />
+        }
+
+        <Switch>
           {/* Home page */}
           <Route exact path="/">
             {userInfo.uid ? (
-              <>
-                <NavBar
-                  title="Home"
-                  currentThemeMode={themeMode}
-                  toggleThemeMode={toggleThemeMode}
-                  setUserId={setUserId}
-                />
-                <Home uid={userInfo.uid} setUserId={setUserId} />
-              </>
+              <Home uid={userInfo.uid} setUserId={setUserId} />
             ) : (
               <Redirect to="/login" />
             )}
@@ -133,8 +152,8 @@ const AppContainer = () => {
           <Route path="*">
             <PageNotFound />
           </Route>
-
         </Switch>
+
       </Router>
     </ThemeProvider>
   )
