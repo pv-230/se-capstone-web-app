@@ -33,4 +33,11 @@ export class UserData {
         };
         return JSONData;
     }
+    getCompletedClasses() {
+        return this.completedClasses;
+    }
+    getOutstandingClasses() {
+        
+        return this.outstandingClasses;
+    }
 }

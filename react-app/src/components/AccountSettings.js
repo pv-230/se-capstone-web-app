@@ -3,13 +3,15 @@ import { Stack, Card, Box, Typography, Button, TextField } from '@mui/material'
 import { useState } from 'react'
 import { getAuth, onAuthStateChanged} from 'firebase/auth'
 import '../styles/AccountSettings.css'
-import { getNameData } from '../APIs/getNameData';
-import { NameData } from '../models/NameData'
+import { getUserData } from '../APIs/getUserData';
+import { UserData } from '../models/UserData'
 import { setUserData } from '../APIs/setUserData'
+
 
 let auth = null;
 let userD = null;
-
+let selectedClasses = [];
+let notSelectedClasses = [];
 const AccountSettings = () => {
   // States
   const [inputText, setInputText] = useState({
@@ -34,7 +36,7 @@ const AccountSettings = () => {
   }
 
   const handleChangeName= async () => {
-    userD = await getNameData(auth.currentUser.uid);
+    userD = await getUserData(auth.currentUser.uid);
     changeName()
   }
 
@@ -44,7 +46,7 @@ const AccountSettings = () => {
     auth = getAuth();
     await onAuthStateChanged(auth, async (user) => {
       if (user) {
-        userD = await getNameData(auth.currentUser.uid);
+        userD = await getUserData(auth.currentUser.uid);
         if (userD) {
           updateName(userD);
           
@@ -52,7 +54,6 @@ const AccountSettings = () => {
           window.location.href = '/account_setup';
         }
       } else {
-        // If they are logged out, redirects to login
         window.location.href = '/login';
       }
     });
@@ -66,6 +67,7 @@ const AccountSettings = () => {
   }
 
   // Functions
+
  async function changeName(){
     if (inputText.firstName.length < 1 && inputText.lastName.length < 1)
       setErrors({ ...errors, firstNameError: true, lastNameError: true });
@@ -79,11 +81,18 @@ const AccountSettings = () => {
     if (inputText.firstName.length < 1 || inputText.lastName.length < 1)
       window.scrollTo(0, 0);
     else {
-        let userD = new NameData(
-            inputText.firstName,
-            inputText.lastName,
-          );
-          await setUserData(userD, auth.currentUser.uid);
+        const email = auth.currentUser.email;
+        let userTemp = getUserData(auth.currentUser.uid);
+        selectedClasses = (await userTemp).completedClasses;
+        notSelectedClasses = (await userTemp).outstandingClasses;
+        let userD = new UserData(
+        inputText.firstName,
+        inputText.lastName,
+        email,
+        selectedClasses,
+        notSelectedClasses
+      );
+      await setUserData(userD, auth.currentUser.uid);
     }
   }
 
@@ -98,7 +107,7 @@ const AccountSettings = () => {
       <Card className="acc-settings-card" elevation={4}>
         <Box m={5}>
           <Stack className="acc-settings-stack" spacing={3}>
-            <Typography variant="h2">Update your information</Typography>
+            <Typography variant="h4">Update your information</Typography>
             <TextField
             type="text"
             onChange={handleInputChange}
