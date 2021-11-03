@@ -1,9 +1,13 @@
 import React, { useState } from 'react'
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth"
-import { TextField, Button, Stack, Typography, Card } from "@mui/material"
-import '../styles/Register.css'
+import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth'
+import TextField from '@mui/material/TextField'
+import Button from '@mui/material/Button'
+import Stack from '@mui/material/Stack'
+import Typography from '@mui/material/Typography'
+import Paper from '@mui/material/Paper'
+import Box from '@mui/material/Box'
 
-/*
+/**
  * This is the component that provides the register function.
  */
 const Register = (props) => {
@@ -11,9 +15,9 @@ const Register = (props) => {
 
     // Form state
     const [inputText, setInputText] = useState({
-        email: "",
-        password: "",
-        confirmPassword: "",
+        email: '',
+        password: '',
+        confirmPassword: '',
     });
 
     // error message state
@@ -49,7 +53,7 @@ const Register = (props) => {
     // Firebase related function that sends user credentials to the database
     async function register(email, password) {
         const auth = getAuth();
-        if (inputText.confirmPassword === inputText.password && inputText.password !== "") {
+        if (inputText.confirmPassword === inputText.password && inputText.password !== '') {
             await createUserWithEmailAndPassword(auth, email, password)
                 .then((userCredential) => {
                     uid = userCredential.user.uid;
@@ -115,62 +119,77 @@ const Register = (props) => {
     }
 
     return (
-        <Card className="register-card" elevation={8}>
-            <Stack spacing={2} margin={3}>
-                <Typography variant="h4">Registration</Typography>
+        <Box sx={{
+            display: 'flex',
+            minHeight: '100vh',
+            justifyContent: 'center',
+            alignItems: 'center',
+            textAlign: 'center',
+        }}>
+            <Paper elevation={8} sx={{ width: 300}}>
+                <Stack spacing={2} margin={3}>
+                    <Typography variant="h4">Registration</Typography>
 
-                <TextField
-                    type="text"
-                    onChange={handleInputChange}
-                    label="Email"
-                    variant="outlined"
-                    name="email"
-                    required
-                    error={errors.emailError}
-                    helperText={errors.emailError ? errors.message : ""}
-                />
+                    {/* Email field */}
+                    <TextField
+                        type="text"
+                        onChange={handleInputChange}
+                        label="Email"
+                        variant="outlined"
+                        name="email"
+                        color="secondary"
+                        required
+                        error={errors.emailError}
+                        helperText={errors.emailError ? errors.message : ""}
+                    />
 
-                <TextField
-                    type="password"
-                    onChange={handleInputChange}
-                    label="Password"
-                    variant="outlined"
-                    name="password"
-                    required
-                    error={errors.passwordError}
-                    helperText={errors.passwordError ? errors.message : ""}
-                />
+                    {/* Password field */}
+                    <TextField
+                        type="password"
+                        onChange={handleInputChange}
+                        label="Password"
+                        variant="outlined"
+                        name="password"
+                        color="secondary"
+                        required
+                        error={errors.passwordError}
+                        helperText={errors.passwordError ? errors.message : ""}
+                    />
 
-                <TextField
-                    type="password"
-                    onChange={handleInputChange}
-                    label="Confirm Password"
-                    variant="outlined"
-                    name="confirmPassword"
-                    required
-                    error={errors.passwordError}
-                    helperText={errors.passwordError ? errors.message : ""}
-                />
+                    {/* Confirm password field */}
+                    <TextField
+                        type="password"
+                        onChange={handleInputChange}
+                        label="Confirm Password"
+                        variant="outlined"
+                        name="confirmPassword"
+                        color="secondary"
+                        required
+                        error={errors.passwordError}
+                        helperText={errors.passwordError ? errors.message : ""}
+                    />
 
-                {errors.otherError ?
-                    <Typography className="register-error">
-                        Error: {errors.message}
-                    </Typography>
-                    :
-                    null
-                }
+                    {/* Message that shows when other errors are received */}
+                    {errors.otherError ?
+                        <Typography color="red">
+                            Error: {errors.message}
+                        </Typography>
+                        :
+                        null
+                    }
 
-                <Button className="gradient-button" onClick={handleRegisterButton} variant="contained">
-                    Register
-                </Button>
-                <Button className="gradient-button" onClick={handleLoginButton} variant="contained">
-                    Back to Login
-                </Button>
-            </Stack>
-        </Card>
+                    {/* Login and register buttons */}
+                    <Button onClick={handleRegisterButton} variant="contained">
+                        Register
+                    </Button>
+                    <Button onClick={handleLoginButton} variant="contained">
+                        Back to Login
+                    </Button>
 
+                </Stack>
+            </Paper>
+        </Box>
     )
-
 }
 
 export default Register
