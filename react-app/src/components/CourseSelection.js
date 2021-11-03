@@ -8,9 +8,11 @@ import { getUserData } from "../APIs/getUserData"
 import { setUserData } from "../APIs/setUserData"
 import { getAuth, onAuthStateChanged } from 'firebase/auth'
 import { UserData } from "../models/UserData"
+import { useHistory } from 'react-router-dom'
 
 const CourseSelection = (props) => {
 
+  const history = useHistory();
   // States to keep track of what courses are selected/disabled
   const [select, setSelect] = useState(Array(35).fill(false));
   const [disable, setDisable] = useState([false].concat(Array(17).fill(true))
@@ -50,7 +52,8 @@ const CourseSelection = (props) => {
 
   // Makes the snackbar pop up
   const showCoreq = () => {
-    setOpen(true);
+    if (!props.disable)
+      setOpen(true);
   };
 
   // Closes the snackbar
@@ -122,7 +125,7 @@ const CourseSelection = (props) => {
   }
 
   function updateClicked(classCode, id) {
-    if(props.disable)
+    if (props.disable)
       return;
     toggleSelect(id);
     let pos = selectedClasses.indexOf(classCode);
@@ -176,8 +179,8 @@ const CourseSelection = (props) => {
     if (data === null)
       setLoadingOpen(false);
     else {
-      if(props.showName) {
-        setInputText({firstName: data.firstName, lastName: data.lastName});
+      if (props.showName) {
+        setInputText({ firstName: data.firstName, lastName: data.lastName });
       }
       disableData = disable;
       selectData = select;
@@ -225,7 +228,7 @@ const CourseSelection = (props) => {
         getData();
       } else {
         // If they are logged out, redirects to login
-        window.location.href = '/login';
+        history.push('/login');
       }
     });
   }, [])
@@ -252,27 +255,27 @@ const CourseSelection = (props) => {
       // Degree progress percent logic
       let comp = selectedClasses.length;
       let total = 33;
-      if(selectedClasses.indexOf("CHM 1045C") !== -1 && selectedClasses.indexOf("BSC 2010") !== -1 && selectedClasses.indexOf("BSC 2011") !== -1) {
-        if(selectedClasses.indexOf("PHY 2048C") !== -1)
+      if (selectedClasses.indexOf("CHM 1045C") !== -1 && selectedClasses.indexOf("BSC 2010") !== -1 && selectedClasses.indexOf("BSC 2011") !== -1) {
+        if (selectedClasses.indexOf("PHY 2048C") !== -1)
           comp -= 1;
-        if(selectedClasses.indexOf("PHY 2049C") !== -1)
+        if (selectedClasses.indexOf("PHY 2049C") !== -1)
           comp -= 1;
       }
-      else if(selectedClasses.indexOf("PHY 2048C") !== -1 || selectedClasses.indexOf("PHY 2049C") !== -1) {
+      else if (selectedClasses.indexOf("PHY 2048C") !== -1 || selectedClasses.indexOf("PHY 2049C") !== -1) {
         total = 32;
-        if(selectedClasses.indexOf("CHM 1045C") !== -1)
+        if (selectedClasses.indexOf("CHM 1045C") !== -1)
           comp -= 1;
-        if(selectedClasses.indexOf("BSC 2010") !== -1)
+        if (selectedClasses.indexOf("BSC 2010") !== -1)
           comp -= 1;
-        if(selectedClasses.indexOf("BSC 2011") !== -1)
+        if (selectedClasses.indexOf("BSC 2011") !== -1)
           comp -= 1;
       }
       else
         total = 33;
-      
-      const percent = Math.round((comp/total)*100);
 
-      if(props.showName) {
+      const percent = Math.round((comp / total) * 100);
+
+      if (props.showName) {
         userD = new UserData(
           inputText.firstName,
           inputText.lastName,
@@ -295,61 +298,68 @@ const CourseSelection = (props) => {
 
       console.log(userD);
       await setUserData(userD, dataAuth.currentUser.uid);
-      window.location.href = '/';
+      history.push('/');
     }
   }
 
   const editHandler = () => {
-    window.location.href = '/edit_courses';
+    history.push('/edit_courses');
   }
 
   return (
     <div>
-      {props.showName && (<Card className="crs-select-card" elevation={8}>
-        <Stack className="crs-select-name-stack" spacing={3}>
-          <Typography variant="h4">Enter your first and last name</Typography>
-          <TextField
-            className="crs-select-name"
-            type="text"
-            value={inputText.firstName}
-            onChange={handleInputChange}
-            label="First Name"
-            variant="outlined"
-            name="firstName"
-            color="secondary"
-            required
-            error={errors.firstNameError}
-            helperText={errors.firstNameError ? "Please enter your first name" : ""}
-          />
+      {props.showName && (
+        <Card className="crs-select-card" elevation={1}>
+          <Stack className="crs-select-name-stack" spacing={3}>
+            <Typography variant="h4" >Enter your first and last name</Typography>
+            <TextField
+              className="crs-select-name"
+              type="text"
+              value={inputText.firstName}
+              onChange={handleInputChange}
+              label="First Name"
+              variant="outlined"
+              name="firstName"
+              color="secondary"
+              required
+              error={errors.firstNameError}
+              helperText={errors.firstNameError ? "Please enter your first name" : ""}
+            />
 
-          <TextField
-            className="crs-select-name"
-            type="text"
-            value={inputText.lastName}
-            onChange={handleInputChange}
-            label="Last Name"
-            variant="outlined"
-            name="lastName"
-            color="secondary"
-            required
-            error={errors.lastNameError}
-            helperText={errors.lastNameError ? "Please enter your last name" : ""}
-          />
+            <TextField
+              className="crs-select-name"
+              type="text"
+              value={inputText.lastName}
+              onChange={handleInputChange}
+              label="Last Name"
+              variant="outlined"
+              name="lastName"
+              color="secondary"
+              required
+              error={errors.lastNameError}
+              helperText={errors.lastNameError ? "Please enter your last name" : ""}
+            />
 
-        </Stack>
-      </Card>)}
+          </Stack>
+        </Card>)}
 
-      <Card className="crs-select-card" elevation={8}>
+      <Card sx={{
+        width: 'calc(100vw - 100px)',
+        mt: 5,
+      }} elevation={1}>
         <Backdrop open={loadingOpen} style={{ zIndex: 2 }}>
           <CircularProgress color="secondary" />
         </Backdrop>
         <CardContent>
-          <Button variant="contained" onClick={test}>Show Selected</Button>
-          <Typography padding={3} variant="h4">Select your completed and current classes</Typography>
+          {!props.hideTitle && (
+            <Stack alignItems="center" marginTop={5} >
+              <Typography padding={3} variant="h4">Select your completed and current classes</Typography>
+            </Stack>
+          )}
           <Stack className="crs-select-stack" direction="row" justifyContent="center">
             <Stack className="crs-select-stack" spacing={2}>
               <Stack direction="row" spacing={2}>
-                <Card style={{ minWidth: '1310px' }} elevation={10}>
+                <Card style={{ minWidth: '1310px' }} elevation={4}>
                   <CardContent>
                     <Stack spacing={2} direction="row">
                       <Stack spacing={2} direction="row">
@@ -368,9 +378,9 @@ const CourseSelection = (props) => {
                       </Stack>
 
                       <Stack spacing={2}>
-                        <Container>
+                        <Stack alignItems="center">
                           <CourseButton courseCode='COP 3363' courseName='Programming I in Unix' id={8} selectState={select} disableState={disable} onClick={toggleSelect} update={updateClicked}></CourseButton>
-                        </Container>
+                        </Stack>
 
                         <Container>
                           <Stack spacing={2} alignItems="center">
@@ -395,7 +405,7 @@ const CourseSelection = (props) => {
                     </Stack>
                   </CardContent>
                 </Card>
-                <Card style={{ height: '290px', minWidth: '230px' }} elevation={10}>
+                <Card style={{ height: '290px', minWidth: '230px' }} elevation={4}>
                   <CardContent>
                     <Stack spacing={2}>
                       <CourseButton courseCode='Foreign Language I' courseName='' id={18} selectState={select} disableState={disable} onClick={toggleSelect} update={updateClicked}></CourseButton>
@@ -409,7 +419,7 @@ const CourseSelection = (props) => {
               <Stack spacing={2} direction="row">
                 <Stack spacing={2} alignItems="center">
                   <Stack spacing={2} direction="row">
-                    <Card elevation={10}>
+                    <Card elevation={4}>
                       <CardContent>
                         <Stack spacing={2}>
                           <CourseButton courseCode='CHM 1045C' courseName='Gen Chem I w/lab' id={21} selectState={select} disableState={disable} onClick={toggleSelect} update={updateClicked}></CourseButton>
@@ -418,7 +428,7 @@ const CourseSelection = (props) => {
                         </Stack>
                       </CardContent>
                     </Card>
-                    <Card style={{ height: '206px' }} elevation={10}>
+                    <Card style={{ height: '206px' }} elevation={4}>
                       <CardContent>
                         <Stack spacing={2}>
                           <CourseButton courseCode='PHY 2048C' courseName='Gen Physics I w/lab' id={24} selectState={select} disableState={disable} onClick={toggleSelect} update={updateClicked}></CourseButton>
@@ -427,7 +437,7 @@ const CourseSelection = (props) => {
                       </CardContent>
                     </Card>
                   </Stack>
-                  <Card style={{ height: '105px' }} elevation={10}>
+                  <Card style={{ height: '105px' }} elevation={4}>
                     <CardContent>
                       <CourseButton courseCode='XXX xxxx' courseName='Science for Majors' id={26} selectState={select} disableState={disable} onClick={toggleSelect} update={updateClicked}></CourseButton>
                     </CardContent>
@@ -435,7 +445,7 @@ const CourseSelection = (props) => {
                 </Stack>
 
                 <Stack spacing={2}>
-                  <Card elevation={10}>
+                  <Card elevation={4}>
                     <CardContent>
                       <Stack spacing={2}>
                         <Stack spacing={2} direction="row">
@@ -457,12 +467,14 @@ const CourseSelection = (props) => {
               </Stack>
             </Stack>
           </Stack>
-          {props.disable && (
-            <Button variant="contained" onClick={saveData}>Edit</Button>
-          )}
-          {!props.disable && (
-            <Button variant="contained" onClick={editHandler}>Save</Button>
-          )}
+          <Stack alignItems="center">
+            {props.disable && (
+              <Button variant="contained" onClick={editHandler}>Edit your classes</Button>
+            )}
+            {!props.disable && (
+              <Button variant="contained" onClick={saveData}>Save</Button>
+            )}
+          </Stack>
           <Snackbar open={open} autoHideDuration={4000} onClose={handleClose}>
             <Alert onClose={handleClose} severity="warning" sx={{ width: '100%' }} >
               Please note that COP 3330 and CDA 3100 are corequisites!

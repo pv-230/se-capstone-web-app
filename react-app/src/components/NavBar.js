@@ -44,10 +44,19 @@ const NavBar = (props) => {
     history.push('/');
   }
 
+  // Event handler for the Course selection nav menu item
+  const handleNavCourseSelection = () => {
+    setNavMenuAnchor(null);
+    history.push('/edit_courses');
+  }
+
   useEffect(() => {
     switch (history.location.pathname) {
       case '/':
         setTitle('Home');
+        break;
+      case '/edit_courses':
+        setTitle('Edit your selected Courses');
         break;
       default:
         setTitle('');
@@ -82,7 +91,7 @@ const NavBar = (props) => {
                 onClose={() => setNavMenuAnchor(null)}
               >
                 <MenuItem onClick={handleNavHome}>Home</MenuItem>
-                <MenuItem>Course selection</MenuItem>
+                <MenuItem onClick={handleNavCourseSelection}>Course selection</MenuItem>
               </Menu>
 
               {/* Navbar text */}

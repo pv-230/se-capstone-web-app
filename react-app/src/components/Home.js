@@ -5,6 +5,7 @@ import { getUserData } from '../APIs/getUserData';
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper'
+import CourseSelection from './CourseSelection';
 
 /**
  * This is the component that provides the main features of the application
@@ -74,19 +75,9 @@ const Home = (props) => {
               Hello, {name}!
             </Typography>
           </Paper>
-          <Paper
-            sx={{
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              height: 250,
-              width: 'calc(100vw - 100px)',
-              mt: 5,
-            }}>
-            <Typography>
-              Content example 1
-            </Typography>
-          </Paper>
+
+          <CourseSelection disable={true} hideTitle={true} />
+
           <Paper
             sx={{
               display: 'flex',
