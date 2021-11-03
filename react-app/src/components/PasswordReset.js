@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useHistory } from 'react-router-dom'
 import { getAuth, sendPasswordResetEmail } from 'firebase/auth'
 import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
@@ -11,6 +12,8 @@ import Box from '@mui/material/Box'
  * This is the component that handles the password reset functionality
  */
 const PasswordReset = () => {
+  const history = useHistory();
+
   const customErrorCodes = {
     noEmail: 'Please enter your email'
   }
@@ -38,6 +41,13 @@ const PasswordReset = () => {
     });
   }
 
+  // Event handler for when the user presses the enter key inside of a text field
+  const handleEnterKey = event => {
+    if (event.key === 'Enter') {
+      handleResetButton();
+    }
+  }
+
   // Event handler for the reset button
   const handleResetButton = async () => {
     // Attempts to sign in using user credentials
@@ -46,10 +56,6 @@ const PasswordReset = () => {
     } else {
       await sendResetLink();
     }
-  }
-
-  const handleRedirectButton = () => {
-    window.location.href = '/login';
   }
 
   const sendResetLink = async () => {
@@ -99,7 +105,7 @@ const PasswordReset = () => {
       alignItems: 'center',
       textAlign: 'center',
     }}>
-      <Paper elevation={8} sx={{ width: 300}}>
+      <Paper elevation={8} sx={{ width: 300 }}>
         <Stack spacing={2} margin={3}>
           <Typography variant="h4">Password Reset</Typography>
 
@@ -107,23 +113,24 @@ const PasswordReset = () => {
           <TextField
             type="text"
             onChange={handleInputChange}
+            onKeyDown={handleEnterKey}
             label="Email"
             variant="outlined"
             name="email"
             color="secondary"
             required
             error={errors.emailError}
-            helperText={errors.emailError ? errors.message : ""}
+            helperText={errors.emailError ? errors.message : ''}
           />
 
           {/* Send reset link button */}
-          <Button onClick={handleResetButton} variant="contained">
+          <Button variant="contained" onClick={handleResetButton}>
             Send reset link
           </Button>
 
           {/* Return to login button */}
-          <Button  variant="contained" onClick={handleRedirectButton}>
-            Return to login
+          <Button variant="contained" onClick={() => history.goBack()}>
+            Return
           </Button>
 
           {/* Message that shows when errors are received */}
