@@ -11,6 +11,7 @@ import CourseSelection from './CourseSelection';
  * This is the component that provides the main features of the application
  */
 const Home = (props) => {
+  console.log('Inside home');
   const history = useHistory();
   const [name, setName] = useState('');
 
@@ -24,9 +25,11 @@ const Home = (props) => {
       // Name is not in local storage
       console.log('Home: calling getUserData...');
       const userData = await getUserData(props.uid);
-      localStorage.setItem('firstName', JSON.stringify(userData.firstName));
-      localStorage.setItem('lastName', JSON.stringify(userData.lastName));
-      setName(userData.firstName + ' ' + userData.lastName);
+      if (userData) {
+        localStorage.setItem('firstName', JSON.stringify(userData.firstName));
+        localStorage.setItem('lastName', JSON.stringify(userData.lastName));
+        setName(userData.firstName + ' ' + userData.lastName);
+      }
     } else {
       // Updates the name state with local storage contents
       setName(firstName + ' ' + lastName);
@@ -39,6 +42,7 @@ const Home = (props) => {
     const auth = getAuth();
     onAuthStateChanged(auth, async (user) => {
       if (user) {
+        props.setNavTitle('Home');
         updateName();
       } else {
         props.setUserId(null);

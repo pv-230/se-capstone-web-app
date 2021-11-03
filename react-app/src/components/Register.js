@@ -80,7 +80,7 @@ const Register = (props) => {
               emailError: true,
               passwordError: false,
               otherError: false,
-              message: 'Email alright in use'
+              message: 'Email already in use'
             });
           }
           else if (errorCode === 'auth/operation-not-allowed') {

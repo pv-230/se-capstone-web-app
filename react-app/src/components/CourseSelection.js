@@ -11,7 +11,7 @@ import { UserData } from "../models/UserData"
 import { useHistory } from 'react-router-dom'
 
 const CourseSelection = (props) => {
-
+  console.log('Inside CourseSelection');
   const history = useHistory();
   // States to keep track of what courses are selected/disabled
   const [select, setSelect] = useState(Array(35).fill(false));
@@ -28,7 +28,6 @@ const CourseSelection = (props) => {
   const [open, setOpen] = React.useState(false);
   const [loadingOpen, setLoadingOpen] = React.useState(true);
 
-  let auth = null;
   let selectData, disableData = null;
   let data = null;
 
@@ -149,14 +148,6 @@ const CourseSelection = (props) => {
     });
   }
 
-  const test = () => {
-    console.log(selectedClasses);
-    console.log(notSelectedClasses);
-    //console.log(langSelect);
-    //console.log(disable);
-    //console.log(disable.length);
-  }
-
   // Enables a button
   const enable = (id) => {
     const newArr = [...disable];
@@ -174,7 +165,7 @@ const CourseSelection = (props) => {
   }
 
   // Gets the user's data and makes the selector reflect it, if it exists
-  const getData = async () => {
+  const getData = async (auth) => {
     data = await getUserData(auth.currentUser.uid);
     if (data === null)
       setLoadingOpen(false);
@@ -221,11 +212,18 @@ const CourseSelection = (props) => {
   }
 
   useEffect(() => {
-    auth = getAuth();
+    const auth = getAuth();
     onAuthStateChanged(auth, (user) => {
       if (user) {
         // User is signed in
-        getData();
+        if (props.setNavTitle) {
+          if (props.showName) {
+            props.setNavTitle('');
+          } else {
+            props.setNavTitle('Course selection');
+          }
+        }
+        getData(auth);
       } else {
         // If they are logged out, redirects to login
         history.push('/login');

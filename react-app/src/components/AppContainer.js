@@ -51,6 +51,9 @@ const AppContainer = () => {
   // State for the theme mode (light or dark)
   const [themeMode, setThemeMode] = useState(getUserTheme());
 
+  // Nav bar title state
+  const [navTitle, setNavTitle] = useState('');
+
   //
   // ====================[ State mutators ]====================
   //
@@ -99,6 +102,7 @@ const AppContainer = () => {
             currentThemeMode={themeMode}
             toggleThemeMode={toggleThemeMode}
             setUserId={setUserId}
+            navTitle={navTitle}
           />
         }
 
@@ -106,7 +110,10 @@ const AppContainer = () => {
           {/* Home page */}
           <Route exact path="/">
             {userInfo.uid ? (
-              <Home uid={userInfo.uid} setUserId={setUserId} />
+              <Home
+                uid={userInfo.uid}
+                setUserId={setUserId}
+                setNavTitle={setNavTitle} />
             ) : (
               <Redirect to="/login" />
             )}
@@ -143,7 +150,7 @@ const AppContainer = () => {
                   mb: 5,
                 }}
               >
-                <CourseSelection showName={true} />
+                <CourseSelection showName={true} setNavTitle={setNavTitle} />
               </Box>
             ) : (
               <Redirect to="/login" />
@@ -163,7 +170,7 @@ const AppContainer = () => {
                   mb: 5,
                 }}
               >
-                <CourseSelection />
+                <CourseSelection setNavTitle={setNavTitle} />
               </Box>
             ) : (
               <Redirect to="/login" />
