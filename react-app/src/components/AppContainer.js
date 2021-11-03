@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom'
 import { ThemeProvider } from '@mui/material/styles';
 import { globalDarkTheme, globalLightTheme } from '../styles/GlobalTheme';
 import { CssBaseline } from '@mui/material';
@@ -18,33 +18,20 @@ import NavBar from './NavBar'
  * manages app wide state.
  */
 const AppContainer = () => {
+  //
+  // ====================[ Local storage functions ]====================
+  //
+
   // Returns the userId found in local storage or null if not found
-  const getUserInfo = () => {
-    const temp = localStorage.getItem("userId");
-    const savedUserId = JSON.parse(temp);
-    return savedUserId || null;
+  const getUserId = () => {
+    return JSON.parse(localStorage.getItem('uid'));
   }
 
-  // User information states
-  const [userInfo, setUserInfo] = useState({
-    uid: getUserInfo(),
-  });
-
-  // Updates the uid state to the userId parameter and stores userId in local storage
-  const setUserId = (userId) => {
-    setUserInfo({
-      ...userId,
-      uid: userId
-    })
-    const temp = JSON.stringify(userId)
-    localStorage.setItem("userId", temp)
-  }
-  
   // Returns the saved theme mode from local storage
   const getUserTheme = () => {
-    const savedTheme = localStorage.getItem("themeMode");
+    const savedTheme = JSON.parse(localStorage.getItem('themeMode'));
 
-    if (savedTheme === "light") {
+    if (savedTheme === 'light') {
       return globalLightTheme;
     } else {
       // If themeMode not found in local storage, dark mode is set by default
@@ -52,8 +39,36 @@ const AppContainer = () => {
     }
   }
 
+  //
+  // ====================[ States ]====================
+  //
+
+  // User information states
+  const [userInfo, setUserInfo] = useState({
+    uid: getUserId(),
+  });
+
   // State for the theme mode (light or dark)
   const [themeMode, setThemeMode] = useState(getUserTheme());
+
+  //
+  // ====================[ State mutators ]====================
+  //
+
+  // Updates the uid state to the userId parameter and stores userId in local storage. Also sets
+  // firstName and lastName in local storage to null if the userId is null.
+  const setUserId = (userId) => {
+    setUserInfo({
+      ...userInfo,
+      uid: userId
+    })
+    localStorage.setItem('uid', JSON.stringify(userId));
+
+    if (userId === null) {
+      localStorage.setItem('firstName', JSON.stringify(null));
+      localStorage.setItem('lastName', JSON.stringify(null));
+    }
+  }
 
   // Toggles between light mode and dark mode
   const toggleThemeMode = () => {
@@ -66,57 +81,75 @@ const AppContainer = () => {
     // that is why this logic is reversed.
     let savedTheme;
     if (themeMode === globalDarkTheme) {
-      savedTheme = "light";
+      savedTheme = 'light';
     } else {
-      savedTheme = "dark";
+      savedTheme = 'dark';
     }
-    localStorage.setItem("themeMode", savedTheme);
+    localStorage.setItem('themeMode', JSON.stringify(savedTheme));
   }
 
   return (
     <ThemeProvider theme={themeMode}>
       <CssBaseline />
       <Router>
+
+        {/* Navbar */}
+        {userInfo.uid &&
+          <NavBar
+            currentThemeMode={themeMode}
+            toggleThemeMode={toggleThemeMode}
+            setUserId={setUserId}
+          />
+        }
+
         <Switch>
+          {/* Home page */}
+          <Route exact path="/">
+            {userInfo.uid ? (
+              <Home uid={userInfo.uid} setUserId={setUserId} />
+            ) : (
+              <Redirect to="/login" />
+            )}
+          </Route>
 
+          {/* Login page */}
           <Route path="/login">
-            <Login setUserId={setUserId} />
+            {userInfo.uid ? (
+              <Redirect to="/" />
+            ) : (
+              <Login setUserId={setUserId} />
+            )}
           </Route>
 
+          {/* Register page */}
           <Route path="/register">
-            <Register setUserId={setUserId} />
+            {userInfo.uid ? (
+              <Redirect to="/" />
+            ) : (
+              <Register setUserId={setUserId} />
+            )}
           </Route>
 
+          {/* Course registration page */}
           <Route path="/account_setup">
-            <div>
-              <CourseSelection showName={true}></CourseSelection>
-            </div>
+            {userInfo.uid ? (
+              <AccountSetup />
+            ) : (
+              <Redirect to="/login" />
+            )}
           </Route>
 
-          <Route path="/edit_courses">
-            <div>
-              <CourseSelection showName={false}></CourseSelection>
-            </div>
-          </Route>
-
+          {/* Password reset page */}
           <Route path="/password_reset">
             <PasswordReset />
           </Route>
 
-          <Route exact path="/">
-            <NavBar
-              title="Home"
-              currentThemeMode={themeMode}
-              toggleThemeMode={toggleThemeMode}
-            />
-            <Home uid={userInfo.uid} />
-          </Route>
-
+          {/* Page not found */}
           <Route path="*">
             <PageNotFound />
           </Route>
-
         </Switch>
+
       </Router>
     </ThemeProvider>
   )

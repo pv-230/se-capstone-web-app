@@ -1,73 +1,121 @@
-import React from 'react'
-import { useState } from 'react'
-import { getUserData } from '../APIs/getUserData';
-import { Stack, Typography, Card } from '@mui/material';
+import React, { useState, useEffect } from 'react'
+import { useHistory } from 'react-router-dom'
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import { getUserData } from '../APIs/getUserData';
+import Box from '@mui/material/Box'
+import Typography from '@mui/material/Typography';
+import Paper from '@mui/material/Paper'
 
-/*
- * This is the page that houses all components needed in the home page.
+/**
+ * This is the component that provides the main features of the application
  */
 const Home = (props) => {
-  let auth = null;
-  let userD = null;
+  const history = useHistory();
+  const [name, setName] = useState('');
 
-  const stackStyle = {
-    alignItems: 'center',
-    justifyContent: 'center',
-    margin: '3%'
-  }
+  // Updates the name state by retrieving the user's name from local storage or from the database
+  // if the name does not exist in local storage.
+  const updateName = async () => {
+    let firstName = JSON.parse(localStorage.getItem('firstName'));
+    let lastName = JSON.parse(localStorage.getItem('lastName'));
 
-  var cardStyle = {
-    display: 'block',
-    width: '400px',
-    height: '400px',
-    textAlign: 'center',
-    background: 'linear-gradient(45deg, #c4b83f 30%, #c9c167 90%)'
-  }
+    if (!firstName || !lastName) {
+      // Name is not in local storage
+      console.log('Home: calling getUserData...');
+      const userData = await getUserData(props.uid);
+      localStorage.setItem('firstName', JSON.stringify(userData.firstName));
+      localStorage.setItem('lastName', JSON.stringify(userData.lastName));
+      setName(userData.firstName + ' ' + userData.lastName);
+    } else {
+      // Updates the name state with local storage contents
+      setName(firstName + ' ' + lastName);
+    }
+  };
 
-  var textStyle = {
-    "fontFamily": `"Segoe UI", "sans-serif"`,
-    "fontSize": 50,
-    "fontWeight": 700,
-  }
-
-  // States
-  const [name, setName] = useState("")
-
-  const checkAuth = async () => {
-    auth = getAuth();
-    await onAuthStateChanged(auth, async (user) => {
+  // This effect causes firebase to watch for changes to the user's authentication and redirects
+  // to login if user is not authenticated. Also updates the name state with updateName().
+  useEffect(() => {
+    const auth = getAuth();
+    onAuthStateChanged(auth, async (user) => {
       if (user) {
-        userD = await getUserData(auth.currentUser.uid);
-        if (userD) {
-          updateName(userD);
-        } else {
-          window.location.href = '/account_setup';
-        }
+        updateName();
       } else {
-        // If they are logged out, redirects to login
-        window.location.href = '/login';
+        props.setUserId(null);
+        history.push('/login');
       }
     });
-  }
-
-  checkAuth();
-
-  const updateName = (userData) => {
-    setName(userData.firstName);
-  }
+  });
 
   return (
-    <Stack spacing={2} style={stackStyle}>
-      <Typography color="text.primary" style={textStyle}>Welcome to the Home Page</Typography>
-      <Stack>
-        <Card style={cardStyle} elevation={8}>
-          <Typography style={textStyle} marginTop='40%' color="white">
-            Hello, {name}!
-          </Typography>
-        </Card>
-      </Stack>
-    </Stack>
+    <Box
+      sx={{
+        display: 'flex',
+        minHeight: `calc(100vh - 65px)`,
+        justifyContent: 'center',
+        alignItems: 'center',
+        flexDirection: 'column'
+      }}
+    >
+      {!name ? (
+        null
+      ) : (
+        <>
+          {/* All of these Paper components are just placeholders and are meant to be replaced */}
+          <Paper
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              height: 250,
+              width: 'calc(100vw - 100px)',
+              mt: 5,
+            }}>
+            <Typography>
+              Hello, {name}!
+            </Typography>
+          </Paper>
+          <Paper
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              height: 250,
+              width: 'calc(100vw - 100px)',
+              mt: 5,
+            }}>
+            <Typography>
+              Content example 1
+            </Typography>
+          </Paper>
+          <Paper
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              height: 250,
+              width: 'calc(100vw - 100px)',
+              mt: 5,
+            }}>
+            <Typography>
+              Content example 2
+            </Typography>
+          </Paper>
+          <Paper
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              height: 500,
+              width: 'calc(100vw - 100px)',
+              my: 5,
+            }}>
+            <Typography>
+              Content example 3 (longer)
+            </Typography>
+          </Paper>
+        </>
+      )}
+    </Box>
   )
 }
 

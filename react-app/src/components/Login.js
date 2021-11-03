@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useHistory } from 'react-router-dom'
 import { getAuth, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, GithubAuthProvider, OAuthProvider } from 'firebase/auth'
 import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
@@ -16,7 +17,8 @@ import Paper from '@mui/material/Paper'
  * This is the component that provides the login functionality
  */
 const Login = (props) => {
-  var uid = null;  // Stores a UID returned from Firebase
+  const history = useHistory();
+  let uid = null;  // Stores a UID returned from Firebase
 
   // This object just holds some strings that are reused for display error messages
   const customErrorCodes = {
@@ -46,6 +48,13 @@ const Login = (props) => {
     });
   }
 
+  // Event handler for when the user presses the enter key inside of a text field
+  const handleEnterKey = event => {
+    if (event.key === 'Enter') {
+      handleLoginButton();
+    }
+  }
+
   // Event handler for clicking on the login button
   const handleLoginButton = async () => {
     // Attempts to sign in using user credentials
@@ -60,18 +69,8 @@ const Login = (props) => {
     // Redirects to homepage if user has been validated since uid will be null otherwise
     if (uid) {
       props.setUserId(uid);
-      window.location.href = '/';
+      history.push('/');
     }
-  }
-
-  // Event handler for clicking on the register button
-  const handleRegisterButton = () => {
-    window.location.href = '/register';
-  }
-
-  // Event handler for clicking on the password reset link
-  const handleForgotPassword = () => {
-    window.location.href = '/password_reset'
   }
 
   // Event handler for using Google authentication
@@ -92,7 +91,7 @@ const Login = (props) => {
     // Redirects to homepage if user has been validated since uid will be null otherwise
     if (uid) {
       props.setUserId(uid);
-      window.location.href = '/';
+      history.push('/');
     }
   }
 
@@ -114,7 +113,7 @@ const Login = (props) => {
     // Redirects to homepage if user has been validated since uid will be null otherwise
     if (uid) {
       props.setUserId(uid);
-      window.location.href = '/';
+      history.push('/');
     }
   }
 
@@ -134,7 +133,7 @@ const Login = (props) => {
     // Redirects to homepage if user has been validated since uid will be null otherwise
     if (uid) {
       props.setUserId(uid);
-      window.location.href = '/';
+      history.push('/');
     }
   }
 
@@ -223,78 +222,80 @@ const Login = (props) => {
         textAlign: 'center',
       }}
     >
-      <Paper elevation={8} sx={{ width: 300}}>
-          <Stack spacing={2} margin={3}>
-            <Typography variant="h4">Welcome!</Typography>
+      <Paper elevation={8} sx={{ width: 300 }}>
+        <Stack spacing={2} margin={3}>
+          <Typography variant="h4">Welcome!</Typography>
 
-            {/* Email field */}
-            <TextField
-              type="text"
-              onChange={handleInputChange}
-              label="Email"
-              variant="outlined"
-              name="email"
-              color="secondary"
-              required
-              error={errors.emailError}
-              helperText={errors.emailError ? errors.message : ""}
-            />
+          {/* Email field */}
+          <TextField
+            type="text"
+            onChange={handleInputChange}
+            onKeyDown={handleEnterKey}
+            label="Email"
+            variant="outlined"
+            name="email"
+            color="secondary"
+            required
+            error={errors.emailError}
+            helperText={errors.emailError ? errors.message : ''}
+          />
 
-            {/* Password field */}
-            <TextField
-              type="password"
-              onChange={handleInputChange}
-              label="Password"
-              variant="outlined"
-              name="password"
-              color="secondary"
-              required
-              error={errors.passwordError}
-              helperText={errors.passwordError ? errors.message : ""}
-            />
+          {/* Password field */}
+          <TextField
+            type="password"
+            onChange={handleInputChange}
+            onKeyDown={handleEnterKey}
+            label="Password"
+            variant="outlined"
+            name="password"
+            color="secondary"
+            required
+            error={errors.passwordError}
+            helperText={errors.passwordError ? errors.message : ''}
+          />
 
-            {/* Forgot password button */}
-            <Button color="secondary" variant="text" onClick={handleForgotPassword}>
-              Forgot your password?
-            </Button>
+          {/* Forgot password button */}
+          <Button color="secondary" variant="text" onClick={() => history.push('/password_reset')}>
+            Forgot your password?
+          </Button>
 
-            {/* Message that shows when other errors are received */}
-            {errors.otherError ?
-              <Typography color="red">
-                Error: {errors.message}
-              </Typography>
-              :
-              null
-            }
+          {/* Message that shows when other errors are received */}
+          {errors.otherError ?
+            <Typography color="red">
+              Error: {errors.message}
+            </Typography>
+            :
+            null
+          }
 
-            {/* Login and register buttons */}
-            <Button onClick={handleLoginButton} variant="contained">
-              Login
-            </Button>
-            <Button onClick={handleRegisterButton} variant="contained">
-              Register
-            </Button>
+          {/* Login and register buttons */}
+          <Button variant="contained" onClick={handleLoginButton}>
+            Login
+          </Button>
+          <Button variant="contained" onClick={() => history.push('/register')}>
+            Register
+          </Button>
 
-            {/* Login providers */}
-            <Stack sx={{ justifyContent: 'center' }} direction="row" spacing={2}>
-              <Tooltip title="Sign in with Google">
-                <IconButton onClick={handleGoogleAuth}>
-                  <GoogleIcon color="secondary"></GoogleIcon>
-                </IconButton>
-              </Tooltip>
-              <Tooltip title="Sign in with GitHub">
-                <IconButton onClick={handleGitHubAuth}>
-                  <GitHubIcon color="secondary"></GitHubIcon>
-                </IconButton>
-              </Tooltip>
-              <Tooltip title="Sign in with Yahoo">
-                <IconButton onClick={handleYahooAuth}>
-                  <EmailIcon color="secondary"></EmailIcon>
-                </IconButton>
-              </Tooltip>
-            </Stack>
-            
+          {/* Login providers */}
+          <Stack sx={{ justifyContent: 'center' }} direction="row" spacing={2}>
+            <Tooltip title="Sign in with Google">
+              <IconButton onClick={handleGoogleAuth}>
+                <GoogleIcon color="secondary"></GoogleIcon>
+              </IconButton>
+            </Tooltip>
+            <Tooltip title="Sign in with GitHub">
+              <IconButton onClick={handleGitHubAuth}>
+                <GitHubIcon color="secondary"></GitHubIcon>
+              </IconButton>
+            </Tooltip>
+            <Tooltip title="Sign in with Yahoo">
+              <IconButton onClick={handleYahooAuth}>
+                <EmailIcon color="secondary"></EmailIcon>
+              </IconButton>
+            </Tooltip>
           </Stack>
+
+        </Stack>
       </Paper>
     </Box>
   )
