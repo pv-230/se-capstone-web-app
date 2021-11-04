@@ -2,12 +2,12 @@ import React, { useState } from 'react'
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom'
 import { ThemeProvider } from '@mui/material/styles';
 import { globalDarkTheme, globalLightTheme } from '../styles/GlobalTheme';
-import { CssBaseline } from '@mui/material';
+import { CssBaseline, Box } from '@mui/material';
+import CourseSelection from './CourseSelection';
 
 // Components
 import Login from './Login'
 import Register from './Register'
-import AccountSetup from './AccountSetup'
 import PasswordReset from './PasswordReset'
 import PageNotFound from './PageNotFound'
 import Home from './Home'
@@ -50,6 +50,9 @@ const AppContainer = () => {
 
   // State for the theme mode (light or dark)
   const [themeMode, setThemeMode] = useState(getUserTheme());
+
+  // Nav bar title state
+  const [navTitle, setNavTitle] = useState('');
 
   //
   // ====================[ State mutators ]====================
@@ -99,6 +102,7 @@ const AppContainer = () => {
             currentThemeMode={themeMode}
             toggleThemeMode={toggleThemeMode}
             setUserId={setUserId}
+            navTitle={navTitle}
           />
         }
 
@@ -106,7 +110,10 @@ const AppContainer = () => {
           {/* Home page */}
           <Route exact path="/">
             {userInfo.uid ? (
-              <Home uid={userInfo.uid} setUserId={setUserId} />
+              <Home
+                uid={userInfo.uid}
+                setUserId={setUserId}
+                setNavTitle={setNavTitle} />
             ) : (
               <Redirect to="/login" />
             )}
@@ -133,7 +140,38 @@ const AppContainer = () => {
           {/* Course registration page */}
           <Route path="/account_setup">
             {userInfo.uid ? (
-              <AccountSetup />
+              <Box
+                sx={{
+                  display: 'flex',
+                  minHeight: `calc(100vh - 65px)`,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  flexDirection: 'column',
+                  mb: 5,
+                }}
+              >
+                <CourseSelection showName={true} setNavTitle={setNavTitle} />
+              </Box>
+            ) : (
+              <Redirect to="/login" />
+            )}
+          </Route>
+
+          {/* Edit selected courses page */}
+          <Route path="/edit_courses">
+            {userInfo.uid ? (
+              <Box
+                sx={{
+                  display: 'flex',
+                  minHeight: `calc(100vh - 65px)`,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  flexDirection: 'column',
+                  mb: 5,
+                }}
+              >
+                <CourseSelection setNavTitle={setNavTitle} />
+              </Box>
             ) : (
               <Redirect to="/login" />
             )}

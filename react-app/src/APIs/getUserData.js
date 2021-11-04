@@ -18,9 +18,10 @@ export async function getUserData(uid) {
         let email = JSON.parse(snapshot.data().Email);
         let comp = JSON.parse(snapshot.data().CompletedClasses);
         let outstanding = JSON.parse(snapshot.data().OutstandingClasses);
+        let percent = JSON.parse(snapshot.data().PercentDone);
 
         // Creates the new object
-        const userD = new UserData(firstN, lastN, email, comp, outstanding);
+        const userD = new UserData(firstN, lastN, email, comp, outstanding, percent);
         return userD;
     } else {
         console.log("Error reading user data from Firestore!");
