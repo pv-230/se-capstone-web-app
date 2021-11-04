@@ -1,6 +1,6 @@
 import React from 'react'
 import '../styles/NotFound.css';
-import NotFound from '../assests/404error.jpg';
+import NotFound from '../images/404error.jpg';
 
 function PageNotFound(props) {
   return (

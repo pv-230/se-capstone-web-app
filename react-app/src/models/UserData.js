@@ -7,6 +7,7 @@ export class UserData {
     this.outstandingClasses = outstandingClasses;
     this.percentDone = percentDone;
   }
+  
   toString() {
     return (`
                 First Name: ${this.firstName}
@@ -16,15 +17,16 @@ export class UserData {
                 Outstanding Classes: ${this.outstandingClasses}
                 Percent Done: ${this.percentDone}`);
   }
+
   completeClass(classCode) {
     let classPos = this.outstandingClasses.indexOf(classCode);
     if (classPos !== -1) {
       this.outstandingClasses.splice(classPos, 1);
       this.completedClasses.push(classCode);
-    }
-    else
+    } else 
       console.log("Error, that is not an outstanding class");
   }
+
   getJSONObject() {
     const JSONData = {
       "FirstName": JSON.stringify(this.firstName),

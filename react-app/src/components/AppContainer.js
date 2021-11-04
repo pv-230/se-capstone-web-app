@@ -8,6 +8,7 @@ import CourseSelection from './CourseSelection';
 // Components
 import Login from './Login'
 import Register from './Register'
+import AccountSettings from './AccountSettings'
 import PasswordReset from './PasswordReset'
 import PageNotFound from './PageNotFound'
 import Home from './Home'
@@ -172,6 +173,15 @@ const AppContainer = () => {
               >
                 <CourseSelection setNavTitle={setNavTitle} />
               </Box>
+            ) : (
+              <Redirect to="/login" />
+            )}
+          </Route>
+
+          {/* Account settings page */}
+          <Route path="/account_settings">
+            {userInfo.uid ? (
+              <AccountSettings />
             ) : (
               <Redirect to="/login" />
             )}
