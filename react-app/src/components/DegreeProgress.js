@@ -1,14 +1,10 @@
-import * as React from 'react';
-import PropTypes from 'prop-types';
+import React, { useState, useEffect } from 'react';
 import LinearProgress from '@mui/material/LinearProgress';
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import { Card, Typography } from "@mui/material";
-import { getAuth, onAuthStateChanged } from 'firebase/auth'
 import { getUserData } from '../APIs/getUserData';
-import { UserData } from '../models/UserData';
 
-let percentage = 0;
 function LinearProgressWithLabel(props) {
   return (
     <Box sx={{ display: 'flex', alignItems: 'center' }}>
@@ -25,24 +21,39 @@ function LinearProgressWithLabel(props) {
 }
 
 const BorderLinearProgress = styled(LinearProgressWithLabel)(({ theme }) => ({
-    height: 10,
-    borderRadius: 5,
-  }));
+  height: 10,
+  borderRadius: 5,
+}));
+
+
+export default function ProgressWithLabel(props) {
+  const [percent, setPercent] = useState(0);
+
+  const getPercent = async () => {
+    await getUserData(props.uid)
+      .then((result) => {
+        setPercent(Number.parseInt(result.percentDone));
+      })
+      .catch(error => {
+        return 0;
+      });
+  }
+
+  useEffect(() => {
+    getPercent();
+  }, [])
   
-
-export default function ProgressWithLabel() {
-
   return (
     <div>
-        <Card sx={{
-            width: 'calc(100vw - 100px)',
-            padding: '2%',
-            mt: 5,
-        }} elevation={1}>
-            <Box sx={{ width: '100%' }}>
-                <BorderLinearProgress value={percentage} />
-            </Box>
-        </Card>
+      <Card sx={{
+        width: 'calc(100vw - 100px)',
+        padding: '2%',
+        mt: 5,
+      }} elevation={1}>
+        <Box sx={{ width: '100%' }}>
+          <BorderLinearProgress value={percent} />
+        </Box>
+      </Card>
     </div>
 
   );
