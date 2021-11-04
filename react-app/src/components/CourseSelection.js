@@ -72,8 +72,9 @@ const CourseSelection = (props) => {
     }
     else if (classCode === "MAC 1140") {
       if (select[1])
-        enable([5]);
-      enable([8]);
+        enable([5, 8]);
+      else
+        enable([8]);
     }
     else if (classCode === "MAC 2311")
       enable([2, 6, 24]);

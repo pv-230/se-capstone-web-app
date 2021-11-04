@@ -27,6 +27,9 @@ const Home = (props) => {
         localStorage.setItem('lastName', JSON.stringify(userData.lastName));
         setName(userData.firstName + ' ' + userData.lastName);
       }
+      else if(firstName === null || lastName === null) {
+        history.push('/account_setup');
+      }
     } else {
       // Updates the name state with local storage contents
       setName(firstName + ' ' + lastName);
