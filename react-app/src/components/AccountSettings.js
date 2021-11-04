@@ -1,7 +1,8 @@
 import React from 'react'
+import { useHistory } from 'react-router-dom'
 import { Stack, Card, Box, Typography, Button, TextField } from '@mui/material'
 import { useState } from 'react'
-import { getAuth, onAuthStateChanged} from 'firebase/auth'
+import { getAuth, onAuthStateChanged } from 'firebase/auth'
 import '../styles/AccountSettings.css'
 import { getUserData } from '../APIs/getUserData';
 import { UserData } from '../models/UserData'
@@ -13,6 +14,8 @@ let userD = null;
 let selectedClasses = [];
 let notSelectedClasses = [];
 const AccountSettings = () => {
+  const history = useHistory();
+
   // States
   const [inputText, setInputText] = useState({
     firstName: "",
@@ -31,11 +34,7 @@ const AccountSettings = () => {
     });
   }
 
-  const handleForgotPassword = () => {
-    window.location.href = "/password_reset"
-  }
-
-  const handleChangeName= async () => {
+  const handleChangeName = async () => {
     userD = await getUserData(auth.currentUser.uid);
     changeName()
   }
@@ -49,26 +48,26 @@ const AccountSettings = () => {
         userD = await getUserData(auth.currentUser.uid);
         if (userD) {
           updateName(userD);
-          
+
         } else {
-          window.location.href = '/account_setup';
+          history.push('/account_setup');
         }
       } else {
-        window.location.href = '/login';
+        history.push('/login');
       }
     });
   }
 
   checkAuth();
-  
+
 
   const updateName = (userData) => {
-    setName(userData.firstName+ " " +userData.lastName);
+    setName(userData.firstName + " " + userData.lastName);
   }
 
   // Functions
 
- async function changeName(){
+  async function changeName() {
     if (inputText.firstName.length < 1 && inputText.lastName.length < 1)
       setErrors({ ...errors, firstNameError: true, lastNameError: true });
     else if (inputText.firstName.length < 1)
@@ -81,13 +80,13 @@ const AccountSettings = () => {
     if (inputText.firstName.length < 1 || inputText.lastName.length < 1)
       window.scrollTo(0, 0);
     else {
-        const email = auth.currentUser.email;
-        let userTemp = getUserData(auth.currentUser.uid);
-        
-        selectedClasses = (await userTemp).completedClasses;
-        notSelectedClasses = (await userTemp).outstandingClasses;
-        let percent = (await userTemp).percentDone;
-        let userD = new UserData(
+      const email = auth.currentUser.email;
+      let userTemp = getUserData(auth.currentUser.uid);
+
+      selectedClasses = (await userTemp).completedClasses;
+      notSelectedClasses = (await userTemp).outstandingClasses;
+      let percent = (await userTemp).percentDone;
+      let userD = new UserData(
         inputText.firstName,
         inputText.lastName,
         email,
@@ -112,35 +111,35 @@ const AccountSettings = () => {
           <Stack className="acc-settings-stack" spacing={3}>
             <Typography variant="h4">Update your information</Typography>
             <TextField
-            type="text"
-            onChange={handleInputChange}
-            label="First Name"
-            variant="outlined"
-            name="firstName"
-            color="secondary"
-            required
-            error={errors.firstNameError}
-            helperText={errors.firstNameError ? "Please enter your first name" : ""}
-          />
+              type="text"
+              onChange={handleInputChange}
+              label="First Name"
+              variant="outlined"
+              name="firstName"
+              color="secondary"
+              required
+              error={errors.firstNameError}
+              helperText={errors.firstNameError ? "Please enter your first name" : ""}
+            />
 
-          <TextField
-            type="text"
-            onChange={handleInputChange}
-            label="Last Name"
-            variant="outlined"
-            name="lastName"
-            color="secondary"
-            required
-            error={errors.lastNameError}
-            helperText={errors.lastNameError ? "Please enter your last name" : ""}
-          />
-            <Button color="secondary" variant="contained" onClick={handleChangeName}>
-             Submit name change
+            <TextField
+              type="text"
+              onChange={handleInputChange}
+              label="Last Name"
+              variant="outlined"
+              name="lastName"
+              color="secondary"
+              required
+              error={errors.lastNameError}
+              helperText={errors.lastNameError ? "Please enter your last name" : ""}
+            />
+            <Button variant="contained" onClick={handleChangeName}>
+              Submit name change
             </Button>
-             <Button color="secondary" variant="text" onClick={handleForgotPassword}>
+            <Button color="secondary" variant="text" onClick={() => history.push('/password_reset')}>
               Would you like to change your password?
             </Button>
-            <Button color="secondary" variant="text">
+            <Button color="secondary" variant="text" onClick={() => history.push('/edit_courses')}>
               Would you like to change your Completed Classes?
             </Button>
           </Stack>
