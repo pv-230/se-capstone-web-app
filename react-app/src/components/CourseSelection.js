@@ -11,7 +11,6 @@ import { UserData } from "../models/UserData"
 import { useHistory } from 'react-router-dom'
 
 const CourseSelection = (props) => {
-  console.log('Inside CourseSelection');
   const history = useHistory();
   // States to keep track of what courses are selected/disabled
   const [select, setSelect] = useState(Array(35).fill(false));
@@ -293,8 +292,7 @@ const CourseSelection = (props) => {
           percent
         );
       }
-
-      console.log(userD);
+      
       await setUserData(userD, dataAuth.currentUser.uid);
       history.push('/');
     }
