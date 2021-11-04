@@ -83,14 +83,17 @@ const AccountSettings = () => {
     else {
         const email = auth.currentUser.email;
         let userTemp = getUserData(auth.currentUser.uid);
+        
         selectedClasses = (await userTemp).completedClasses;
         notSelectedClasses = (await userTemp).outstandingClasses;
+        let percent = (await userTemp).percentDone;
         let userD = new UserData(
         inputText.firstName,
         inputText.lastName,
         email,
         selectedClasses,
-        notSelectedClasses
+        notSelectedClasses,
+        percent
       );
       await setUserData(userD, auth.currentUser.uid);
     }
