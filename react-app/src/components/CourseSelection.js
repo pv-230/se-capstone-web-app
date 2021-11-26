@@ -220,7 +220,7 @@ const CourseSelection = (props) => {
           if (props.showName) {
             props.setNavTitle('');
           } else {
-            props.setNavTitle('Course selection');
+            props.setNavTitle('Course Selection');
           }
         }
         getData(auth);

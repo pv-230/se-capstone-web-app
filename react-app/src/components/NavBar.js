@@ -55,6 +55,11 @@ const NavBar = (props) => {
     history.push('/edit_courses');
   }
 
+  const handleNavCourseInfo = () => {
+    setNavMenuAnchor(null);
+    history.push('/course_info');
+  }
+
   return (
     <>
       {!props.navTitle ? (
@@ -83,7 +88,8 @@ const NavBar = (props) => {
                 onClose={() => setNavMenuAnchor(null)}
               >
                 <MenuItem onClick={handleNavHome}>Home</MenuItem>
-                <MenuItem onClick={handleNavCourseSelection}>Course selection</MenuItem>
+                <MenuItem onClick={handleNavCourseSelection}>Course Selection</MenuItem>
+                <MenuItem onClick={handleNavCourseInfo}>Course Information</MenuItem>
               </Menu>
 
               {/* Navbar text */}
