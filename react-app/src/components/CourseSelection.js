@@ -379,19 +379,19 @@ const CourseSelection = (props) => {
 
                       <Stack spacing={2}>
                         <Stack alignItems="center">
-                          <CourseButton courseCode='COP 3363' courseName='Programming I in Unix' id={8} selectState={select} disableState={disable} onClick={toggleSelect} update={updateClicked}></CourseButton>
+                          <CourseButton courseCode='COP 3363' courseName='Intro to Programming in C++' id={8} selectState={select} disableState={disable} onClick={toggleSelect} update={updateClicked}></CourseButton>
                         </Stack>
 
                         <Container>
                           <Stack spacing={2} alignItems="center">
                             <Stack spacing={2} direction="row">
                               <CourseButton courseCode='CIS 3250' courseName='Ethics and CS' id={9} selectState={select} disableState={disable} onClick={toggleSelect} update={updateClicked}></CourseButton>
-                              <CourseButton courseCode='COP 3330' courseName='Object-Oriented Programming' id={10} selectState={select} disableState={disable} onClick={toggleSelect} update={updateClicked}></CourseButton>
+                              <CourseButton courseCode='COP 3330' courseName='Data Struc, Algs, and Gen Program I' id={10} selectState={select} disableState={disable} onClick={toggleSelect} update={updateClicked}></CourseButton>
                               <CourseButton courseCode='CDA 3100' courseName='Computer Organization I' id={11} selectState={select} disableState={disable} onClick={toggleSelect} update={updateClicked}></CourseButton>
                             </Stack>
                             <Stack spacing={2} direction="row" justifyContent="flex-start">
                               <CourseButton courseCode='COT 4420' courseName='Theory of Computation' id={12} selectState={select} disableState={disable} onClick={toggleSelect} update={updateClicked}></CourseButton>
-                              <CourseButton courseCode='COP 4530' courseName='Data Struc, Algs and Gen Program' id={13} selectState={select} disableState={disable} onClick={toggleSelect} update={updateClicked}></CourseButton>
+                              <CourseButton courseCode='COP 4530' courseName='Data Struc, Algs and Gen Program II' id={13} selectState={select} disableState={disable} onClick={toggleSelect} update={updateClicked}></CourseButton>
                             </Stack>
                           </Stack>
                         </Container>
