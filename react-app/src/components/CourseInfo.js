@@ -10,26 +10,29 @@ import Toolbar from '@mui/material/Toolbar';
 import Divider from '@mui/material/Divider';
 import Typography from '@mui/material/Typography';
 
-
 const CourseInfo = (props) => {
   const history = useHistory();
-  
-  const coreCoursesList = [ 'Discrete Math I', 'Discrete Math II', 'Computer Organization I',
+
+  const coreCoursesList = [
+    'Discrete Math I', 'Discrete Math II', 'Computer Organization I',
     'Software Engineering I', 'Software Engineering Capstone', 'Intro to Programming',
     'DS, Algos, and GP I', 'DS, Algos, and GP II', 'SP&D Computing in Python',
     'Operating Systems', 'Theory of Computation', 'Statistics', 'Ethics and Computer Science'
   ]
 
-  const electivesList = [ 'Intro to Artificial Intelligence', 'Computer Organization II',
-  'Software Engineering II', 'Expert Systems', 'Intro to Software Reverse Engineering',
-  'Computer Security Fundamentals', 'Cybercrime Detection and Forensics',
-  'Intro to Offensive Computer Security', 'Network Security and Cryptography',
-  'Intro to Computer Networks', 'Computer and Network System Administration',
-  'Advanced Programming with Java', 'Programming Languages', 'Python Programming',
-  'Advanced Application Developerment', 'Unix Tools', 'Reactive Systems Programming',
-  'Intro to Compiler Writing', 'Mobile Programming', 'Theory and Structure of Databases',
-  'Web Applications Programming', 'Top 10 Algorithms', 'Computer Architecture'
+  const electivesList = [
+    'Intro to Artificial Intelligence', 'Computer Organization II',
+    'Software Engineering II', 'Expert Systems', 'Intro to Software Reverse Engineering',
+    'Computer Security Fundamentals', 'Cybercrime Detection and Forensics',
+    'Intro to Offensive Computer Security', 'Network Security and Cryptography',
+    'Intro to Computer Networks', 'Computer and Network System Administration',
+    'Advanced Programming with Java', 'Programming Languages', 'Python Programming',
+    'Advanced Application Developerment', 'Unix Tools', 'Reactive Systems Programming',
+    'Intro to Compiler Writing', 'Mobile Programming', 'Theory and Structure of Databases',
+    'Web Applications Programming', 'Top 10 Algorithms', 'Computer Architecture'
   ]
+
+  const [info, setInfo] = useState('Please select a course on the left');
 
   useEffect(() => {
     const auth = getAuth();
@@ -42,53 +45,70 @@ const CourseInfo = (props) => {
     });
   });
 
+  const handleSelection = text => {
+    setInfo(text);
+  }
+
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        minHeight: `calc(100vh - 65px)`,
-        justifyContent: 'center',
-        alignItems: 'center',
-        flexDirection: 'column'
-      }}
-    >
-      <Drawer
-        sx={{
-          zIndex: (theme) => theme.zIndex.appBar - 1
-        }}
-        PaperProps={{
-          sx: { width: 350 }
-        }}
-        variant="permanent"
-        anchor="left"
-      >
-        <Toolbar />
-        <List>
-          <ListItem>
-            <ListItemText>
-              <Typography variant="h5">Required Courses</Typography>
-            </ListItemText>
-          </ListItem>
-          {coreCoursesList.sort().map((text) => (
-            <ListItem button key={text}>
-              <ListItemText secondary={text} />
-            </ListItem>
-          ))}
-          <Divider />
-          <ListItem>
-            <ListItemText>
-              <Typography variant="h5">Electives</Typography>
-            </ListItemText>
-          </ListItem>
-          {electivesList.sort().map((text) => (
-            <ListItem button key={text}>
-              <ListItemText secondary={text} />
-            </ListItem>
-          ))}
-        </List>
-      </Drawer>
-      <p>Put some course info here later</p>
-    </Box>
+    <>
+      {props.navTitle ? (
+        <>
+          <Drawer
+            PaperProps={{
+              sx: {
+                width: 350,
+              }
+            }}
+            variant="permanent"
+          >
+            <Toolbar />
+            <Box sx={{ overflow: 'auto' }}>
+              <List>
+                <ListItem>
+                  <ListItemText>
+                    <Typography variant="h5">Required Courses</Typography>
+                  </ListItemText>
+                </ListItem>
+                {coreCoursesList.sort().map((text) => (
+                  <ListItem button key={text} onClick={() => handleSelection(text)}>
+                    <ListItemText secondary={text} />
+                  </ListItem>
+                ))}
+                <Divider />
+                <ListItem>
+                  <ListItemText>
+                    <Typography variant="h5">Electives</Typography>
+                  </ListItemText>
+                </ListItem>
+                {electivesList.sort().map((text) => (
+                  <ListItem button key={text} onClick={() => handleSelection(text)}>
+                    <ListItemText secondary={text} />
+                  </ListItem>
+                ))}
+              </List>
+            </Box>
+          </Drawer>
+
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              flexDirection: 'column',
+              position: 'relative',
+              left: 350,
+              height: 'calc(100vh - 65px)',
+              width: 'calc(100vw - 350px)',
+            }}
+          >
+
+            <p>{info}</p>
+          </Box>
+        </>
+      ) : (
+        null
+      )}
+    </>
   )
 }
 

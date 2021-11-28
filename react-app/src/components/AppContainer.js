@@ -181,7 +181,10 @@ const AppContainer = () => {
 
           <Route path="/course_info">
             {userInfo.uid ? (
-              <CourseInfo setNavTitle={setNavTitle} />
+              <CourseInfo
+                setNavTitle={setNavTitle}
+                navTitle={navTitle}
+              />
             ) : (
               <Redirect to="/login" />
             )}

@@ -71,7 +71,13 @@ const NavBar = (props) => {
           helpful because the AppBar is set to a "fixed" position and this means that the AppBar
           itself does not effect the layout of other components. */}
           <Toolbar sx={{ minHeight: 65 }}></Toolbar>
-          <AppBar enableColorOnDark={true} position="fixed">
+          <AppBar
+            enableColorOnDark={true}
+            position="fixed"
+            sx={{
+              zIndex: (theme) => theme.zIndex.drawer + 1
+            }}
+          >
             <Toolbar sx={{ minHeight: 65 }}>
 
               {/* Nav menu */}
