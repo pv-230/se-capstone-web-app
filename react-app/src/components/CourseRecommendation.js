@@ -1,9 +1,63 @@
-import { Typography, Card, Stack, Slider, Button, Container } from "@mui/material"
+import { getAuth, onAuthStateChanged } from 'firebase/auth'
+import { Typography, Card, Stack, Slider, Button, Container, Divider, Paper } from "@mui/material"
 import { Box } from "@mui/system"
-import React from "react"
+import React, { useState, useEffect } from "react"
+import { getUserData } from "../APIs/getUserData"
+import { ClassInfo } from "../models/ClassInfo"
+import { useHistory } from 'react-router-dom'
 
 const CourseRecommendation = () => {
 
+  const history = useHistory();
+  let courseInfo = new ClassInfo();
+
+  let [buttonClicked, setButtonClicked] = useState(false);
+  const [takenCourses, setTakenCourses] = useState(null);
+  const [sliderVal, setSliderVal] = useState(0);
+
+  const setCourses = (courses) => {
+    setTakenCourses(courses.completedClasses)
+  }
+
+  const generateCourses = () => {
+    let courses = [];
+    let counter = 0;
+    console.log(sliderVal)
+
+    for(let i = 0; i < courseInfo.classMapNames.length; i++) {
+      if(counter >= sliderVal) {
+        return courses
+      }
+      else {
+        console.log(takenCourses)
+        if(!takenCourses.includes(courseInfo.classMapCodes[i])) {
+          console.log(courseInfo.classMapCodes[i])
+          if(courseInfo.classMapCodes[i].includes('I') || courseInfo.classMapCodes[i].includes('X'))
+          courses.push(<Typography>{courseInfo.classMapNames[i]}</Typography>)
+          else
+            courses.push(<Typography>{courseInfo.classMapCodes[i]} - {courseInfo.classMapNames[i]}</Typography>)
+          counter++
+        }
+      }
+    }
+    return courses;
+  }
+
+  const clicked = () => {
+    setButtonClicked(true)
+  }
+
+  useEffect(() => {
+    const auth = getAuth();
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        getUserData(auth.currentUser.uid).then(result => {setCourses(result)})
+      } else {
+        // If they are logged out, redirects to login
+        history.push('/login');
+      }
+    });
+  }, [])
 
   return (
     <div>
@@ -13,10 +67,15 @@ const CourseRecommendation = () => {
       }} elevation={1} elevation={1}>
         <Stack spacing={2} margin={5} alignItems="center">
           <Typography>Select the number of required Computer Science classes you want to take</Typography>
-          <Box width="500px">
-            <Slider valueLabelDisplay="auto" max={6} marks />
+          <Box width="600px">
+            <Slider valueLabelDisplay="auto" max={6} min={1} marks onChange={(e, val) => setSliderVal(val)} />
           </Box>
-          <Button variant="contained" width="a">Get recomended Computer Science classes</Button>
+          <Button variant="contained" width="a" onClick={clicked}>Get recomended Computer Science classes</Button>
+          {buttonClicked && (<Paper elevation={10}>
+            <Stack margin={3} divider={<Divider orientation="horizontal" flexItem />} spacing={2} alignItems="center">
+                {generateCourses()} 
+            </Stack>
+          </Paper>)}
         </Stack>
       </Card>
     </div>

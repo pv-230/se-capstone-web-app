@@ -61,6 +61,7 @@ const Home = (props) => {
         alignItems: 'center',
         flexDirection: 'column'
       }}
+      marginBottom={5}
     >
       {!name ? (
         null

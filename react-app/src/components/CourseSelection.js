@@ -385,7 +385,7 @@ const CourseSelection = (props) => {
                         <Container>
                           <Stack spacing={2} alignItems="center">
                             <Stack spacing={2} direction="row">
-                              <CourseButton courseCode='CIS 3250' courseName='Ethics and CS' id={9} selectState={select} disableState={disable} onClick={toggleSelect} update={updateClicked}></CourseButton>
+                              <CourseButton courseCode='CIS 3250' courseName='Ethics in Computer Science' id={9} selectState={select} disableState={disable} onClick={toggleSelect} update={updateClicked}></CourseButton>
                               <CourseButton courseCode='COP 3330' courseName='Data Struc, Algs, and Gen Program I' id={10} selectState={select} disableState={disable} onClick={toggleSelect} update={updateClicked}></CourseButton>
                               <CourseButton courseCode='CDA 3100' courseName='Computer Organization I' id={11} selectState={select} disableState={disable} onClick={toggleSelect} update={updateClicked}></CourseButton>
                             </Stack>
@@ -397,7 +397,7 @@ const CourseSelection = (props) => {
                         </Container>
                         <Stack spacing={2} direction="row">
                           <CourseButton courseCode='CEN 4020' courseName='Software Engineering' id={14} selectState={select} disableState={disable} onClick={toggleSelect} update={updateClicked}></CourseButton>
-                          <CourseButton courseCode='CEN 4020L' courseName='SE Capstone' id={15} selectState={select} disableState={disable} onClick={toggleSelect} update={updateClicked}></CourseButton>
+                          <CourseButton courseCode='CEN 4090L' courseName='SE Capstone' id={15} selectState={select} disableState={disable} onClick={toggleSelect} update={updateClicked}></CourseButton>
                           <CourseButton courseCode='COP 4521' courseName='Secure, Parallel and Dist. Python' id={16} selectState={select} disableState={disable} onClick={toggleSelect} update={updateClicked}></CourseButton>
                           <CourseButton courseCode='COP 4610' courseName='Op Sys and Conc Progr' id={17} selectState={select} disableState={disable} onClick={toggleSelect} update={updateClicked}></CourseButton>
                         </Stack>
