@@ -13,23 +13,46 @@ import Typography from '@mui/material/Typography';
 const CourseInfo = (props) => {
   const history = useHistory();
 
-  const coreCoursesList = [
-    'Discrete Math I', 'Discrete Math II', 'Computer Organization I',
-    'Software Engineering I', 'Software Engineering Capstone', 'Intro to Programming',
-    'DS, Algos, and GP I', 'DS, Algos, and GP II', 'SP&D Computing in Python',
-    'Operating Systems', 'Theory of Computation', 'Statistics', 'Ethics and Computer Science'
+  // An array of arrays that stores a course code and a course title. I initially used a dictionary
+  // but sorting was easier with this set up.
+  const coreCourses = [
+    ['CDA3100', 'Computer Organization I'],
+    ['COP3330', 'Data Structures, Algorithms, and GP I'],
+    ['COP4530', 'Data Structures, Algorithms, and GP II'],
+    ['MAD2104', 'Discrete Mathematics I'],
+    ['MAD3105', 'Discrete Mathematics II'],
+    ['CIS3250', 'Ethics and Computer Science'],
+    ['COP3363', 'Intro to Programming in C++'],
+    ['COP4610', 'Operating Systems'],
+    ['COP4521', 'SP&D Computing in Python'],
+    ['CEN4090L', 'Software Engineering Capstone'],
+    ['CEN4020', 'Software Engineering I'],
+    ['STA3032', 'Statistics'],
+    ['COT4420', 'Theory of Computation'],
   ]
 
-  const electivesList = [
-    'Intro to Artificial Intelligence', 'Computer Organization II',
-    'Software Engineering II', 'Expert Systems', 'Intro to Software Reverse Engineering',
-    'Computer Security Fundamentals', 'Cybercrime Detection and Forensics',
-    'Intro to Offensive Computer Security', 'Network Security and Cryptography',
-    'Intro to Computer Networks', 'Computer and Network System Administration',
-    'Advanced Programming with Java', 'Programming Languages', 'Python Programming',
-    'Advanced Application Developerment', 'Unix Tools', 'Reactive Systems Programming',
-    'Intro to Compiler Writing', 'Mobile Programming', 'Theory and Structure of Databases',
-    'Web Applications Programming', 'Top 10 Algorithms', 'Computer Architecture'
+  const electives = [
+    ['COP3252', 'Advanced Programming with Java'],
+    ['CDA4150', 'Computer Architecture'],
+    ['CDA3101', 'Computer Organization II'],
+    ['CIS4360', 'Computer Security Fundamentals'],
+    ['CNT4603', 'Computer and Network System Administration'],
+    ['CIS4385', 'Cybercrime Detection and Forensics'],
+    ['CEN4681', 'Expert Systems'],
+    ['CAP4601', 'Intro to Artificial Intelligence'],
+    ['CNT4504', 'Intro to Computer Networks'],
+    ['CIS4626', 'Intro to Offensive Computer Security'],
+    ['CIS4138', 'Intro to Software Reverse Engineering'],
+    ['COP4656', 'Mobile Programming'],
+    ['CNT4406', 'Network Security and Cryptography'],
+    ['COP4020', 'Programming Languages'],
+    ['COP4046C', 'Python Programming'],
+    ['COP4380', 'Reactive Systems Programming'],
+    ['CEN4021', 'Software Engineering II'],
+    ['COP4710', 'Theory and Structure of Databases'],
+    ['COT4401', 'Top 10 Algorithms'],
+    ['COP4342', 'Unix Tools'],
+    ['COP4813', 'Web Applications Programming'],
   ]
 
   const [info, setInfo] = useState('Please select a course on the left');
@@ -69,9 +92,9 @@ const CourseInfo = (props) => {
                     <Typography variant="h5">Required Courses</Typography>
                   </ListItemText>
                 </ListItem>
-                {coreCoursesList.sort().map((text) => (
-                  <ListItem button key={text} onClick={() => handleSelection(text)}>
-                    <ListItemText secondary={text} />
+                {coreCourses.sort((kv1, kv2) => kv1[1] - kv2[1]).map(([k, v]) => (
+                  <ListItem button key={k} onClick={() => handleSelection(k)}>
+                    <ListItemText secondary={v} />
                   </ListItem>
                 ))}
                 <Divider />
@@ -80,9 +103,9 @@ const CourseInfo = (props) => {
                     <Typography variant="h5">Electives</Typography>
                   </ListItemText>
                 </ListItem>
-                {electivesList.sort().map((text) => (
-                  <ListItem button key={text} onClick={() => handleSelection(text)}>
-                    <ListItemText secondary={text} />
+                {electives.sort((kv1, kv2) => kv1[1] - kv2[1]).map(([k, v]) => (
+                  <ListItem button key={k} onClick={() => handleSelection(k)}>
+                    <ListItemText secondary={v} />
                   </ListItem>
                 ))}
               </List>
