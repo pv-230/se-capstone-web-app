@@ -1,5 +1,5 @@
 import React, { useEffect } from "react"
-import { Container, Card, Stack, Button, CardContent, Snackbar, Alert, Typography, Backdrop, CircularProgress, TextField } from "@mui/material"
+import { Container, Card, Stack, Button, CardContent, Snackbar, Alert, Typography, Backdrop, CircularProgress, TextField, Tooltip } from "@mui/material"
 import '../styles/CourseSelection.css'
 import CourseButton from "./CourseButton"
 import { useState } from "react"
@@ -367,7 +367,11 @@ const CourseSelection = (props) => {
                           <CourseButton courseCode='MAC 1105' courseName='College Algebra' id={0} selectState={select} disableState={disable} onClick={toggleSelect} update={updateClicked}></CourseButton>
                           <CourseButton courseCode='MAC 1114' courseName='Trigonometry' id={1} selectState={select} disableState={disable} onClick={toggleSelect} update={updateClicked}></CourseButton>
                           <CourseButton courseCode='MAC 2312' courseName='Calculus II' id={2} selectState={select} disableState={disable} onClick={toggleSelect} update={updateClicked}></CourseButton>
-                          <CourseButton courseCode='STA 4442' courseName='Intro to Probability' id={3} selectState={select} disableState={disable} onClick={toggleSelect} update={updateClicked}></CourseButton>
+                          <Tooltip title="You can take: STA 3032 Applied Statistics for Engineers and Scientists or STA 4231 Intro to Mathematical Statistics in place of this class." placement="bottom" arrow>
+                            <div>
+                              <CourseButton courseCode='STA 4442' courseName='Intro to Probability' id={3} selectState={select} disableState={disable} onClick={toggleSelect} update={updateClicked}></CourseButton>
+                            </div>
+                          </Tooltip>
                         </Stack>
                         <Stack spacing={2}>
                           <CourseButton courseCode='MAC 1140' courseName='Precalculus' id={4} selectState={select} disableState={disable} onClick={toggleSelect} update={updateClicked}></CourseButton>
@@ -379,7 +383,11 @@ const CourseSelection = (props) => {
 
                       <Stack spacing={2}>
                         <Stack alignItems="center">
-                          <CourseButton courseCode='COP 3363' courseName='Intro to Programming in C++' id={8} selectState={select} disableState={disable} onClick={toggleSelect} update={updateClicked}></CourseButton>
+                          <Tooltip title="You can also take COP 3014 Programming I and COP 3353 Unix in place of this class." placement="top" arrow>
+                            <div>
+                              <CourseButton courseCode='COP 3363' courseName='Intro to Programming in C++' id={8} selectState={select} disableState={disable} onClick={toggleSelect} update={updateClicked}></CourseButton>
+                            </div>
+                          </Tooltip>
                         </Stack>
 
                         <Container>
