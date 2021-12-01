@@ -217,169 +217,237 @@ const STA4321 = {
 const COP3252 = {
   title: 'Advanced Programming with Java',
   code: 'COP 3252',
-  prereq: '',
+  prereq: 'Prerequisite: COP 3330',
   coreq: '',
-  description: '',
+  description: 'This course offers instruction in advanced programming using Java. ' +
+  'This course assumes the student is conversant with C++. The course covers the core features ' +
+  'of the Java language, together with as many advanced topics as time permits.',
 };
 
 const CDA4150 = {
   title: 'Computer Architecture',
   code: 'CDA 4150',
-  prereq: '',
+  prereq: 'Prerequisite: CDA 3101',
   coreq: '',
-  description: '',
+  description: 'This course explores high performance architecture design and analysis, ' + 
+  'including memory-system design, pipelining, vector computers, and multiprocessors.',
 };
 
 const CDA3101 = {
   title: 'Computer Organization II',
   code: 'CDA 3101',
-  prereq: '',
+  prereq: 'Prerequisite: CDA 3100',
   coreq: '',
-  description: '',
+  description: 'This course explores the fundamental concepts in processor design, ' +
+  'including datapath and control, pipelining, memory hierarchies, and I/O.',
 };
 
 const CIS4360 = {
   title: 'Computer Security Fundamentals',
   code: 'CIS 4360',
-  prereq: '',
+  prereq: 'Prerequisite: COP 3330',
   coreq: '',
-  description: '',
+  description: 'This is an undergraduate-level introduction to computer security, targeted ' +
+  'towards seniors and advanced juniors. This course covers a broad range of topics within ' +
+  'computer security, such as cryptographic algorithms, security protocols, ' +
+  'network authentication, and software security.',
 };
 
 const CNT4603 = {
   title: 'Computer and Network System Administration',
   code: 'CNT 4603',
-  prereq: '',
+  prereq: ' Prerequisite: CGS 3406 or COP 3014',
   coreq: '',
-  description: '',
+  description: 'This course offers a hands-on introduction to Unix and Microsoft Windows ' +
+  'systems and network administration. Topics include installation, maintenance, and extension ' +
+  'of a multi-user computer system; development of administrative policies and procedures; ' +
+  'user assistance and education; specifics of the Unix and Windows operating systems; and ' +
+  'practical troubleshooting and problem solving.',
 };
 
 const CIS4385 = {
   title: 'Cybercrime Detection and Forensics',
   code: 'CIS 4385',
-  prereq: '',
+  prereq: 'Prerequisites: CIS 4360 and CJE 3110',
   coreq: '',
-  description: '',
+  description: 'This course discusses tools, techniques, and procedures for detecting ' +
+  'cybercrime and analyzing collected data related to past and on-going cyber offenses, ' +
+  'along with preserving the legal value of the collected evidence.',
 };
 
 const CEN4681 = {
   title: 'Expert Systems',
   code: 'CEN 4681',
   prereq: '',
-  coreq: '',
-  description: '',
+  coreq: 'Corequisite: COP 4530',
+  description: 'This course covers definitions and historical development, methodology tools ' +
+  'for analysis and design, survey of existing systems, inference engines, and theory and ' +
+  'applications of fuzzy relational products to new developments in inference engines.',
 };
 
 const CAP4601 = {
   title: 'Intro to Artificial Intelligence',
   code: 'CAP 4601',
   prereq: '',
-  coreq: '',
-  description: '',
+  coreq: 'Corequisite: COP 4530',
+  description: 'This first course in Artificial Intelligence (AI) is designed to expose the ' +
+  'student to both the breadth and depth of the subject. Topics include problem solving, ' +
+  'knowledge and reasoning, acting logically, uncertain knowledge and reasoning, learning, and ' +
+  'communicating, perceiving and acting.',
 };
 
 const CNT4504 = {
   title: 'Intro to Computer Networks',
   code: 'CNT 4504',
   prereq: '',
-  coreq: '',
-  description: '',
+  coreq: 'Corequisite: COP 4530',
+  description: 'This course covers circuit-switched and packet switched networks; protocols; ' +
+  'protocol layering; application layer and socket programming; transport layer, multiplexing ' +
+  'and demultiplexing, UDP, TCP, reliability, flow control, and congestion control; ' +
+  'network layer, routing protocols, switching technologies, multicast, and mobility; ' +
+  'link layer, local area networks, error detection and correction; wireless networks; ' +
+  'multimedia networking; network security; network management.',
 };
 
 const CIS4626 = {
   title: 'Intro to Offensive Computer Security',
   code: 'CIS 4626',
-  prereq: '',
+  prereq: 'Prerequisite: CDA 3100',
   coreq: '',
-  description: '',
+  description: 'This course provides introductory but comprehensive coverage of fundamental ' +
+  'problems, principles, and techniques in offensive computer security including various buffer ' +
+  'overflow techniques, format string techniques, basic networking techniques, shellcode ' +
+  'development, web application exploitation, software reverse engineering, fuzzing ' +
+  'techniques, social engineering techniques, and then commonly used tools for penetration ' +
+  'testing with an emphasis on their principles and fundamental techniques.',
 };
 
 const CIS4138 = {
   title: 'Intro to Software Reverse Engineering',
   code: 'CIS 4138',
-  prereq: '',
+  prereq: 'Prerequisite: CDA 3100',
   coreq: '',
-  description: '',
+  description: 'This introductory course provides comprehensive coverage of fundamental ' +
+  'problems, principles, and techniques in software reverse engineering of binaries including ' +
+  'static analysis techniques, disassembly algorithms, dynamic analysis techniques, ' +
+  'automated static and dynamic analysis techniques, malware analysis techniques, ' +
+  'anti-analysis techniques, and malware obfuscation and packing techniques; many of ' +
+  'the techniques will be demonstrated and practiced using IDA. The course also involves ' +
+  'analyzing malware samples.',
 };
 
 const COP4656 = {
   title: 'Mobile Programming',
   code: 'COP 4656',
-  prereq: '',
+  prereq: 'Prerequisite: COP 4530',
   coreq: '',
-  description: '',
+  description: 'This course teaches students how to program mobile devices. Students use ' +
+  'event-based models to write and deploy a content based application using a mobile ' +
+  'computing software framework. May be repeated to a maximum of nine semester hours.',
 };
 
 const CNT4406 = {
   title: 'Network Security and Cryptography',
   code: 'CNT 4406',
   prereq: '',
-  coreq: '',
-  description: '',
+  coreq: 'Corequisite: COP 4530',
+  description: 'This course examines threats to computer networks, network vulnerabilities, ' +
+  'techniques for strengthening passive defenses, tools for establishing an active network ' +
+  'defense, and policies for enhancing forensic analysis of crimes and attacks on computer ' +
+  'networks. Topics include private and public key cryptography, digital signatures, secret ' +
+  'sharing, security protocols, formal methods for analyzing network security, electronic ' +
+  'mail security, firewalls, intrusion detection, Internet privacy, and public key ' +
+  'infrastructures.',
 };
 
 const COP4020 = {
   title: 'Programming Languages',
   code: 'COP 4020',
   prereq: '',
-  coreq: '',
-  description: '',
+  coreq: 'Corequisite: COP 4530',
+  description: 'This course covers the principles of programming languages, including language ' +
+  'constructs, syntactic and semantic specification methods, runtime structures, ' +
+  'implementation techniques, and alternative programming paradigms. The course involves ' +
+  'programming assignments in a variety of languages and individual investigations accompanied ' +
+  'by a required written report and oral presentation.',
 };
 
 const COP4046C = {
   title: 'Python Programming',
   code: 'COP 4046C',
-  prereq: '',
-  coreq: '',
-  description: '',
+  prereq: 'Prerequisite: COP 3330',
+  coreq: 'Corequisite: COP 4530',
+  description: 'This course covers intermediate level Python. Students are expected to know the ' +
+  'material taught in COP 4530, and to be comfortable with the programming material taught in ' +
+  'COP 3330. This course includes lectures on the python language and development environment ' +
+  'and covers select Python modules that demonstrate the versatility of the Python language. ' +
+  'Some topics that are covered include types and operations, functions, modules and ' +
+  'libraries, text processing, functional programming, object oriented programming, testing, ' +
+  'debugging, performance tuning, and algorithm implementations in Python.',
 };
 
 const COP4380 = {
   title: 'Reactive Systems Programming',
   code: 'COP 4380',
-  prereq: '',
-  coreq: '',
-  description: '',
+  prereq: 'Prerequisite: COP 4530',
+  coreq: 'Corequisite: COP 4610 or instructor permission',
+  description: 'This course covers the theory of Hierarchical State Machines [HSM] and the use ' +
+  'of HSM to model and implement Reactive Systems [RS]. The course explores implementations of ' +
+  'HSM in C, C++, and Java. HSM are applied for modeling and implementing RS including ' +
+  'real-time, multi-threaded, and embedded systems.',
 };
 
 const CEN4021 = {
   title: 'Software Engineering II',
   code: 'CEN 4021',
-  prereq: '',
+  prereq: 'Prerequisite: CEN 4020',
   coreq: '',
-  description: '',
+  description: 'This course is the second of a two-semester sequence on project-system ' +
+  'development and focuses on software design and implementation. Topics include software ' +
+  'design, architectures, testing, deployment, metrics, configuration management, ' +
+  'reusability, portability, and interoperability.',
 };
 
 const COP4710 = {
   title: 'Theory and Structure of Databases',
   code: 'COP 4710',
-  prereq: '',
+  prereq: 'Prerequisites: COP 3330 and MAD 2104',
   coreq: '',
-  description: '',
+  description: 'This course examines the theory of relational and object-oriented databases; ' +
+  'relational database management systems and SQL; design, development, and implementation ' +
+  'issues in database systems.',
 };
 
 const COT4401 = {
   title: 'Top 10 Algorithms',
   code: 'COT 4401',
-  prereq: '',
+  prereq: 'Prerequisite: COP 4530',
   coreq: '',
-  description: '',
+  description: 'This course focuses on a wide-ranging selection of ten of the most influential ' +
+  'algorithms in use today: what they are, how they work, and their impact on modern life.',
 };
 
 const COP4342 = {
   title: 'Unix Tools',
   code: 'COP 4342',
-  prereq: '',
+  prereq: 'Prerequisite: COP 3330',
   coreq: '',
-  description: '',
+  description: 'This course is an introduction to selected Unix tools and utilities that are ' +
+  'useful for advanced users, programmers, and system administrators, such as shell scripts, ' +
+  'the perl language, revision control systems, debuggers, editors, and the make, awk, sed, ' +
+  'and expect utilities.',
 };
 
 const COP4813 = {
   title: 'Web Applications Programming',
   code: 'COP 4813',
-  prereq: '',
+  prereq: 'Prerequisite: COP 3252',
   coreq: '',
-  description: '',
+  description: 'This course teaches programming of distributed Web applications using Java ' +
+  'Database Connectivity, Servlets, Java Server Pages, Remote Method Invocation, and ' +
+  'Enterprise Java Beans (both session and entity beans). Use of the Sun Microsystems ' +
+  'Java 2 Enterprise Edition development platform either directly or through an Integrated ' +
+  'Development Environment such as IBM’s Websphere is also covered.',
 };
 
 /**
