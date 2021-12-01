@@ -1,5 +1,5 @@
 import { getAuth, onAuthStateChanged } from 'firebase/auth'
-import { Typography, Card, Stack, Slider, Button, Container, Divider, Paper } from "@mui/material"
+import { Typography, Card, Stack, Slider, Button, Divider, Paper } from "@mui/material"
 import { Box } from "@mui/system"
 import React, { useState, useEffect } from "react"
 import { getUserData } from "../APIs/getUserData"
@@ -13,7 +13,7 @@ const CourseRecommendation = () => {
 
   let [buttonClicked, setButtonClicked] = useState(false);
   const [takenCourses, setTakenCourses] = useState(null);
-  const [sliderVal, setSliderVal] = useState(0);
+  const [sliderVal, setSliderVal] = useState(1);
 
   const setCourses = (courses) => {
     setTakenCourses(courses.completedClasses)
@@ -22,16 +22,13 @@ const CourseRecommendation = () => {
   const generateCourses = () => {
     let courses = [];
     let counter = 0;
-    console.log(sliderVal)
 
     for(let i = 0; i < courseInfo.classMapNames.length; i++) {
       if(counter >= sliderVal) {
         return courses
       }
       else {
-        console.log(takenCourses)
         if(!takenCourses.includes(courseInfo.classMapCodes[i])) {
-          console.log(courseInfo.classMapCodes[i])
           if(courseInfo.classMapCodes[i].includes('I') || courseInfo.classMapCodes[i].includes('X'))
           courses.push(<Typography>{courseInfo.classMapNames[i]}</Typography>)
           else
@@ -64,9 +61,10 @@ const CourseRecommendation = () => {
       <Card sx={{
         width: 'calc(100vw - 100px)',
         mt: 5,
-      }} elevation={1} elevation={1}>
+      }} elevation={1}>
         <Stack spacing={2} margin={5} alignItems="center">
-          <Typography>Select the number of required Computer Science classes you want to take</Typography>
+          <Typography variant="h4">Course Recommendations</Typography>
+          <Typography>Select the number of Computer Science classes you want to take next semester</Typography>
           <Box width="600px">
             <Slider valueLabelDisplay="auto" max={6} min={1} marks onChange={(e, val) => setSliderVal(val)} />
           </Box>

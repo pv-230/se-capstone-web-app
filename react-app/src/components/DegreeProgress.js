@@ -51,6 +51,7 @@ export default function ProgressWithLabel(props) {
         mt: 5,
       }} elevation={1}>
         <Box sx={{ width: '100%' }}>
+          <Typography variant="h5" marginBottom={3}>Degree Progress Percentage</Typography>
           <BorderLinearProgress value={percent} />
         </Box>
       </Card>

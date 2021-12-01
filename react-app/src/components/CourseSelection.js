@@ -309,7 +309,7 @@ const CourseSelection = (props) => {
         <Card sx={{
           width: 'calc(100vw - 100px)',
           mt: 5,
-        }} elevation={1} elevation={1}>
+        }} elevation={1}>
           <Stack className="crs-select-name-stack" spacing={3}>
             <Typography variant="h4" >Enter your first and last name</Typography>
             <TextField
