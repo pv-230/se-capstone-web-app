@@ -13,45 +13,53 @@ import CourseDescription from './CourseDescription'
 
 // An array of arrays that stores course codes and descriptions for core courses
 const coreCourses = [
-  ['CDA3100', 'Computer Organization I'],
-  ['COP3330', 'Data Structures, Algos, and GP I'],
-  ['COP4530', 'Data Structures, Algos, and GP II'],
-  ['MAD2104', 'Discrete Mathematics I'],
-  ['MAD3105', 'Discrete Mathematics II'],
-  ['CIS3250', 'Ethics and Computer Science'],
-  ['COP3363', 'Intro to Programming in C++'],
-  ['COP4610', 'Operating Systems'],
-  ['COP4521', 'SP&D Computing in Python'],
-  ['CEN4090L', 'Software Engineering Capstone'],
-  ['CEN4020', 'Software Engineering I'],
-  ['STA3032', 'Statistics'],
-  ['COT4420', 'Theory of Computation'],
-]
+  ['CDA 3100', 'Computer Organization I'],
+  ['COP 3330', 'Data Structures, Algorithms, and GP I'],
+  ['COP 4530', 'Data Structures, Algorithms, and GP II'],
+  ['MAD 2104', 'Discrete Mathematics I'],
+  ['MAD 3105', 'Discrete Mathematics II'],
+  ['CIS 3250', 'Ethics and Computer Science'],
+  ['COP 3363', 'Intro to Programming in C++'],
+  ['COP 4610', 'Operating Systems'],
+  ['COP 4521', 'SP&D Computing in Python'],
+  ['CEN 4090L', 'Software Engineering Capstone'],
+  ['CEN 4020', 'Software Engineering I'],
+  ['STA 4442', 'Intro to Probability'],
+  ['COT 4420', 'Theory of Computation'],
+];
+
+// An array of arrays that stores course codes and descriptions for alternative core courses
+const altCourses = [
+  ['COP 3014', 'Programming I'],
+  ['COP 3353', 'Intro to UNIX'],
+  ['STA 3032', 'Applied Stats for Engineers and Scientists'],
+  ['STA 4321', 'Intro to Mathematical Statistics'],
+];
 
 // An array of arrays that stores course codes and descriptions for electives
 const electives = [
-  ['COP3252', 'Advanced Programming with Java'],
-  ['CDA4150', 'Computer Architecture'],
-  ['CDA3101', 'Computer Organization II'],
-  ['CIS4360', 'Computer Security Fundamentals'],
-  ['CNT4603', 'Computer and Network System Administration'],
-  ['CIS4385', 'Cybercrime Detection and Forensics'],
-  ['CEN4681', 'Expert Systems'],
-  ['CAP4601', 'Intro to Artificial Intelligence'],
-  ['CNT4504', 'Intro to Computer Networks'],
-  ['CIS4626', 'Intro to Offensive Computer Security'],
-  ['CIS4138', 'Intro to Software Reverse Engineering'],
-  ['COP4656', 'Mobile Programming'],
-  ['CNT4406', 'Network Security and Cryptography'],
-  ['COP4020', 'Programming Languages'],
-  ['COP4046C', 'Python Programming'],
-  ['COP4380', 'Reactive Systems Programming'],
-  ['CEN4021', 'Software Engineering II'],
-  ['COP4710', 'Theory and Structure of Databases'],
-  ['COT4401', 'Top 10 Algorithms'],
-  ['COP4342', 'Unix Tools'],
-  ['COP4813', 'Web Applications Programming'],
-]
+  ['COP 3252', 'Advanced Programming with Java'],
+  ['CDA 4150', 'Computer Architecture'],
+  ['CDA 3101', 'Computer Organization II'],
+  ['CIS 4360', 'Computer Security Fundamentals'],
+  ['CNT 4603', 'Computer & Network Sys. Administration'],
+  ['CIS 4385', 'Cybercrime Detection and Forensics'],
+  ['CEN 4681', 'Expert Systems'],
+  ['CAP 4601', 'Intro to Artificial Intelligence'],
+  ['CNT 4504', 'Intro to Computer Networks'],
+  ['CIS 4626', 'Intro to Offensive Computer Security'],
+  ['CIS 4138', 'Intro to Software Reverse Engineering'],
+  ['COP 4656', 'Mobile Programming'],
+  ['CNT 4406', 'Network Security and Cryptography'],
+  ['COP 4020', 'Programming Languages'],
+  ['COP 4046C', 'Python Programming'],
+  ['COP 4380', 'Reactive Systems Programming'],
+  ['CEN 4021', 'Software Engineering II'],
+  ['COP 4710', 'Theory and Structure of Databases'],
+  ['COT 4401', 'Top 10 Algorithms'],
+  ['COP 4342', 'Unix Tools'],
+  ['COP 4813', 'Web Applications Programming'],
+];
 
 /**
  * @brief Renders a course list in a permanent drawer on the left with a card in the center that
@@ -65,12 +73,19 @@ const CourseInfo = (props) => {
   // Contains a two element array that stores the currently selected course info
   const [cardInfo, setCardInfo] = useState([]);
 
+  // These states allow the list highlighter to color the currently selected list item
+  const [reqSelected, setReqSelected] = useState(true);
+  const [altSelected, setAltSelected] = useState(false);
+  const [elcSelcted, selElcSelected] = useState(false);
+
+  const [selectedItem, setSelectedItem] = useState(0)
+
   // Redirects the user to the login screen if not authenticated
   useEffect(() => {
     const auth = getAuth();
     onAuthStateChanged(auth, async (user) => {
       if (user) {
-        props.setNavTitle('Course Information');
+        props.setNavTitle('Computer Science Course Information');
       } else {
         history.push('/login');
       }
@@ -78,8 +93,24 @@ const CourseInfo = (props) => {
   });
 
   // Event handler for course selection
-  const handleSelection = code => {
+  const handleSelection = (code, index, list) => {
     setCardInfo(code);
+    setSelectedItem(index);
+    
+    // Sets the currently selected list
+    if (list === 1) {
+      setReqSelected(true);
+      setAltSelected(false);
+      selElcSelected(false);
+    } else if (list === 2) {
+      setReqSelected(false);
+      setAltSelected(true);
+      selElcSelected(false);
+    } else if (list === 3) {
+      setReqSelected(false);
+      setAltSelected(false);
+      selElcSelected(true);
+    }
   }
 
   return (
@@ -105,24 +136,57 @@ const CourseInfo = (props) => {
                     <Typography variant="h5">Required Courses</Typography>
                   </ListItemText>
                 </ListItem>
-                {coreCourses.sort((kv1, kv2) => kv1[1] - kv2[1]).map(([k, v]) => (
-                  <ListItem button key={k} onClick={() => handleSelection([k, v])}>
-                    <ListItemText secondary={
-                      <Typography>
-                        {v} ({k})
+                {coreCourses.sort().map(([k, v], index) => (
+                  <ListItem
+                    button key={k}
+                    onClick={() => handleSelection([k, v], index, 1)}
+                    selected={(selectedItem === index) && reqSelected}
+                  >
+                    <ListItemText>
+                      <Typography variant="body2">
+                        {k} - {v}
                       </Typography>
-                    } />
+                    </ListItemText>
                   </ListItem>
                 ))}
-                <Divider />
+                <Divider sx={{ mt: 2, mb: 1 }} />
+                <ListItem>
+                  <ListItemText>
+                    <Typography variant="h5">Alternative Courses</Typography>
+                  </ListItemText>
+                </ListItem>
+                {altCourses.sort().map(([k, v], index) => (
+                  <ListItem
+                    button
+                    key={k}
+                    onClick={() =>handleSelection([k, v], index, 2)}
+                    selected={(selectedItem === index) && altSelected}
+                  >
+                    <ListItemText>
+                      <Typography variant="body2">
+                        {k} - {v}
+                      </Typography>
+                    </ListItemText>
+                  </ListItem>
+                ))}
+                <Divider sx={{ mt: 2, mb: 1 }} />
                 <ListItem>
                   <ListItemText>
                     <Typography variant="h5">Electives</Typography>
                   </ListItemText>
                 </ListItem>
-                {electives.sort((kv1, kv2) => kv1[1] - kv2[1]).map(([k, v]) => (
-                  <ListItem button key={k} onClick={() => handleSelection([k, v])}>
-                    <ListItemText secondary={v} />
+                {electives.sort().map(([k, v], index) => (
+                  <ListItem
+                    button
+                    key={k}
+                    onClick={() => handleSelection([k, v], index, 3)}
+                    selected={(selectedItem === index) && elcSelcted}
+                  >
+                    <ListItemText>
+                      <Typography variant="body2">
+                        {k} - {v}
+                      </Typography>
+                    </ListItemText>
                   </ListItem>
                 ))}
               </List>
@@ -137,9 +201,9 @@ const CourseInfo = (props) => {
               alignItems: 'center',
               flexDirection: 'column',
               position: 'relative',
-              left: 350,
+              left: 400,
               height: 'calc(100vh - 65px)',
-              width: 'calc(100vw - 350px)',
+              width: 'calc(100vw - 400px)',
             }}
           >
             <CourseDescription cardInfo={cardInfo} />
