@@ -13,6 +13,7 @@ import PasswordReset from './PasswordReset'
 import PageNotFound from './PageNotFound'
 import Home from './Home'
 import NavBar from './NavBar'
+import CourseInfo from './CourseInfo';
 
 /**
  * This component houses all the components that will be used in the application and it also
@@ -173,6 +174,17 @@ const AppContainer = () => {
               >
                 <CourseSelection setNavTitle={setNavTitle} />
               </Box>
+            ) : (
+              <Redirect to="/login" />
+            )}
+          </Route>
+
+          <Route path="/course_info">
+            {userInfo.uid ? (
+              <CourseInfo
+                setNavTitle={setNavTitle}
+                navTitle={navTitle}
+              />
             ) : (
               <Redirect to="/login" />
             )}
