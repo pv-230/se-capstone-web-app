@@ -14,6 +14,7 @@ import PageNotFound from './PageNotFound'
 import Home from './Home'
 import NavBar from './NavBar'
 import CourseInfo from './CourseInfo';
+import AdditionalResources from './AdditionalResources';
 
 /**
  * This component houses all the components that will be used in the application and it also
@@ -202,6 +203,13 @@ const AppContainer = () => {
           {/* Password reset page */}
           <Route path="/password_reset">
             <PasswordReset />
+          </Route>
+
+          {/* Additional Resources page */}
+          <Route path="/additional_resources">
+            <AdditionalResources 
+              setNavTitle={setNavTitle}
+            />
           </Route>
 
           {/* Page not found */}
