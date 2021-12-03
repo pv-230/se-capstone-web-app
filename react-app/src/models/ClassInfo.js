@@ -22,9 +22,9 @@ export class ClassInfo {
     ]
 
     this.classMapNames = ['College Algebra', 'Trigonometry', 'Precalculus', 'Calculus I', 'Intro to Programming in C++', 'Calculus II', "Data Strucs, Alg's & Gen Program I", 'Gen Physics I w/lab', 'Science for Majors', 'Gen Physics II w/lab',
-    'Discrete Math I', 'Computer Organization I', 'CXX 3xxx or 4xxx I', "Data Strucs, Alg's & Gen Program II", 'Discrete Math II', 'Ethics in Computer Science', 'CXX 3xxx or 4xxx II',
-    'Operating Systems & Concurrent Programming', 'Foreign Language I', 'CXX 4xxx I', 'Intro to Probability', 'Secure, Parallel & Dist. Python', 'Foreign Language II',
-    'CIS 4900 or CXX 3xxx', 'Theory of Computation', 'Foreign Language III', 'Software Engineering', 'CXX 4xxx II', 'Software Engineering Capstone', 'CS 4xxx or Advanced Math Elective', 'CXX 4xxx III', 'CXX 4xxx IV'
+    'Discrete Math I', 'Computer Organization I', 'CXX 3xxx or 4xxx Elective I', "Data Strucs, Alg's & Gen Program II", 'Discrete Math II', 'Ethics in Computer Science', 'CXX 3xxx or 4xxx Elective II',
+    'Operating Systems & Concurrent Programming', 'Foreign Language I', 'CXX 4xxx Elective I', 'Intro to Probability', 'Secure, Parallel & Dist. Python', 'Foreign Language II',
+    'CIS 4900 or CXX 3xxx Elective', 'Theory of Computation', 'Foreign Language III', 'Software Engineering', 'CXX 4xxx Elective II', 'Software Engineering Capstone', 'CS 4xxx or Advanced Math Elective', 'CXX 4xxx Elective III', 'CXX 4xxx Elective IV'
     ]
   }
 

@@ -23,17 +23,46 @@ const CourseRecommendation = () => {
     let courses = [];
     let counter = 0;
 
-    for(let i = 0; i < courseInfo.classMapNames.length; i++) {
-      if(counter >= sliderVal) {
+    for (let i = 0; i < courseInfo.classMapNames.length; i++) {
+      if (counter >= sliderVal) {
         return courses
       }
       else {
-        if(!takenCourses.includes(courseInfo.classMapCodes[i])) {
-          if(courseInfo.classMapCodes[i].includes('I') || courseInfo.classMapCodes[i].includes('X'))
-          courses.push(<Typography>{courseInfo.classMapNames[i]}</Typography>)
-          else
-            courses.push(<Typography>{courseInfo.classMapCodes[i]} - {courseInfo.classMapNames[i]}</Typography>)
-          counter++
+        let newClass = courseInfo.classMapCodes[i]
+        if (!takenCourses.includes(courseInfo.classMapCodes[i])) {
+          // Checks for prereqs
+          if (newClass === 'Foreign Language II' && !takenCourses.includes('Foreign Language I')) { }
+          else if (newClass === 'Foreign Language III' && !takenCourses.includes('Foreign Language II')) { }
+          else if (newClass === 'MAC 1140' && !takenCourses.includes('MAC 1105')) { }
+          else if (newClass === 'MAC 1114' && !takenCourses.includes('MAC 1105')) { }
+          else if (newClass === 'MAC 2311' && !takenCourses.includes('MAC 1114') && !takenCourses.includes('MAC 1140')) { }
+          else if (newClass === 'MAC 2312' && !takenCourses.includes('MAC 2311')) { }
+          else if (newClass === 'MAD 2104' && !takenCourses.includes('MAC 2311')) { }
+          else if (newClass === 'STA 4442' && !takenCourses.includes('MAC 2312')) { }
+          else if (newClass === 'MAD 3105' && !takenCourses.includes('MAD 2104')) { }
+          else if (newClass === 'COP 3363' && !takenCourses.includes('MAC 1140')) { }
+          else if (newClass === 'CIS 3250' && !takenCourses.includes('COP 3363')) { }
+          else if (newClass === 'COP 3330' && !takenCourses.includes('COP 3363')) { }
+          else if (newClass === 'CDA 3100' && !takenCourses.includes('COP 3363')) { }
+          else if (newClass === 'COT 4420' && !takenCourses.includes('MAD 3105')) { }
+          else if (newClass === 'COP 4530' && !takenCourses.includes('COP 3330') && !takenCourses.includes('MAD 2104')) { }
+          else if (newClass === 'CEN 4020' && !takenCourses.includes('COP 4530')) { }
+          else if (newClass === 'CEN 4090L' && !takenCourses.includes('COP 4530')) { }
+          else if (newClass === 'COP 4521' && !takenCourses.includes('COP 4530')) { }
+          else if (newClass === 'COP 4610' && !takenCourses.includes('COP 4530')) { }
+          else if (newClass === 'PHY 2049C' && !takenCourses.includes('PHY 2048C')) { }
+          else {
+            if (courseInfo.classMapCodes[i].includes('I') || courseInfo.classMapCodes[i].includes('X'))
+              courses.push(<Typography>{courseInfo.classMapNames[i]}</Typography>)
+            else
+              if(newClass === 'PHY 2048C' && takenCourses.includes('CHM 1045C'))
+                courses.push(<Typography>BSC 2010 - Biological Science I</Typography>)
+              else if(newClass === 'PHY 2049C' && takenCourses.includes('BSC 2010'))
+                courses.push(<Typography>BSC 2011 - Biological Science II</Typography>)
+              else
+                courses.push(<Typography>{courseInfo.classMapCodes[i]} - {courseInfo.classMapNames[i]}</Typography>)
+            counter++
+          }
         }
       }
     }
@@ -48,7 +77,7 @@ const CourseRecommendation = () => {
     const auth = getAuth();
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        getUserData(auth.currentUser.uid).then(result => {setCourses(result)})
+        getUserData(auth.currentUser.uid).then(result => { setCourses(result) })
       } else {
         // If they are logged out, redirects to login
         history.push('/login');
@@ -71,7 +100,7 @@ const CourseRecommendation = () => {
           <Button variant="contained" width="a" onClick={clicked}>Get recomended Computer Science classes</Button>
           {buttonClicked && (<Paper elevation={10}>
             <Stack margin={3} divider={<Divider orientation="horizontal" flexItem />} spacing={2} alignItems="center">
-                {generateCourses()} 
+              {generateCourses()}
             </Stack>
           </Paper>)}
         </Stack>
