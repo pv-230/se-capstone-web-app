@@ -15,18 +15,6 @@ describe('navbar tests', () => {
     const navBar = screen.queryByRole('banner');
     expect(navBar).not.toBeInTheDocument();
   });
-
-  // Currently this test doesn't work because I need to mock the entire app first, still learning
-  // how to do that properly
-  
-  // it('theme toggle switches between light and dark', () => {
-  //   render(<NavBar navTitle="Test Title" />);
-  //   const themeControlLabel = screen.getByTestId('themeControlLabel');
-  //   const themeSwitch = screen.getByTestId('themeSwitch');
-  //   expect(themeControlLabel).toHaveTextContent('Dark');
-  //   userEvent.click(themeSwitch);
-  //   expect(themeControlLabel).toHaveTextContent('Light');
-  // });
 });
 
 // Nav menu tests
@@ -38,8 +26,6 @@ describe('nav menu tests', () => {
     const navMenu = screen.getByRole('menu');
     expect(navMenu).toBeInTheDocument();
   });
-
-  // TODO: Add tests to check redirections, requires mocking the app
 });
 
 // Account menu tests
@@ -51,6 +37,4 @@ describe('account menu tests', () => {
     const accountMenu = screen.getByRole('menu');
     expect(accountMenu).toBeInTheDocument();
   });
-
-  // TODO: Add tests to check redirections, requires mocking the app
 });
