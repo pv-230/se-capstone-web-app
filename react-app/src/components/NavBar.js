@@ -55,6 +55,11 @@ const NavBar = (props) => {
     history.push('/edit_courses');
   }
 
+  const handleNavCourseInfo = () => {
+    setNavMenuAnchor(null);
+    history.push('/course_info');
+  }
+
   return (
     <>
       {!props.navTitle ? (
@@ -66,7 +71,13 @@ const NavBar = (props) => {
           helpful because the AppBar is set to a "fixed" position and this means that the AppBar
           itself does not effect the layout of other components. */}
           <Toolbar sx={{ minHeight: 65 }}></Toolbar>
-          <AppBar enableColorOnDark={true} position="fixed">
+          <AppBar
+            enableColorOnDark={true}
+            position="fixed"
+            sx={{
+              zIndex: (theme) => theme.zIndex.drawer + 1
+            }}
+          >
             <Toolbar sx={{ minHeight: 65 }}>
 
               {/* Nav menu */}
@@ -84,7 +95,8 @@ const NavBar = (props) => {
                 onClose={() => setNavMenuAnchor(null)}
               >
                 <MenuItem onClick={handleNavHome}>Home</MenuItem>
-                <MenuItem onClick={handleNavCourseSelection}>Course selection</MenuItem>
+                <MenuItem onClick={handleNavCourseSelection}>Course Selection</MenuItem>
+                <MenuItem onClick={handleNavCourseInfo}>Course Information</MenuItem>
               </Menu>
 
               {/* Navbar text */}
