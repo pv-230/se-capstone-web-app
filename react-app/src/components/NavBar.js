@@ -55,6 +55,12 @@ const NavBar = (props) => {
     history.push('/edit_courses');
   }
 
+  // Event handler for the Additional resources nav menu item
+  const handleNavAddititonalResources = () => {
+    setNavMenuAnchor(null);
+    history.push('/additional_resources');
+    }
+
   const handleNavCourseInfo = () => {
     setNavMenuAnchor(null);
     history.push('/course_info');
@@ -96,6 +102,7 @@ const NavBar = (props) => {
                 <MenuItem onClick={handleNavHome}>Home</MenuItem>
                 <MenuItem onClick={handleNavCourseSelection}>Course Selection</MenuItem>
                 <MenuItem onClick={handleNavCourseInfo}>Course Information</MenuItem>
+                <MenuItem onClick={handleNavAddititonalResources}>Additional Resources</MenuItem>
               </Menu>
 
               {/* Navbar text */}
