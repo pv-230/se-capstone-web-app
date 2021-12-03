@@ -1,5 +1,5 @@
 import { getAuth, onAuthStateChanged } from 'firebase/auth'
-import { Typography, Card, Stack, Slider, Button, Divider, Paper } from "@mui/material"
+import { Typography, Card, Stack, Slider, Button, Divider, Paper, Tooltip } from "@mui/material"
 import { Box } from "@mui/system"
 import React, { useState, useEffect } from "react"
 import { getUserData } from "../APIs/getUserData"
@@ -50,10 +50,14 @@ const CourseRecommendation = () => {
           else if (newClass === 'CEN 4090L' && !takenCourses.includes('COP 4530')) { }
           else if (newClass === 'COP 4521' && !takenCourses.includes('COP 4530')) { }
           else if (newClass === 'COP 4610' && !takenCourses.includes('COP 4530')) { }
-          else if (newClass === 'PHY 2049C' && !takenCourses.includes('PHY 2048C')) { }
+          else if (newClass === 'PHY 2048C' && !takenCourses.includes('MAC 2311') ) { }
+          else if (newClass === 'PHY 2049C' && !takenCourses.includes('PHY 2048C') ) { }
           else {
-            if (courseInfo.classMapCodes[i].includes('I') || courseInfo.classMapCodes[i].includes('X'))
-              courses.push(<Typography>{courseInfo.classMapNames[i]}</Typography>)
+            if ((courseInfo.classMapCodes[i].includes('I') || courseInfo.classMapCodes[i].includes('X') || courseInfo.classMapCodes[i] === 'CS 4xxx or Advanced Math Elective') && (courseInfo.classMapCodes[i] !== 'CIS 3250'))
+              if(newClass.includes("Foreign"))
+                courses.push(<Typography>{courseInfo.classMapNames[i]}</Typography>)
+              else
+                courses.push(<Tooltip title="Please check prerequisties!"><Typography>{courseInfo.classMapNames[i]}</Typography></Tooltip>)
             else
               if(newClass === 'PHY 2048C' && takenCourses.includes('CHM 1045C'))
                 courses.push(<Typography>BSC 2010 - Biological Science I</Typography>)
