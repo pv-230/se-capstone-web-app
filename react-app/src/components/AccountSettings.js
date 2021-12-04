@@ -2,7 +2,7 @@ import React from 'react'
 import { useHistory } from 'react-router-dom'
 import { Stack, Card, Box, Typography, Button, TextField } from '@mui/material'
 import { useState } from 'react'
-import { getAuth, onAuthStateChanged } from 'firebase/auth'
+import { getAuth, onAuthStateChanged, updatePassword } from 'firebase/auth'
 import '../styles/AccountSettings.css'
 import { getUserData } from '../APIs/getUserData';
 import { UserData } from '../models/UserData'
@@ -13,18 +13,23 @@ let auth = null;
 let userD = null;
 let selectedClasses = [];
 let notSelectedClasses = [];
+let uid = null;
 const AccountSettings = () => {
   const history = useHistory();
 
   // States
   const [inputText, setInputText] = useState({
     firstName: "",
-    lastName: ""
+    lastName: "",
+    password: "",
+    confirmPassword: ""
   })
 
   const [errors, setErrors] = useState({
     firstNameError: false,
     lastNameError: false,
+    paswrodError: false,
+    confirmPasswordError: false
   });
 
   const handleInputChange = event => {
@@ -37,6 +42,11 @@ const AccountSettings = () => {
   const handleChangeName = async () => {
     userD = await getUserData(auth.currentUser.uid);
     changeName()
+  }
+
+  const handlePasswordButton = async () => {
+    userD = await getUserData(auth.currentUser.uid);
+    changePass()
   }
 
   const [name, setName] = useState("")
@@ -98,6 +108,73 @@ const AccountSettings = () => {
     }
   }
 
+  async function changePass() {
+    const auth = getAuth();
+    if (inputText.confirmPassword === inputText.password && inputText.password !== '') {
+      await updatePassword(auth.currentUser, inputText.password)
+      .then((userCredential) => {
+        uid = userCredential.user.uid;
+      })
+      .catch((error) => {
+        // Error registering account
+        const errorCode = error.code;
+        if (errorCode === 'auth/invalid-email') {
+          setErrors({
+            ...errors,
+            emailError: true,
+            passwordError: false,
+            otherError: false,
+            message: 'Invalid email'
+          });
+        }
+        else if (errorCode === 'auth/email-already-in-use') {
+          setErrors({
+            ...errors,
+            emailError: true,
+            passwordError: false,
+            otherError: false,
+            message: 'Email already in use'
+          });
+        }
+        else if (errorCode === 'auth/operation-not-allowed') {
+          setErrors({
+            ...errors,
+            emailError: false,
+            passwordError: false,
+            otherError: true,
+            message: 'Operation not allowed'
+          });
+        }
+        else if (errorCode === 'auth/weak-password') {
+          setErrors({
+            ...errors,
+            emailError: false,
+            passwordError: true,
+            otherError: false,
+            message: 'Weak password'
+          });
+        } else {
+          setErrors({
+            ...errors,
+            emailError: false,
+            passwordError: false,
+            otherError: true,
+            message: errorCode
+          });
+        }
+      });
+  }
+  else {
+    setErrors({
+      ...errors,
+      emailError: false,
+      passwordError: true,
+      otherError: false,
+      message: 'Passwords do not match'
+    });
+    }
+  }
+
   return (
     <Card className="acc-settings-card" elevation={8}>
       <Card className="acc-settings-card" elevation={4}>
@@ -136,10 +213,40 @@ const AccountSettings = () => {
             <Button variant="contained" onClick={handleChangeName}>
               Submit name change
             </Button>
-            <Button color="secondary" variant="text" onClick={() => history.push('/password_reset')}>
-              Would you like to change your password?
+
+            <Typography variant="h4">Change your password</Typography>
+            
+            {/* Password field */}
+          <TextField
+            type="password"
+            onChange={handleInputChange}
+            label="Password"
+            variant="outlined"
+            name="password"
+            color="secondary"
+            required
+            error={errors.passwordError}
+            helperText={errors.passwordError ? errors.message : ''}
+          />
+
+          {/* Confirm password field */}
+          <TextField
+            type="password"
+            onChange={handleInputChange}
+            label="Confirm Password"
+            variant="outlined"
+            name="confirmPassword"
+            color="secondary"
+            required
+            error={errors.passwordError}
+            helperText={errors.passwordError ? errors.message : ''}
+          />
+            
+            <Button variant="contained" onClick={handlePasswordButton}>
+              Submit password change
             </Button>
-            <Button color="secondary" variant="text" onClick={() => history.push('/edit_courses')}>
+           
+             <Button color="secondary" variant="text" onClick={() => history.push('/edit_courses')}>
               Would you like to change your Completed Classes?
             </Button>
           </Stack>
