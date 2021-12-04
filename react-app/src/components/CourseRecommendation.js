@@ -15,21 +15,17 @@ const CourseRecommendation = () => {
   const [takenCourses, setTakenCourses] = useState(null);
   const [sliderVal, setSliderVal] = useState(1);
 
-  const setCourses = (courses) => {
-    setTakenCourses(courses.completedClasses)
-  }
-
   const generateCourses = () => {
     let courses = [];
     let counter = 0;
 
     for (let i = 0; i < courseInfo.classMapNames.length; i++) {
-      // FIX LOOP
       if (counter >= sliderVal) {
         return courses
       }
       else {
         let newClass = courseInfo.classMapCodes[i]
+        console.log(takenCourses)
         if (!takenCourses.includes(courseInfo.classMapCodes[i])) {
           // Checks for prereqs
           if (newClass === 'Foreign Language II' && !takenCourses.includes('Foreign Language I')) { }
@@ -60,12 +56,12 @@ const CourseRecommendation = () => {
               else
                 courses.push(<Tooltip title="Please check prerequisties!"><Typography>{courseInfo.classMapNames[i]}</Typography></Tooltip>)
             else
-              if((newClass === 'PHY 2048C' || newClass === 'PHY 2049C') && takenCourses.includes('CHM 1045C') && !takenCourses.includes('BSC 2010'))
+              if(newClass === 'PHY 2049C' && takenCourses.includes('PHY 2048C'))
+                courses.push(<Typography>{courseInfo.classMapCodes[i]} - {courseInfo.classMapNames[i]}</Typography>)
+              else if(newClass === 'PHY 2048C' && takenCourses.includes('CHM 1045C') && !takenCourses.includes('BSC 2010'))
                 courses.push(<Typography>BSC 2010 - Biological Science I</Typography>)
-              else if((newClass === 'PHY 2048C' || newClass === 'PHY 2049C') && takenCourses.includes('BSC 2010') && !takenCourses.includes('BSC 2011')) {
-                console.log("TEST")
+              else if((newClass === 'PHY 2048C' || newClass === 'PHY 2049C') && takenCourses.includes('BSC 2010') && !takenCourses.includes('BSC 2011'))
                 courses.push(<Typography>BSC 2011 - Biological Science II</Typography>)
-              }
               else
                 courses.push(<Typography>{courseInfo.classMapCodes[i]} - {courseInfo.classMapNames[i]}</Typography>)
             counter++
@@ -76,7 +72,9 @@ const CourseRecommendation = () => {
     return courses;
   }
 
-  const clicked = () => {
+  const clicked = async () => {
+    const auth = getAuth()
+    await getUserData(auth.currentUser.uid).then(result => { setTakenCourses(result.completedClasses) })
     setButtonClicked(true)
   }
 
@@ -84,7 +82,6 @@ const CourseRecommendation = () => {
     const auth = getAuth();
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        getUserData(auth.currentUser.uid).then(result => { setCourses(result) })
       } else {
         // If they are logged out, redirects to login
         history.push('/login');
