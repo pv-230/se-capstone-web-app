@@ -5,6 +5,7 @@ import { getUserData } from '../APIs/getUserData';
 import Box from '@mui/material/Box'
 import CourseSelection from './CourseSelection';
 import DegreeProgress from './DegreeProgress';
+import CourseRecommendation from './CourseRecommendation';
 
 /**
  * This is the component that provides the main features of the application
@@ -60,6 +61,7 @@ const Home = (props) => {
         alignItems: 'center',
         flexDirection: 'column'
       }}
+      marginBottom={5}
     >
       {!name ? (
         null
@@ -67,6 +69,7 @@ const Home = (props) => {
         <>
           <DegreeProgress uid={props.uid} />
           <CourseSelection disable={true} hideTitle={true} />
+          <CourseRecommendation />
         </>
       )}
     </Box>
