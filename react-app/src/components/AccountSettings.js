@@ -2,7 +2,7 @@ import React from 'react'
 import { useHistory } from 'react-router-dom'
 import { Stack, Card, Box, Typography, Button, Snackbar, Alert, TextField } from '@mui/material'
 import { useState } from 'react'
-import { getAuth, onAuthStateChanged, updatePassword } from 'firebase/auth'
+import { getAuth, onAuthStateChanged, updatePassword, signOut} from 'firebase/auth'
 import '../styles/AccountSettings.css'
 import { getUserData } from '../APIs/getUserData';
 import { UserData } from '../models/UserData'
@@ -15,7 +15,7 @@ let selectedClasses = [];
 let notSelectedClasses = [];
 
 
-const AccountSettings = () => {
+const AccountSettings = (props) => {
   const history = useHistory();
 
   const [open, setOpen] = React.useState(false);
@@ -128,9 +128,12 @@ const handleClose = (event, reason) => {
     const auth = getAuth();
     if (inputText.confirmPassword === inputText.password && inputText.password !== '') {
       await updatePassword(auth.currentUser, inputText.password)
-      .then((userCredential) => {
-        console.log("test");  
+      .then((userCredential) => { 
         showPassAlert();
+        const auth = getAuth();
+        props.setUserId(null);
+        signOut(auth);
+        history.push('/login');
       })
       .catch((error) => {
         // Error registering account
@@ -268,7 +271,7 @@ const handleClose = (event, reason) => {
             </Button>
 
             <Snackbar open={open} autoHideDuration={4000} onClose={handleClose}>
-             <Alert onClose={handleClose} severity="warning" sx={{ width: '100%' }} >
+             <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }} >
              Password Changed.
              </Alert>
             </Snackbar>
