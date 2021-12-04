@@ -194,7 +194,7 @@ const AppContainer = () => {
           {/* Account settings page */}
           <Route path="/account_settings">
             {userInfo.uid ? (
-              <AccountSettings />
+              <AccountSettings setUserId={setUserId} />
             ) : (
               <Redirect to="/login" />
             )}
