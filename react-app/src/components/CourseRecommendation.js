@@ -56,7 +56,8 @@ const CourseRecommendation = () => {
               else
                 courses.push(<Tooltip title="Please check prerequisties!"><Typography>{courseInfo.classMapNames[i]}</Typography></Tooltip>)
             else
-              if(newClass === 'PHY 2049C' && takenCourses.includes('PHY 2048C'))
+              if(takenCourses.includes('CHM 1045C') && takenCourses.includes('BSC 2010') && takenCourses.includes('BSC 2011')) {}
+              else if(newClass === 'PHY 2049C' && takenCourses.includes('PHY 2048C'))
                 courses.push(<Typography>{courseInfo.classMapCodes[i]} - {courseInfo.classMapNames[i]}</Typography>)
               else if(newClass === 'PHY 2048C' && takenCourses.includes('CHM 1045C') && !takenCourses.includes('BSC 2010'))
                 courses.push(<Typography>BSC 2010 - Biological Science I</Typography>)
