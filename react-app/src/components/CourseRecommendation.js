@@ -24,6 +24,7 @@ const CourseRecommendation = () => {
     let counter = 0;
 
     for (let i = 0; i < courseInfo.classMapNames.length; i++) {
+      // FIX LOOP
       if (counter >= sliderVal) {
         return courses
       }
@@ -59,10 +60,12 @@ const CourseRecommendation = () => {
               else
                 courses.push(<Tooltip title="Please check prerequisties!"><Typography>{courseInfo.classMapNames[i]}</Typography></Tooltip>)
             else
-              if(newClass === 'PHY 2048C' && takenCourses.includes('CHM 1045C'))
+              if((newClass === 'PHY 2048C' || newClass === 'PHY 2049C') && takenCourses.includes('CHM 1045C') && !takenCourses.includes('BSC 2010'))
                 courses.push(<Typography>BSC 2010 - Biological Science I</Typography>)
-              else if(newClass === 'PHY 2049C' && takenCourses.includes('BSC 2010'))
+              else if((newClass === 'PHY 2048C' || newClass === 'PHY 2049C') && takenCourses.includes('BSC 2010') && !takenCourses.includes('BSC 2011')) {
+                console.log("TEST")
                 courses.push(<Typography>BSC 2011 - Biological Science II</Typography>)
+              }
               else
                 courses.push(<Typography>{courseInfo.classMapCodes[i]} - {courseInfo.classMapNames[i]}</Typography>)
             counter++
@@ -87,7 +90,7 @@ const CourseRecommendation = () => {
         history.push('/login');
       }
     });
-  }, [])
+  })
 
   return (
     <div>
