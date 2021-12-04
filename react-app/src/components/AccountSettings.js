@@ -1,6 +1,6 @@
 import React from 'react'
 import { useHistory } from 'react-router-dom'
-import { Stack, Card, Box, Typography, Button, Snackbar, Alert, TextField } from '@mui/material'
+import { Stack, Card, Box, Typography, Button, TextField } from '@mui/material'
 import { useState } from 'react'
 import { getAuth, onAuthStateChanged, updatePassword, signOut} from 'firebase/auth'
 import '../styles/AccountSettings.css'
@@ -18,7 +18,7 @@ let notSelectedClasses = [];
 const AccountSettings = (props) => {
   const history = useHistory();
 
-  const [open, setOpen] = React.useState(false);
+ 
 
   // States
   const [inputText, setInputText] = useState({
@@ -27,19 +27,6 @@ const AccountSettings = (props) => {
     password: "",
     confirmPassword: ""
   })
-
-// Makes the snackbar pop up
-const showPassAlert = () => {
-    setOpen(true);
-};
-
-// Closes the snackbar
-const handleClose = (event, reason) => {
-  if (reason === 'clickaway') {
-    return;
-  }
-  setOpen(false);
-};
 
   const [errors, setErrors] = useState({
     firstNameError: false,
@@ -129,7 +116,6 @@ const handleClose = (event, reason) => {
     if (inputText.confirmPassword === inputText.password && inputText.password !== '') {
       await updatePassword(auth.currentUser, inputText.password)
       .then((userCredential) => { 
-        showPassAlert();
         const auth = getAuth();
         props.setUserId(null);
         signOut(auth);
@@ -269,12 +255,6 @@ const handleClose = (event, reason) => {
              <Button color="secondary" variant="text" onClick={() => history.push('/edit_courses')}>
               Would you like to change your Completed Classes?
             </Button>
-
-            <Snackbar open={open} autoHideDuration={4000} onClose={handleClose}>
-             <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }} >
-             Password Changed.
-             </Alert>
-            </Snackbar>
           </Stack>
         </Box>
       </Card>
