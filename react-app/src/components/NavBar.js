@@ -12,7 +12,7 @@ import MenuItem from '@mui/material/MenuItem'
 import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
-import { globalDarkTheme } from '../styles/GlobalTheme';
+import { globalLightTheme } from '../styles/GlobalTheme';
 
 /**
  * This is the navbar component that allows the user to navigate around the
@@ -91,6 +91,7 @@ const NavBar = (props) => {
                 edge="start"
                 sx={{ mr: 1 }}
                 onClick={(e) => setNavMenuAnchor(e.currentTarget)}
+                data-testid="navMenuButton"
               >
                 <MenuIcon fontSize="large" />
               </IconButton>
@@ -121,15 +122,19 @@ const NavBar = (props) => {
                       defaultChecked
                       onClick={() => props.toggleThemeMode()}
                       color="default"
+                      data-testid="themeSwitch"
                     />
                   }
-                  label={props.currentThemeMode === globalDarkTheme ? 'Dark' : 'Light'} />
+                  label={props.currentThemeMode === globalLightTheme ? 'Light' : 'Dark'}
+                  data-testid="themeControlLabel"
+                />
               </FormGroup>
 
               {/* Account menu */}
               <IconButton
                 edge="end"
                 onClick={(e) => setAccMenuAnchor(e.currentTarget)}
+                data-testid="accountMenuButton"
               >
                 <AccountCircleIcon fontSize="large" />
               </IconButton>
