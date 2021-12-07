@@ -148,7 +148,7 @@ useEffect(() => {
     courseS = aja.map((el) => <MenuItem key={el} value={el}>{el}</MenuItem>);
     }
 
-    if(name.length >= 7 && flag){
+    if(name.length >= 1 && flag){
         bflag = true
     } else bflag = false;
 
@@ -231,7 +231,7 @@ useEffect(() => {
         <span>
             <Button disabled={flag === false} href={courseurl} target="_blank" rel="noopener noreferrer" variant="contained" sx={{mr: 3, width: 125}}>Course</Button>
             <Button disabled={bflag === false} href={bothurl} target="_blank" rel="noopener noreferrer" variant="contained" sx={{width: 125}}>Both</Button>
-            <Button disabled={(len < 7)} href={profurl} target="_blank" rel="noopener noreferrer" variant="contained" sx={{ml: 3, width: 125}}>Professor</Button>
+            <Button disabled={(len < 1)} href={profurl} target="_blank" rel="noopener noreferrer" variant="contained" sx={{ml: 3, width: 125}}>Professor</Button>
         </span>
         </CardContent>
     </Card>
