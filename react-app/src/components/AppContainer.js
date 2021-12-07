@@ -15,6 +15,7 @@ import Home from './Home'
 import NavBar from './NavBar'
 import CourseInfo from './CourseInfo';
 import AdditionalResources from './AdditionalResources';
+import CourseFeedback from './CourseFeedback';
 
 /**
  * This component houses all the components that will be used in the application and it also
@@ -183,6 +184,17 @@ const AppContainer = () => {
           <Route path="/course_info">
             {userInfo.uid ? (
               <CourseInfo
+                setNavTitle={setNavTitle}
+                navTitle={navTitle}
+              />
+            ) : (
+              <Redirect to="/login" />
+            )}
+          </Route>
+
+          <Route path="/course_feedback">
+            {userInfo.uid ? (
+              <CourseFeedback
                 setNavTitle={setNavTitle}
                 navTitle={navTitle}
               />
