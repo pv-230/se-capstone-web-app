@@ -66,6 +66,11 @@ const NavBar = (props) => {
     history.push('/course_info');
   }
 
+  const handleNavCourseFeed = () => {
+    setNavMenuAnchor(null);
+    history.push('/course_feedback');
+  }
+
   return (
     <>
       {!props.navTitle ? (
@@ -103,6 +108,7 @@ const NavBar = (props) => {
                 <MenuItem onClick={handleNavHome}>Home</MenuItem>
                 <MenuItem onClick={handleNavCourseSelection}>Course Selection</MenuItem>
                 <MenuItem onClick={handleNavCourseInfo}>Course Information</MenuItem>
+                <MenuItem onClick={handleNavCourseFeed}>Course Feedback</MenuItem>
                 <MenuItem onClick={handleNavAddititonalResources}>Additional Resources</MenuItem>
               </Menu>
 
